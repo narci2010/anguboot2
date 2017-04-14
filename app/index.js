@@ -14,14 +14,12 @@ module.exports = class extends generator {
                    '  /--\\| )(_)|_||_)(_)(_)|_  v'+ version +'\n' +
                    '          _/\n');
         this.languagesChoice = [
-             {name:'English', value:'en', checked: true},
              {name:'Français', value:'fr', checked: true},
              {name:'Deutsch', value:'de', checked: true},
              {name:'Español', value:'es', checked: true}
         ];
 
         this.pluginsChoice = [
-            {name:'Crash', value:'crash', checked: true},
             {name:'Security', value:'security', checked: true},
             {name:'Jpa', value:'jpa', checked: true},
             {name:'Rest documentation', value:'restDoc', checked: true},
@@ -29,7 +27,6 @@ module.exports = class extends generator {
         ];
 
         this.pluginsAngularChoice = [
-            {name:'Smart table', value: 'smartTable', checked: true},
             {name:'Tenant customization', value:'custo', checked: true}
         ];
     }
@@ -101,11 +98,8 @@ module.exports = class extends generator {
             },
             type: 'checkbox',
             name: 'languagesAnswer',
-            choices: this.languagesChoice,
-            validate: function (input) {
-                return input.length > 0 ? true : 'Please select at least one language.';
-            },
-            message: 'Languages i18n : '
+            choices: this.languagesChoice
+            message: 'Languages i18n (in addition to english) : '
         }, {
             when: function (response) {
                 return response.springboot && response.pluginsAnswer.indexOf('jpa') > -1;
@@ -150,9 +144,6 @@ module.exports = class extends generator {
 			this.props.packagePath = answers.groupId.replace(/\./g, '/') + '/' + this.props.nameLow;
 			var random = Math.floor(Math.random() * 90 + 10);
 			this.props.port = '80' + random;
-			if(this.props.plugins.crash){
-			    this.props.sshPort = '20' + random;
-			}
         });
      }
 
@@ -175,24 +166,9 @@ module.exports = class extends generator {
 
         this.template('_pom.xml', 'pom.xml');
 
-        // site & asciidoc
-        this.template('src/site/_site.xml', 'src/site/site.xml');
-        this.copy('src/site/asciidoc/index.adoc', 'src/site/asciidoc/index.adoc');
-
-        this.copy('src/main/asciidoc/functional-specifications.adoc', 'src/main/asciidoc/functional-specifications.adoc');
-        this.copy('src/main/asciidoc/technical-specifications.adoc', 'src/main/asciidoc/technical-specifications.adoc');
-        this.copy('src/main/asciidoc/developer.adoc', 'src/main/asciidoc/developer.adoc');
-        this.copy('src/main/asciidoc/user-manual.adoc', 'src/main/asciidoc/user-manual.adoc');
-        this.template('src/main/asciidoc/_book.adoc', 'src/main/asciidoc/book.adoc');
-        this.template('src/main/asciidoc/_operating-guide.adoc', 'src/main/asciidoc/operating-guide.adoc');
-        this.template('src/main/asciidoc/_installation-guide.adoc', 'src/main/asciidoc/installation-guide.adoc');
-
         if(this.props.angular){
             this.template('_package.json', 'package.json');
-            this.template('_gulpfile.js', 'gulpfile.js');
-            this.copy('constants.json', 'constants.json');
-
-            this.copy('clients', 'clients', skipTemplates);
+            this.template('_tslint.json', '_tslint.json');
         }
 
         if(this.props.plugins.restDoc) {
@@ -216,15 +192,6 @@ module.exports = class extends generator {
         var javaTestDir = 'src/test/java/' + this.props.packagePath;
         var classPrefix = this.props.nameCap;
 
-        // crash
-        if (this.props.plugins.crash) {
-            this.copy('src/main/resources/crash', 'src/main/resources/crash', skipTemplates);
-            this.template('src/main/resources/crash', 'src/main/resources/crash');
-
-            this.template('src/main/java/crash/commands/_AbstractCommand.java', javaDir +'/crash/commands/AbstractCommand.java');
-            this.template('src/main/java/crash/commands/_hello.java', javaDir +'/crash/commands/hello.java');
-        }
-
         // java
         this.template('src/main/java/exception/_ApplicativeException.java', javaDir +'/exception/'+classPrefix+'ApplicativeException.java');
         this.template('src/main/java/exception/_TechnicalException.java', javaDir +'/exception/'+classPrefix+'TechnicalException.java');
@@ -241,7 +208,10 @@ module.exports = class extends generator {
             this.template('src/main/java/web/_Controller.java', javaDir + '/web/' + classPrefix + 'Controller.java');
             
             if (this.props.plugins.security) {
-                this.template('src/main/java/config/_Security.java', javaDir + '/config/' + classPrefix + 'Security.java');
+                this.template('src/main/java/config/_SecurityConfiguration.java', javaDir + '/config/SecurityConfiguration.java');
+                this.template('src/main/java/config/_FrontBasicAuthenticationEntryPoint.java', javaDir + '/config/FrontBasicAuthenticationEntryPoint.java');
+                this.template('src/main/java/config/oauth/_CorsEnabledConfiguration.java', javaDir + '/config/oauth/CorsEnabledConfiguration.java');
+                this.template('src/main/java/config/oauth/_Oauth2Configuration.java', javaDir + '/config/oauth/Oauth2Configuration.java');
             }
 
             if(this.props.report){
@@ -257,36 +227,28 @@ module.exports = class extends generator {
         }
 
         if (this.props.angular) {
-            // java
-            this.template('src/main/java/config/_WebMvc.java', javaDir + '/config/' + classPrefix + 'WebMvc.java');
 
             // app
             var staticDir = 'src/main/web/';
             this.copy(staticDir + '**/*', 'src/main/web', skipTemplates);
 
             this.template(staticDir + '_index.html', staticDir + 'index.html');
-            this.template(staticDir + 'js/_main.js', staticDir + 'js/main.js');
-            this.template(staticDir + 'js/_config.js', staticDir + 'js/config.js');
-            this.template(staticDir + 'js/services/_language.js', staticDir + 'js/services/language.js');
-            this.template(staticDir + 'js/services/_errorHandler.js', staticDir + 'js/services/errorHandler.js');
 
-            this.template(staticDir + 'languages/_locales.json', staticDir + 'languages/locales.json');
             if(this.props.plugins.custo){
-                this.template(staticDir + 'views/_custo.html', staticDir + 'views/custo.html');
-                this.template(staticDir + 'js/controllers/_custo.js', staticDir + 'js/controllers/custo.js');
+                this.template(staticDir + 'app/components/_custo.component.ts', staticDir + 'app/components/custo.component.ts');
+                this.template(staticDir + 'app/components/_custo.component.html', staticDir + 'app/components/custo.component.html');
+                // java
+                this.template('src/main/java/config/_WebMvcConfiguration.java', javaDir + '/config/WebMvcConfiguration.java');
+                // client example
+                this.copy('clients', 'clients', skipTemplates);
             }
 
             // languages
             for(var l in this.props.languages){
                 if(this.props.languages[l]){
-                    this.template(staticDir + 'languages/specific/_.json', staticDir + 'languages/specific/' + l + '.json');
-                    this.template(staticDir + 'js/vendor/_angular-locale_' + l + '.js', staticDir + 'js/vendor/angular-locale_' + l + '.js');
+                    this.template(staticDir + 'locale/_messages.' + l +'.xlf', staticDir + 'locale/messages.' + l +'.xlf');
                 }
             }
-
-            // tests
-            this.copy('src/test/javascript', 'src/test/javascript', skipTemplates);
-            this.template('src/test/javascript/unit/services/_example_spec.js', 'src/test/javascript/unit/services/example_spec.js');
         }
 
         if(this.props.plugins.docker) {
@@ -294,18 +256,13 @@ module.exports = class extends generator {
         }
 	}
 	install() {
-        var ssh = '';
-        if(this.props.sshPort){
-            ssh = ', ssh ' + this.props.sshPort;
+        var displayedLanguages = 'en';
+        if(this.props.languages.length > 0){
+            displayedLanguages += ', ';
         }
-
-        var displayedLanguages = '';
         for(var l in this.props.languages){
             if(this.props.languages[l]){
-                if(displayedLanguages !== ''){
-                    displayedLanguages += ', ';
-                }
-                displayedLanguages+= l;
+                displayedLanguages+= ', ' + l;
             }
         }
 
@@ -314,12 +271,11 @@ module.exports = class extends generator {
         this.log(' |_ groupId    : ' + this.props.groupId);
         this.log(' |_ artifactId : ' + this.props.artifactId);
         this.log(' |_ version    : ' + this.props.version);
-        this.log(' |_ package    : ' + this.props.package + ' (path=' + this.props.packagePath + ')');
-        this.log(' |_ port       : http '+ this.props.port + ssh);
+        this.log(' |_ package    : ' + this.props.package);
+        this.log(' |_ http port  : '+ this.props.port);
         this.log(' |_ languages  :', displayedLanguages);
 		this.log('--------------------------------------------------------------------------------------------------------------------------');
-		var springBootMsg = this.props.springboot ? 'and "java -jar target/' + this.props.artifactId + '.jar" to launch server' : '';
-		this.log('All done, run "mvn clean install" ' + springBootMsg);
+		this.log('All done, run "mvn clean install" to compile and download dependencies');
 		this.log('--------------------------------------------------------------------------------------------------------------------------');
 	}
 };

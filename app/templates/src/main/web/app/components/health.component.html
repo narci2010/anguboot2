@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-header card-header-primary">
+        <span i18n="Health panel title">Health ({{filteredCount.count}} / {{healthList.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Health [raw]" [(rawBody)]="raw" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="pointer" i18n="Health table header : name">Name</th>
+                    <th class="pointer" i18n="Health table header : status">Status</th>
+                    <th i18n="Health table header : details">Details</th>
+                </tr>
+                <tr>
+                    <th colspan="1">
+                        <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="term">
+                    </th>
+                    <th colspan="2" class="align-middle">
+                        <span (click)="termStatus = undefined" class="badge pointer"
+                              [ngClass]="{'badge-primary': !termStatus || termStatus === 'ALL', 'badge-default': termStatus !== 'ALL'}">ALL</span>
+                        <span (click)="termStatus = 'UP'" class="badge pointer"
+                              [ngClass]="{'badge-success': termStatus === 'UP', 'badge-default': termStatus !== 'UP'}">UP</span>
+                        <span (click)="termStatus = 'DOWN'" class="badge pointer"
+                              [ngClass]="{'badge-danger': termStatus === 'DOWN', 'badge-default': termStatus !== 'DOWN'}">DOWN</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let health of healthList | filter:{terms: [{key:'name',value:term},{key:'status',value:termStatus}]}:filteredCount">
+                    <td>{{health.name}}</td>
+                    <td><span
+                            [ngClass]="{'badge-success': health.status === 'UP', 'badge-danger': health.status !== 'UP'}"
+                            class="badge">{{health.status}}</span></td>
+                    <td>
+                        <span [ngSwitch]="health.name">
+                        <span *ngSwitchCase="'diskSpace'">
+                            <ngb-progressbar type="{{health.type}}" [value]="health.value" [striped]="true" [animated]="true"
+                                             placement="top" ngbTooltip="{{health.free | size}} / {{health.total | size}}">
+                                <i>{{ health.value }} %</i>
+                            </ngb-progressbar>
+                        </span>
+                        <span *ngSwitchCase="'db'">{{health.database}}</span>
+                        <span *ngSwitchDefault>{{health.details}}</span>
+                        </span>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredCount.count == 0">
+                    <td colspan="3">
+                        <span>No results</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

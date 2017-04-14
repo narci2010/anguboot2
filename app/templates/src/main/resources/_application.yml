@@ -68,19 +68,6 @@ server:
 
 management:
     context-path: /manage
-    shell:
-        auth:
-            simple:
-                user:
-                    name: angutest
-                    password: '@angutest@'
-            spring:
-                roles: ADMIN
-            type: simple
-        command-path-patterns: classpath*:/crash/commands/**,classpath*:/commands/**
-        ssh:
-            enabled: true
-            port: 2098
 
 # uncomment to use oauth security
 security:

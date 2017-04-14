@@ -1,0 +1,241 @@
+<!-- >>> used to retrieve text color !-->
+<span class="invisible text-color" #textColor></span>
+<!-- <<< -->
+<div class="card">
+    <div class="card-header card-header-primary">
+            <span>
+                <span i18n="Jvm panel title">Jvm</span>
+                <span *ngIf="isDataAvailable">- running for {{metrics.uptime | time}}</span>
+            </span>
+        <span class="float-right">
+            <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="metrics"
+               class="fa fa-lg fa-eye fa-margin pointer text-color"
+               placement="top" ngbTooltip="Metrics raw" href="#"></a>
+            <a my-raw rawTitle="Dumps [raw]" [(rawBody)]="dumps" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               placement="top" ngbTooltip="Dumps raw" href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div class="row" *ngIf="isDataAvailable">
+            <div class="col-md-4">
+                <b>Memory</b>
+                <hr>
+                <p>Total Memory</p>
+                <ngb-progressbar type="success" [value]="(metrics.mem - metrics['mem.free']) * 100 / metrics.mem" [striped]="true" [animated]="true"
+                                 placement="top" ngbTooltip="{{(metrics.mem - metrics['mem.free']) / 1024 | number:0}} M / {{metrics.mem / 1024 | number:0}} M">
+                    <i>{{(metrics.mem - metrics['mem.free']) * 100 / metrics.mem | number:0}}%</i>
+                </ngb-progressbar>
+
+                <p class="margin-top">Heap Memory</p>
+                <ngb-progressbar type="success" [value]="metrics['heap.used'] * 100 / metrics['heap.committed']" [striped]="true" [animated]="true"
+                                 placement="top" ngbTooltip="{{metrics['heap.used'] / 1024 | number:0}} M / {{metrics['heap.committed'] / 1024 | number:0}} M">
+                    <i>{{metrics['heap.used'] * 100 / metrics['heap.committed'] | number:0}}%</i>
+                </ngb-progressbar>
+
+                <p class="margin-top">Non-Heap Memory</p>
+                <ngb-progressbar type="success" [value]="metrics['nonheap.used'] * 100 / metrics['nonheap.committed']" [striped]="true" [animated]="true"
+                                 placement="top" ngbTooltip="{{metrics['nonheap.used'] / 1024 | number:0}} M / {{metrics['nonheap.committed'] / 1024 | number:0}} M">
+                    <i>{{metrics['nonheap.used'] * 100 / metrics['nonheap.committed'] | number:0}}%</i>
+                </ngb-progressbar>
+            </div>
+            <div class="col-md-4">
+                <b (click)="isDataAvailable = true">Threads</b> (Total: {{threads.all}})
+                <hr>
+                <div class="pie-padding">
+                    <canvas baseChart height="150"
+                            [data]="threadsData"
+                            [labels]="threadsLabels"
+                            [options]="threadsOptions"
+                            [chartType]="'pie'"
+                            (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)">
+
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <b>Garbage collector</b>
+                <hr>
+                <dl class="row">
+                    <dt class="col-sm-9 col-xs-9">Mark Sweep count</dt>
+                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_marksweep.count']}}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-9 col-xs-9">Mark Sweep time</dt>
+                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_marksweep.time']}}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-9 col-xs-9">Scavenge count</dt>
+                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_scavenge.count']}}</dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-9 col-xs-9">Scavenge time</dt>
+                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_scavenge.time']}}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card margin-top">
+    <div class="card-header card-header-primary">
+        <span>Http</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="metrics"
+               class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="isDataAvailable">
+            <p *ngIf="metricsHttp['all'] == 0">No http requests yet</p>
+            <div *ngIf="metricsHttp && metricsHttp['all'] > 0">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngIf="metricsHttp['200'] > 0">
+                        <td>OK</td>
+                        <td>
+                            <ngb-progressbar type="success"
+                                             [value]="metricsHttp['200'] * 100 / metricsHttp['all']"
+                                             [striped]="true" [animated]="true">
+                                <i>{{metricsHttp['200']}}</i>
+                            </ngb-progressbar>
+                        </td>
+                    </tr>
+                    <tr *ngIf="metricsHttp['400'] > 0">
+                        <td>Bad Request</td>
+                        <td>
+                            <ngb-progressbar type="warning"
+                                             [value]="metricsHttp['400'] * 100 / metricsHttp['all']"
+                                             [striped]="true" [animated]="true">
+                                <i>{{metricsHttp['400']}}</i>
+                            </ngb-progressbar>
+                        </td>
+                    </tr>
+                    <tr *ngIf="metricsHttp['401'] > 0">
+                        <td>Unauthorized</td>
+                        <td>
+                            <ngb-progressbar type="warning"
+                                             [value]="metricsHttp['401'] * 100 / metricsHttp['all']"
+                                             [striped]="true" [animated]="true">
+                                <i>{{metricsHttp['401']}}</i>
+                            </ngb-progressbar>
+                        </td>
+                    </tr>
+                    <tr *ngIf="metricsHttp['404'] > 0">
+                        <td>Not Found</td>
+                        <td>
+                            <ngb-progressbar type="warning"
+                                             [value]="metricsHttp['404'] * 100 / metricsHttp['all']"
+                                             [striped]="true" [animated]="true">
+                                <i>{{metricsHttp['404']}}</i>
+                            </ngb-progressbar>
+                        </td>
+                    </tr>
+                    <tr *ngIf="metricsHttp['500'] > 0">
+                        <td>Server error</td>
+                        <td>
+                            <ngb-progressbar type="danger"
+                                             [value]="metricsHttp['500'] * 100 / metricsHttp['all']"
+                                             [striped]="true" [animated]="true">
+                                <i>{{metricsHttp['500']}}</i>
+                            </ngb-progressbar>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card margin-top">
+    <div class="card-header card-header-primary">
+        <span>Services (in ms)</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="metrics"
+               class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="isDataAvailable">
+            <p *ngIf="!metricsServicesArray || metricsServicesArray.length == 0">No service found</p>
+
+            <div *ngIf="metricsServicesArray && metricsServicesArray.length > 0">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="pointer">Service name</th>
+                        <th class="pointer text-right">Count</th>
+                        <th class="pointer text-right">Mean</th>
+                        <th class="pointer text-right">Min</th>
+                        <th class="pointer text-right">Median</th>
+                        <th class="pointer text-right">p75</th>
+                        <th class="pointer text-right">p95</th>
+                        <th class="pointer text-right">p99</th>
+                        <th class="pointer text-right">p999</th>
+                        <th class="pointer text-right">Max</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let entry of metricsServicesArray">
+                        <td><span class="badge badge-primary">{{entry.name}}</span></td>
+                        <td class="text-right">{{entry.count}}</td>
+                        <td class="text-right">{{entry.mean | number:0}}</td>
+                        <td class="text-right">{{entry.min | number:0}}</td>
+                        <td class="text-right">{{entry.median | number:0}}</td>
+                        <td class="text-right">{{entry['75thPercentile'] | number:0}}</td>
+                        <td class="text-right">{{entry['95thPercentile'] | number:0}}</td>
+                        <td class="text-right">{{entry['99thPercentile'] | number:0}}</td>
+                        <td class="text-right">{{entry['999thPercentile'] | number:0}}</td>
+                        <td class="text-right">{{entry.max | number:0}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card margin-top">
+    <div class="card-header card-header-primary">
+        <span>Services over time (in ms)</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="timers" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="isDataAvailable">
+            <p *ngIf="!graphsArray || graphsArray.length == 0">No data found</p>
+            <div class="row" *ngIf="graphsArray && graphsArray.length > 0">
+                <div class="col-md-6 text-center margin-bottom" *ngFor="let graph of graphsArray">
+                    <code>{{graph.name}}</code>
+                    <hr/>
+                    <canvas baseChart
+                            [datasets]="graph.data"
+                            [labels]="graph.labels"
+                            [options]="graphOptions"
+                            [legend]="true"
+                            [chartType]="'line'"
+                            (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

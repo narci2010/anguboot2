@@ -19,7 +19,7 @@ import static <%= package %>.config.FrontBasicAuthenticationEntryPoint.SECURITY_
 @Configuration
 @Import(AuthorizationServerEndpointsConfiguration.class)
 @Order(-1)
-public class CorsEnabledAuthorizationServerSecurityConfiguration extends AuthorizationServerSecurityConfiguration {
+public class CorsEnabledConfiguration extends AuthorizationServerSecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

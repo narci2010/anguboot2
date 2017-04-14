@@ -14,7 +14,6 @@ Module | Details
 `Spring security ` | (basic)
 `Spring actuator` | -
 `Spring rest doc` | -
-`Crash console` | -
 `Junit` | With spring boot runner
 `Docker` | Build an docker image ready to use
 

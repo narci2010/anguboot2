@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="fr">
+    <body>
+      <trans-unit id="4fa63dd9c2262a1ffa884fed078efff3a7bca34d" datatype="html">
+        <source>Welcome to anguboot</source>
+        <target>Bienvenue sur anguboot</target>
+        <note priority="1" from="description">Welcome message</note>
+      </trans-unit>
+      <trans-unit id="e41be11e47efe12c4b11f81183341bdbf5e16c78" datatype="html">
+        <source>Available users:</source>
+        <target>Utilisateurs disponibles :</target>
+        <note priority="1" from="description">Available users message</note>
+      </trans-unit>
+      <trans-unit id="34746fb1c7f3d2194d99652bdff89e6e14c9c4f4" datatype="html">
+        <source>Contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="c43dc1967a603fefb886149ac35863a06d5b4ce5" datatype="html">
+        <source>Information</source>
+        <target>Information de l'utilisateur</target>
+        <note priority="1" from="description">User panel title</note>
+      </trans-unit>
+      <trans-unit id="cff1428d10d59d14e45edec3c735a27b5482db59" datatype="html">
+        <source>Name</source>
+        <target>Nom</target>
+        <note priority="1" from="description">User name</note>
+      </trans-unit>
+      <trans-unit id="edef1e15f2e0092bc502e11f80fa7ad39e390fdd" datatype="html">
+        <source>Authorities</source>
+        <target>Autorités</target>
+        <note priority="1" from="description">User authorities</note>
+      </trans-unit>
+      <trans-unit id="c5b7225d1b349c0abfc2dfa7bf8480af240131f5" datatype="html">
+        <source>Home</source>
+        <target>Accueil</target>
+        <note priority="1" from="description">Go to main page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="0c552d71e78c387028a2fd210f04a4f4fe9a96eb" datatype="html">
+        <source>Contact</source>
+        <target>Contact</target>
+        <note priority="1" from="description">Go to contact page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="5247f30252faa5a523f4aa84f223db42770fd80d" datatype="html">
+        <source>Login</source>
+        <target>Se connecter</target>
+        <note priority="1" from="description">Go to login page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="f8b996ef1bd864ce1175cb6f02f2aed50808d049" datatype="html">
+        <source>Administration</source>
+        <target>Administration</target>
+        <note priority="1" from="description">Open administration drowdown</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="ceeb3d38b5d2a5740bd79aff1a113b22917a85ea" datatype="html">
+        <source>Health</source>
+        <target>Santé</target>
+        <note priority="1" from="description">Go to health page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="0c80fd5fb7fabc4568c52a4e6740d9bac9d88a13" datatype="html">
+        <source>Metrics</source>
+        <target>Métriques</target>
+        <note priority="1" from="description">Go to metrics page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="c74a01789cfb7036c2830a18380bf7493202b834" datatype="html">
+        <source>Loggers</source>
+        <target>Loggers</target>
+        <note priority="1" from="description">Go to loggers page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="7dca18b8662f5cd58c13578ad106a0bc83607799" datatype="html">
+        <source>Locales</source>
+        <target>Locales</target>
+        <note priority="1" from="description">Open locales drowdown</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="c3e46e4c5508b6892555fecbd93088f7e378e361" datatype="html">
+        <source>Customization</source>
+        <target>Personalisation</target>
+        <note priority="1" from="description">Go to customization page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="53cdd30874e467ff343f3d7ed9058d8258b33168" datatype="html">
+        <source>Account</source>
+        <target>Compte</target>
+        <note priority="1" from="description">Open account drowdown</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="d23da54b0dfcd7becb4352d8d66b5f1831161098" datatype="html">
+        <source>My info</source>
+        <target>Mes informations</target>
+        <note priority="1" from="description">Go to my account page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="ef7654011706faccfd86dab4857e42baf1ba7441" datatype="html">
+        <source>Logout</source>
+        <target>Se déconnecter</target>
+        <note priority="1" from="description">Logout</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <target>Se déconnecter</target>
+        <note priority="1" from="description">Logout confirm popup title</note>
+      </trans-unit>
+      <trans-unit id="d2533abd72cef0d2e48d6fa6268e6875fcd3d2dc" datatype="html">
+        <source>Are you sure you want to logout ?</source>
+        <target>Etes vous sûr de vouloir vous déconnecter ?</target>
+        <note priority="1" from="description">Logout confirm popup message</note>
+      </trans-unit>
+    <trans-unit id="b40926cf4aaf994f1972a19ffc7f0fc5897ca55a" datatype="html">
+        <source>Health (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
+        <target state="new">Santé (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</target>
+      </trans-unit><trans-unit id="4a5d6a9ca9bbf07021f3a4c134fd295b68e8ad44" datatype="html">
+        <source>Jvm</source>
+        <target state="new">Jvm</target>
+        <note priority="1" from="description">Jvm panel title</note>
+      </trans-unit><trans-unit id="e5c39295ba80b4af73d7b997467649b012c4bd88" datatype="html">
+        <source>Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
+        <target state="new">Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</target>
+        <note priority="1" from="description">Loggers panel title</note>
+      </trans-unit><trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+        <source>Status</source>
+        <target state="new">Statut</target>
+        <note priority="1" from="description">Health table header : status</note>
+      </trans-unit><trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
+        <source>Details</source>
+        <target state="new">Détails</target>
+        <note priority="1" from="description">Health table header : details</note>
+      </trans-unit><trans-unit id="09ea2fdf501405d2c9e2b341b5344fef2113ac21" datatype="html">
+        <source>Filter by name...</source>
+        <target state="new">Filtrer par nom...</target>
+        <note priority="1" from="description">Filter input placeholder</note>
+      </trans-unit><trans-unit id="f8774d558bcfb9ac5f4eedfce71fae8c3af1a3f7" datatype="html">
+        <source>Filter by level : </source>
+        <target state="new">Filtrer par niveau : </target>
+        <note priority="1" from="description">Filter by level</note>
+      </trans-unit><trans-unit id="52fc59444822dd7e672efc1507c2e3a67f003ec1" datatype="html">
+        <source>Configured Level</source>
+        <target state="new">Niveau configuré</target>
+        <note priority="1" from="description">Loggers table header : configured level</note>
+      </trans-unit><trans-unit id="f3af1e0cdcc0fd2b8ef7750d9de87ae23b35cafd" datatype="html">
+        <source>Effective Level</source>
+        <target state="new">Niveau effectif</target>
+        <note priority="1" from="description">Loggers table header : effective level</note>
+      </trans-unit><trans-unit id="3dc4db549e412f88eef1a96298ca0a104a4f2b17" datatype="html">
+        <source>Update level</source>
+        <target state="new">Mettre à jour le niveau de log</target>
+        <note priority="1" from="description">Loggers table header : level</note>
+      </trans-unit></body>
+  </file>
+</xliff>

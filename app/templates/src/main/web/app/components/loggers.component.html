@@ -1,0 +1,88 @@
+<div class="card">
+    <div class="card-header card-header-primary">
+        <span i18n="Loggers panel title">Loggers ({{filteredCount.count}} / {{loggers.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Loggers [raw]" [(rawBody)]="raw" class="fa fa-lg fa-eye fa-margin pointer"
+               href="#"></a>
+            <a class="fa fa-refresh pointer" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th colspan="1">
+                        <input type="text" class="form-control" placeholder="Filter by name..." i18n-placeholder="Filter input placeholder" [(ngModel)]="term">
+                    </th>
+                    <th colspan="4" class="align-middle text-right">
+                        <span i18n="Filter by level">Filter by level : </span>
+                        <span (click)="levelTerm = undefined" class="space pointer badge"
+                              [ngClass]="{'badge-default': levelTerm != 'ALL', 'badge-primary': !levelTerm || levelTerm == 'ALL'}">ALL</span>
+                        <span (click)="levelTerm = level.name" *ngFor="let level of levels"
+                              class="space pointer badge badge-default"
+                              [ngClass]="getClass(level.name, levelTerm == level.name)">{{level.name}}</span>
+                    </th>
+                </tr>
+                <tr>
+                    <th class="pointer" (click)="doSort('name')">
+                        <span i18n="Loggers table header : name">Name</span>
+                        <span class="margin-left" [ngClass]="headerClass['name']"></span>
+                    </th>
+                    <th class="pointer" (click)="doSort('configuredLevel')">
+                        <span i18n="Loggers table header : configured level">Configured Level</span>
+                        <span class="margin-left" [ngClass]="headerClass['configuredLevel']"></span>
+                    </th>
+                    <th class="pointer" (click)="doSort('effectiveLevel')">
+                        <span i18n="Loggers table header : effective level">Effective Level</span>
+                        <span class="margin-left" [ngClass]="headerClass['effectiveLevel']"></span>
+                    </th>
+                    <th class="text-right" i18n="Loggers table header : level">Update level</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let logger of loggers | filter:{terms: [{key:'name',value:term},{key:'effectiveLevel',value:levelTerm}], sort: sort}:filteredCount | slice:(page - 1) * pageSize:page * pageSize">
+                    <td><span class="logger-name">{{logger.name}}</span></td>
+                    <td>
+                        <span class="label" class="space pointer badge" [ngClass]="logger.configuredLevelClass">{{logger.configuredLevel}}</span>
+                    </td>
+                    <td>
+                        <span class="label" class="space pointer badge" [ngClass]="logger.effectiveLevelClass">{{logger.effectiveLevel}}</span>
+                    </td>
+                    <td class="text-right">
+                        <span (click)="updateLevel(logger, 'INHERIT')"
+                              class="space pointer badge badge-primary">INHERIT</span>
+                        <span (click)="updateLevel(logger, level.name)" *ngFor="let level of levels"
+                              class="space pointer badge" [ngClass]="level.class">{{level.name}}</span>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredCount.count == 0">
+                    <td colspan="4">
+                        <span>No results</span>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <div>
+                            <ngb-pagination class="float-left" [collectionSize]="filteredCount.count" [maxSize]="15"
+                                            [pageSize]="pageSize" [(page)]="page"></ngb-pagination>
+                            <nav>
+                                <div class="float-right">
+                                    <ul class="pagination">
+                                        <li class="page-item" [ngClass]="{'active': pageSize == size}"
+                                            *ngFor="let size of pageSizes">
+                                            <a class="page-link" (click)="$event.preventDefault();pageSize = size" href>{{size}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

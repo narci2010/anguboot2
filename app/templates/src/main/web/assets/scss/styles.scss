@@ -1,0 +1,268 @@
+// ------------------------------------------------------------------------------------------------------------
+// Variables
+// ------------------------------------------------------------------------------------------------------------
+
+@import "theme";
+// @import "theme-light";
+
+$body-bg:               $my-body-bg;
+$body-color:            $my-body-color;
+
+$state-success-text:    $my-state-success-text;
+$state-success-bg:      $my-state-success-bg;
+$state-info-text:       $my-state-info-text;
+$state-info-bg:         $my-state-info-bg;
+$state-warning-text:    $my-state-warning-text;
+$state-warning-bg:      $my-state-warning-bg;
+$state-danger-text:     $my-state-danger-text;
+$state-danger-bg:       $my-state-danger-bg;
+
+$brand-primary:         $my-brand-primary;
+$brand-success:         $my-brand-success;
+$brand-info:            $my-brand-info;
+$brand-warning:         $my-brand-warning;
+$brand-danger:          $my-brand-danger;
+
+$close-color:           $my-body-color;
+
+$footer-height: 40px;
+$container-margin: 10px;
+$my-brand-primary-hover: lighten(rgba($my-brand-primary, .4), 20%);
+
+$hr-border-color: lighten($my-body-color, 5%);
+$input-group-addon-bg:  $my-brand-primary;
+$dropdown-link-hover-bg: $my-brand-primary-hover;
+$table-bg-hover: $my-brand-primary-hover;
+
+// ------------------------------------------------------------------------------------------------------------
+// Imports
+// ------------------------------------------------------------------------------------------------------------
+
+// font awesome
+$fa-font-path: "~font-awesome/fonts";
+
+@import '~bootstrap/scss/bootstrap';
+@import "~font-awesome/scss/font-awesome";
+@import '~angular2-toaster/toaster';
+@import '../css/spinner';
+
+// ------------------------------------------------------------------------------------------------------------
+// Bootstrap overrides / addons
+// ------------------------------------------------------------------------------------------------------------
+
+.navbar {
+  border-bottom: $card-border-width solid $navbar-light-disabled-color;
+  padding: 0 $spacer;
+}
+
+@include media-breakpoint-down(md) {
+  .navbar {
+    padding: $navbar-toggler-padding-x $spacer;
+  }
+}
+
+.input-group-addon {
+  color: $my-brand-primary-text;
+}
+.card-header-primary {
+    background-color: $my-brand-primary;
+    color: $my-brand-primary-text;
+}
+.card-header-primary a {
+    color: $my-brand-primary-text;
+}
+.custom-file-control {
+    border: none;
+}
+.custom-file-control::before {
+    // font awesome
+    content: "\f07c";
+    display: inline-block;
+    font: normal normal normal 14px/1.4 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    // others
+    background-color: $my-brand-primary;
+    cursor: pointer;
+    line-height: 1.5;
+    padding: 0.25rem 0.82rem;
+}
+.form-control + .input-group-addon:not(:first-child) {
+    border: $input-btn-border-width solid $input-group-addon-border-color;
+}
+.progress-bar-lg > .progress > .progress-bar {
+  height: 1.3rem;
+}
+.progress-bar-lg > .progress {
+    font-size: 0.90rem;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Ng-Bootstrap overrides
+// ------------------------------------------------------------------------------------------------------------
+
+select[_ngcontent-c5] {
+  background-color: $my-body-bg;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// General
+// ------------------------------------------------------------------------------------------------------------
+
+footer {
+  padding: 10px;
+  height: $footer-height;
+  border-top: $card-border-width solid $navbar-light-disabled-color;
+}
+
+footer p {
+  color: $navbar-light-color;
+}
+
+.container-fixed {
+  margin-top: $container-margin;
+  margin-bottom: $footer-height + $container-margin;
+}
+.text-color {
+  color: $my-body-color;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Navbar
+// ------------------------------------------------------------------------------------------------------------
+
+a.nav-link {
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+a.nav-link.active {
+  border-bottom: ($card-border-width * 2) solid $brand-primary;
+}
+
+.fa-nav {
+  margin-right: 5px;
+}
+.dropdown-menu {
+  border-radius: 0;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Toast
+// ------------------------------------------------------------------------------------------------------------
+
+.toast-success {
+    background-color: $my-popup-success-bg-color;
+}
+.toast-info {
+    background-color: $my-popup-info-bg-color;
+}
+.toast-warning {
+    background-color: $my-popup-warning-bg-color;
+}
+.toast-error {
+    background-color: $my-popup-error-bg-color;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Spinner
+// ------------------------------------------------------------------------------------------------------------
+
+.spinner-overall {
+  background: $my-spinner-bg;
+}
+
+.cssload-zenith {
+  box-shadow: 3px 3px 1px $my-spinner-color;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Forms
+// ------------------------------------------------------------------------------------------------------------
+
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid #42A948; /* green */
+}
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442; /* red */
+}
+.custom-file-100 {
+  width: 100%;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Login
+// ------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------------------------------------------
+// Loggers
+// ------------------------------------------------------------------------------------------------------------
+
+.logger-name {
+  word-break: break-all;
+  display: block;
+  width: 500px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Metrics
+// ------------------------------------------------------------------------------------------------------------
+
+.pie-padding {
+  /* padding-right: 50px;*/
+  /* padding-left: 50px;*/
+  padding-top: 10px;
+}
+
+// ------------------------------------------------------------------------------------------------------------
+// Others
+// ------------------------------------------------------------------------------------------------------------
+
+.fa-margin {
+  margin-right: 10px;
+}
+
+.space {
+  margin-right: 5px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+.margin-bottom {
+  margin-bottom: 20px;
+}
+.margin-left {
+  margin-left: 20px;
+}
+.margin-right {
+  margin-right: 20px;
+}
+
+.margin {
+  margin: 10px;
+}
+
+.padding {
+  padding: 10px;
+}
+
+.ace_editor {
+  height: 400px;
+}
+
+.ace_editor-small {
+  height: 150px;
+}
+
+.tab-content {
+  padding: 10px;
+}

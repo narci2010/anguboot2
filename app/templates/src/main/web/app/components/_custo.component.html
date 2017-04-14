@@ -1,0 +1,321 @@
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+        <div class="card">
+            <div class="card-header card-header-primary">Pick colors</div>
+            <div class="card-block">
+                <form #custoForm="ngForm" (ngSubmit)="compile()" *ngIf="ready">
+                    <div>
+                        <select id="theme" name="theme" class="form-control" [(ngModel)]="theme"
+                                (change)="changeTheme()">
+                            <option *ngFor="let theme of ['dark', 'light']" [value]="theme">{{theme}}</option>
+                        </select>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div *ngFor="let color of colors" class="col-md-6">
+                            <label>{{color.name}}</label>
+                            <div class="input-group">
+                                <input id="{{color.name}}" name="{{color.name}}" type="text" class="form-control"
+                                       [(ngModel)]="color.value" placeholder="#000000"
+                                       pattern="#[a-fA-F\d]{6}|#[a-fA-F\d]{3}|rgba?\(( ?[\d]+ ?),( ?[\d]+ ?),( ?[\d]+ ?)(, ?0?\.?[\d]+ ?)?\)"
+                                       required>
+                                <span class="input-group-addon" [style.background-color]="color.value"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="text-danger" *ngIf="!custoForm.form.valid">Colors are expressed in
+                                hexadecimal or rgb(a) format : (ex: #000000, #fff, rgb(256,256,256), etc.)</p>
+                            <button type="submit" class="btn btn-primary pointer" [disabled]="!custoForm.form.valid">
+                                Compile
+                            </button>
+                            <a class="btn btn-primary pointer" *ngIf="fileUrl" [href]="fileUrl" download="specific.css">Download
+                            </a>
+                            <button type="button" class="btn btn-secondary pointer" (click)="changeTheme()">Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-6">
+        <div class="card">
+            <div class="card-header card-header-primary">Preview</div>
+            <div class="card-block table-responsive">
+                <div id="preview-navbar">
+                    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+                        <button class="pointer navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation" (click)="isNavbarCollapsed = !isNavbarCollapsed">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <a class="navbar-brand">Customization</a>
+
+                        <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse"
+                             id="navbarSupportedContentAdmin">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link pointer">
+                                        <span class="fa fa-nav fa-lg fa-home text-primary"></span>
+                                        <span>Home</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link pointer">
+                                        <span class="fa fa-nav fa-lg fa-phone text-primary"></span>
+                                        <span>Contact</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <div ngbDropdown>
+                                        <a class="nav-link dropdown-toggle pointer" id="dropdownMenu" ngbDropdownToggle>
+                                            <span class="fa fa-nav fa-lg fa-user text-primary"></span>
+                                            <span>Account</span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                                            <a class="dropdown-item active" href="#">Active</a>
+                                            <a class="dropdown-item" href="#">Another</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">And another</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <hr/>
+                <div id="preview-tabs" class="row">
+                    <div class="col-md-6">
+                        <ngb-tabset>
+                            <ngb-tab title="Simple">
+                                <template ngbTabContent>
+                                    <p>Simple tab content</p>
+                                </template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <template ngbTabTitle><b>Bold</b> title</template>
+                                <template ngbTabContent>
+                                    <p>Bold tab content</p>
+                                </template>
+                            </ngb-tab>
+                            <ngb-tab title="Disabled" [disabled]="true">
+                                <template ngbTabContent>
+                                    <p>Disabled tab content</p>
+                                </template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                    <div class="col-md-6">
+                        <ngb-tabset type="pills">
+                            <ngb-tab title="Simple">
+                                <template ngbTabContent>
+                                    <p>Simple tab content</p>
+                                </template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <template ngbTabTitle><b>Bold</b> title</template>
+                                <template ngbTabContent>
+                                    <p>Bold tab content</p>
+                                </template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div id="preview-modal" class="col-md-6">
+                        <p>
+                            <a class="btn btn-primary" my-confirm href confirmTitle="Title" confirmMessage="Message"
+                               (onConfirm)="confirmed = 'Confirmed !'" (onCancel)="cancelled = 'Cancelled ...'"
+                               (click)="confirmed=null;cancelled=null">Confirm modal</a>
+                            <span *ngIf="confirmed">{{confirmed}}</span>
+                            <span *ngIf="cancelled">{{cancelled}}</span>
+                        </p>
+                    </div>
+                    <div id="preview-raw" class="col-md-6">
+                        <p><a my-raw rawTitle="Metrics [raw]" [(rawBody)]="raw" class="btn btn-primary space" href="#">Raw
+                            button</a>
+                            <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="raw"
+                               class="fa fa-lg fa-eye pointer space" href="#"></a>
+                            <span class="space"><--Raw in link</span>
+                            <a href="" class="space">Lorem ipsum</a>
+                        </p>
+                    </div>
+                </div>
+                <hr/>
+                <div id="preview-badges">
+                    <h5>
+                        <span class="badge space" [ngClass]="'badge-' + type"
+                              *ngFor="let type of badgeTypes">{{type}}</span>
+                    </h5>
+                </div>
+                <hr/>
+                <div id="preview-pagination">
+                    <ngb-pagination [collectionSize]="999" [maxSize]="10" [pageSize]="10"
+                                    [(page)]="page"></ngb-pagination>
+                    <nav>
+                        <div>
+                            <ul class="pagination">
+                                <li class="page-item" [ngClass]="{'active': pageSize == size}"
+                                    *ngFor="let size of [5, 10, 20, 50]">
+                                    <a class="page-link" (click)="$event.preventDefault();pageSize = size"
+                                       href>{{size}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <hr/>
+                <div id="preview-progress" class="row">
+                    <div *ngFor="let type of alertTypes; let i = index;" class="col-md-6 padding">
+                        <ngb-progressbar class="margin-top progress-bar-lg" type="{{type}}" [value]="(i + 1) * 20"
+                                         [striped]="i == 2" [animated]="i == 2">
+                            <i>{{ type }}</i>
+                        </ngb-progressbar>
+                    </div>
+                </div>
+                <hr/>
+                <div id="preview-button">
+                    <button type="submit" class="btn space" [ngClass]="'btn-' + type" *ngFor="let type of buttonTypes">
+                        Button {{type}}
+                    </button>
+                </div>
+                <hr/>
+                <div id="preview-notifications">
+                    <button type="submit" class="btn pointer space" [ngClass]="'btn-' + type" (click)="notify(type)"
+                            *ngFor="let type of alertTypes">Notif {{type}}
+                    </button>
+                    <button type="submit" class="btn btn-primary pointer" (click)="showSpinner()"> Show spinner</button>
+                </div>
+                <hr/>
+                <div id="preview-alerts" class="row">
+                    <div *ngFor="let type of alertTypes" class="col-md-6 padding">
+                        <div class="alert" [ngClass]="'alert-' + type">
+                            <span>{{type}}</span>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div id="preview-card">
+                    <div class="card">
+                        <div class="card-header card-header-primary">Card</div>
+                        <div class="card-block">
+                            <p class="overflow-hidden" data-overflow-tooltip>Example of text too long which has
+                                been
+                                hidden, and a tooltip is available. All of if with directive 'overflow-tooltip'.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et
+                            </p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et
+                                dolore
+                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi ut aliquip ex ea
+                                commodo
+                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                dolore eu fugiat nulla
+                                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                officia deserunt mollit anim
+                                id
+                                est laborum.</p>
+                            <pre>Pre example : {{'Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod'}}</pre>
+                            <code>Code example : /bin/bash</code>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div id="preview-form">
+                    <form #custoFormPreview="ngForm">
+                        <div class="form-group row">
+                            <label for="text" class="col-sm-2 col-form-label">Text</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="text" name="text" placeholder="Text..."
+                                       required #text="ngModel"
+                                       [(ngModel)]="custo.text">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email..."
+                                       required #email="ngModel"
+                                       [(ngModel)]="custo.email">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="Password..." required
+                                       #password="ngModel" [(ngModel)]="custo.password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="date" class="col-sm-2 col-form-label">Date</label>
+                            <div class="col-sm-10 input-group">
+                                <input class="form-control" placeholder="yyyy-mm-dd" name="db" id="date"
+                                       [(ngModel)]="model" ngbDatepicker
+                                       #d="ngbDatepicker" required (click)="d.toggle()">
+                                <span class="input-group-addon"><i class="fa fa-calendar fa-fw pointer"
+                                                                   (click)="d.toggle()"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="select" class="col-sm-2 col-form-label">Select</label>
+                            <div class="col-sm-10">
+                                <select id="select" name="select" class="form-control" [(ngModel)]="select" required>
+                                    <option *ngFor="let select of [' Option 1', ' Option 2', ' Option 3']"
+                                            [value]="select">{{select}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="file" class="col-sm-2 col-form-label">File</label>
+                            <div class="col-sm-10 input-group">
+                                <label class="custom-file custom-file-100">
+                                    <input type="file" id="file" class="custom-file-input" accept=".pdf"
+                                           (change)="file($event)" multiple required>
+                                    <span class="custom-file-control">
+                                        <span *ngIf="!fileNames">Choose pdf...</span>
+                                        <span *ngIf="fileNames">{{fileNames}}</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="checkbox" class="col-sm-2 col-form-label">Checkbox</label>
+                            <div class="col-sm-10 col-form-label">
+                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                                    <input id="checkbox" name="checkbox" type="checkbox" class="custom-control-input"
+                                           [(ngModel)]="checkbox">
+                                    <i class="custom-control-indicator"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary pointer float-right"
+                                        [disabled]="!custoFormPreview.form.valid">Send
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr/>
+                <div id="preview-ui-ace">
+                    <button type="button" class="btn btn-primary pointer" (click)="aceModal()">See a detailed
+                        editor example
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

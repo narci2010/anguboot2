@@ -1,0 +1,69 @@
+// my variables
+$my-body-bg:                    #343434;
+$my-body-color:                 #e3e3e3;
+// my brands
+$my-brand-primary:              #d89719;
+$my-brand-success:              #5cb85c;
+$my-brand-info:                 #5bc0de;
+$my-brand-warning:              #f0ad4e;
+$my-brand-danger:               #d9534f;
+// my brands text
+$my-brand-primary-text:         #fff;
+$my-brand-success-text:         #fff;
+$my-brand-info-text:            #fff;
+$my-brand-warning-text:         #fff;
+$my-brand-danger-text:          #fff;
+// my states
+$my-state-success-text: #3c763d;
+$my-state-success-bg: #dff0d8;
+$my-state-info-text: #31708f;
+$my-state-info-bg: #d9edf7;
+$my-state-warning-text: #8a6d3b;
+$my-state-warning-bg: #fcf8e3;
+$my-state-danger-text: #a94442;
+$my-state-danger-bg: #f2dede;
+// my notifications
+$my-popup-success-bg-color:     #51a351;
+$my-popup-info-bg-color:        #2f96b4;
+$my-popup-warning-bg-color:     #f89406;
+$my-popup-error-bg-color:       #bd362f;
+// my spinner
+$my-spinner-bg:                 rgba(125, 125, 125, 0.5);
+$my-spinner-color:              #d89719;
+
+// specific overrides
+$navbar-light-color: rgba($my-body-color, .5);
+$navbar-light-color: rgba($my-body-color, .5);
+$navbar-light-hover-color: rgba($my-body-color, .7);
+$navbar-light-active-color: rgba($my-body-color, .9);
+$navbar-light-disabled-color: rgba($my-body-color, .3);
+$navbar-light-toggler-border: rgba($my-body-color, .1);
+
+$card-bg: lighten($my-body-bg, 10%);
+
+$pre-color: $my-body-color;
+
+$dropdown-bg: lighten($my-body-bg, 5%);
+$dropdown-link-color: $my-body-color;
+$dropdown-link-hover-color: $my-body-color;
+
+$input-bg: lighten($my-body-bg, 5%);
+$input-color: lighten($my-body-color, 10%);
+$custom-file-bg: lighten($my-body-bg, 5%);
+$custom-file-color: lighten($my-body-color, 10%);
+$custom-select-color: lighten($my-body-color, 10%);
+
+$modal-content-bg: lighten($my-body-bg, 10%);
+
+$pagination-bg: lighten($my-body-bg, 15%);
+$pagination-disabled-bg: lighten($my-body-bg, 10%);
+$pagination-hover-bg: lighten($my-body-bg, 20%);
+$pagination-hover-color: darken($my-brand-primary, 5%);
+
+$pagination-active-border: lighten($my-body-bg, 5%);
+$pagination-border-color: lighten($my-body-bg, 5%);
+$pagination-hover-border: lighten($my-body-bg, 5%);
+$pagination-disabled-border: lighten($my-body-bg, 5%);
+
+$nav-tabs-active-link-hover-color: $my-body-color;
+$nav-tabs-active-link-hover-bg: lighten($my-body-bg, 5%);

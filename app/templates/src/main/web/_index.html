@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="/">
+    <title>[ <%=name%> ]</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico"/>
+    <link id="specific" rel="stylesheet" href="styles/specific.css">
+    <link id="spinner" rel="stylesheet" href="styles/spinner.css">
+    <style>
+        .loading {
+            opacity: 0;
+            transition: opacity .5s ease-in-out;
+            position: fixed;
+            z-index: -1;
+        }
+        my-app:empty + .loading {
+            opacity: 1;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+<my-app></my-app>
+
+<div class="loading">
+    <div class="spinner-overall">
+    <div class="cssload-container"><div class="cssload-zenith"></div></div>
+    </div>
+</div>
+<!--TODO remove if not dev-->
+<script src="sass/sass.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+// angular
+import {NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
+import {FormsModule} from "@angular/forms";
+import {HttpModule} from "@angular/http";
+import {DatePipe} from "@angular/common";
+// application
+import {AppRoutingModule} from "./app-routing.module";
+// components
+import {AppComponent} from "./app.component";
+import {NavComponent} from "./components/nav.component";
+import {LoginComponent} from "./components/login.component";
+import {HomeComponent} from "./components/home.component";
+import {MetricsComponent} from "./components/metrics.component";
+import {LoggersComponent} from "./components/loggers.component";
+import {HealthComponent} from "./components/health.component";
+import {ContactComponent} from "./components/contact.component";
+import {UserComponent} from "./components/user.component";
+import {AceModalContent, CustoComponent} from "./components/custo.component";
+// services
+import {UserService} from "./services/user.service";
+import {ActuatorService} from "./services/actuator.service";
+import {NotificationService} from "./services/notification.service";
+import {SpinnerService} from "./services/spinner.service";
+import {HttpService} from "./services/http.service";
+import {ActuatorActivation, AdminActivation, AuthenticatedActivation} from "./services/auth-routing.service";
+import {CustoService} from "./services/custo.service";
+import {LoggerService} from "./services/logger.service";
+// directives
+import {SpinnerComponent} from "./directives/spinner.directive";
+import {RawDirective, RawModalContent} from "./directives/raw.directive";
+import {ConfirmDirective, ConfirmModalContent} from "./directives/confirm.directive";
+// pipes
+import {TimePipe} from "./pipes/time.pipe";
+import {SizePipe} from "./pipes/size.pipe";
+import {FilterPipe} from "./pipes/filter.pipe";
+// addons
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ChartsModule} from "ng2-charts";
+import "chart.js/dist/Chart.bundle.min.js";
+import {ToasterModule} from "angular2-toaster";
+import {LocalStorageModule} from "angular-2-local-storage";
+import {CookieService} from 'angular2-cookie/services/cookies.service';
+// ace
+import {AceEditorModule} from "ng2-ace-editor";
+
+import "ace-builds/src-min-noconflict/theme-vibrant_ink.js";
+import "ace-builds/src-min-noconflict/theme-tomorrow_night_eighties.js";
+import "ace-builds/src-min-noconflict/theme-twilight.js";
+import "ace-builds/src-min-noconflict/theme-terminal.js";
+import "ace-builds/src-min-noconflict/theme-eclipse.js";
+import "ace-builds/src-min-noconflict/theme-chrome.js";
+
+import "brace/theme/vibrant_ink.js";
+import "brace/theme/tomorrow_night_eighties.js";
+import "brace/theme/twilight.js";
+import "brace/theme/terminal.js";
+import "brace/theme/eclipse.js";
+import "brace/theme/chrome.js";
+
+import "ace-builds/src-min-noconflict/mode-json.js";
+import "ace-builds/src-min-noconflict/mode-java.js";
+import "ace-builds/src-min-noconflict/mode-javascript.js";
+import "ace-builds/src-min-noconflict/mode-css.js";
+import "ace-builds/src-min-noconflict/mode-xml.js";
+import "ace-builds/src-min-noconflict/mode-asciidoc.js";
+import "ace-builds/src-min-noconflict/mode-markdown.js";
+import "ace-builds/src-min-noconflict/mode-properties.js";
+import "ace-builds/src-min-noconflict/mode-html.js";
+import "ace-builds/src-min-noconflict/mode-yaml.js";
+import "ace-builds/src-min-noconflict/mode-sql.js";
+
+import "brace/mode/json";
+import "brace/mode/css";
+import "brace/mode/javascript";
+import "brace/mode/xml";
+import "brace/mode/html";
+import "brace/mode/java";
+
+import "brace/worker/json";
+import "brace/worker/css";
+import "brace/worker/javascript";
+import "brace/worker/xml";
+import "brace/worker/html";
+// styles
+import "../assets/scss/styles.scss";
+import {Constants} from "./constants";
+
+import "../assets/images/favicon.ico";
+
+@NgModule({
+  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, AceEditorModule, NgbModule.forRoot(), ChartsModule, ToasterModule, LocalStorageModule.withConfig({
+    prefix: 'angutest',
+    storageType: 'localStorage'
+  })],
+  entryComponents: [RawModalContent, ConfirmModalContent, AceModalContent],
+  providers: [UserService, ActuatorService, NotificationService, SpinnerService, HttpService, CustoService, LoggerService,
+    TimePipe, SizePipe, DatePipe,
+    AuthenticatedActivation, AdminActivation, ActuatorActivation, Constants, NavComponent,
+    CookieService],
+  bootstrap: [AppComponent],
+  declarations: [AppComponent, HomeComponent, ContactComponent, HealthComponent, LoggersComponent, MetricsComponent,
+    NavComponent, LoginComponent, SpinnerComponent, UserComponent, CustoComponent,
+    RawModalContent, RawDirective, AceModalContent, ConfirmModalContent, ConfirmDirective,
+    TimePipe, SizePipe, FilterPipe]
+})
+export class AppModule {
+}
