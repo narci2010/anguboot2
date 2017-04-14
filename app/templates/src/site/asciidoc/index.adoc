@@ -1,0 +1,27 @@
+= My project
+
+* link:./book.html[Single-page documentation]
+
+== Introduction
+
+Presentation of the product
+
+== Documentations
+
+[width="100%",cols="<s,^m"]
+|===
+| link:./functional-specifications.html[Functional specifications] | Functional specifications
+| link:./technical-specifications.html[Technical specifications] | Technical specifications
+| link:./installation-guide.html[Installation guide] | How to install the project on a production machine
+| link:./operating-guide.html[Operating guide] | Operating guide
+| link:./user-manual.html[User Manual] | User Manual
+|===
+
+== Pdf book
+
+[width="100%",cols="<s,^m"]
+|===
+| link:./pdf/book.pdf[Pdf book documentation] | All generated documentation in one single pdf
+| link:./pdf/[Pdf folder] | All generated pdf
+|===
+

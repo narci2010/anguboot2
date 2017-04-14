@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>conf</id>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>./target/delivery</directory>
+            <outputDirectory>config</outputDirectory>
+            <fileMode>644</fileMode>
+            <directoryMode>755</directoryMode>
+            <excludes>
+                <exclude>application.yml</exclude>
+                <exclude>application.conf</exclude>
+            </excludes>
+        </fileSet>
+    </fileSets>
+    <%if(springboot){%><files>
+        <file>
+            <source>./target/delivery/application.yml</source>
+            <outputDirectory />
+            <destName>application.yml</destName>
+            <fileMode>744</fileMode>
+            <lineEnding>unix</lineEnding>
+        </file>
+        <file>
+            <source>./target/delivery/application.conf</source>
+            <outputDirectory />
+            <destName>${project.build.finalName}-${project.version}.conf</destName>
+            <fileMode>744</fileMode>
+            <lineEnding>unix</lineEnding>
+        </file>
+    </files><%}%>
+</assembly>

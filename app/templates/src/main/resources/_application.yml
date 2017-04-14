@@ -1,0 +1,91 @@
+# ----------------------------------------
+# SPRING BOOT
+# ----------------------------------------
+
+spring:
+    application:
+        name: angutest
+    datasource:
+        tomcat:
+            initial-size: 10
+            max-active: 200
+            max-idle: 8
+            min-idle: 8
+            test-on-borrow: true
+            validation-query: SELECT 1
+        type: org.apache.tomcat.jdbc.pool.DataSource
+    http:
+        multipart:
+            enabled: true
+            file-size-threshold: 10Mb
+            max-file-size: 30Mb
+            max-request-size: 31Mb
+    jpa:
+        hibernate:
+            naming:
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    main:
+        banner-mode: LOG
+    mvc:
+        favicon:
+            enabled: false
+
+# info : generated info from pom (do not change it)
+
+info:
+    build:
+        artifact: ${project.artifactId}
+        group: ${project.groupId}
+        name: ${project.name}
+        version: ${project.version}
+
+# ----------------------------------------
+# LOGGING
+# ----------------------------------------
+
+logging:
+    console:
+        active: true
+    main:
+        file:
+            name: angutest
+
+# ----------------------------------------
+# MANAGEMENT
+# ----------------------------------------
+
+server:
+    port: 8989
+    session:
+        timeout: 3600
+    tomcat:
+        accessLog:
+            enabled: true
+            pattern: '%h %l %u %t "%r" %p %s %b %D'
+        accesslog:
+            directory: logs
+
+management:
+    context-path: /manage
+    shell:
+        auth:
+            simple:
+                user:
+                    name: angutest
+                    password: '@angutest@'
+            spring:
+                roles: ADMIN
+            type: simple
+        command-path-patterns: classpath*:/crash/commands/**,classpath*:/commands/**
+        ssh:
+            enabled: true
+            port: 2098
+
+# uncomment to use oauth security
+security:
+    basic:
+        enabled: false
+    oauth2:
+        resource:
+            filter-order: 3

@@ -1,0 +1,11 @@
+# intellij
+.idea/
+*.iml
+
+# eclipse
+.settings/
+.classpath
+.project
+
+# angular
+node_modules/

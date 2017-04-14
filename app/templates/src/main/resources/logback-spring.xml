@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex"/>
+	<property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n%wex"/>
+
+	<appender name="DEBUG_LEVEL_REMAPPER" class="org.springframework.boot.logging.logback.LevelRemappingAppender">
+		<destinationLogger>org.springframework.boot</destinationLogger>
+	</appender>
+
+	<logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+	<logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+	<logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+	<logger name="org.apache.sshd.common.util.SecurityUtils" level="WARN"/>
+	<logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+	<logger name="org.crsh.plugin" level="WARN"/>
+	<logger name="org.crsh.ssh" level="WARN"/>
+	<logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+	<logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+	<logger name="org.springframework.boot.actuate.autoconfigure.CrshAutoConfiguration" level="WARN"/>
+	<logger name="org.springframework.boot.actuate.endpoint.jmx" additivity="false">
+		<appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
+	</logger>
+	<logger name="org.thymeleaf" additivity="false">
+		<appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
+	</logger>
+
+	<property name="CONSOLE_ACTIVE" value="${CONSOLE_ACTIVE:-true}"/>
+	<property name="MAIN_ACTIVE" value="${MAIN_ACTIVE:-true}"/>
+	<property name="ALERT_ACTIVE" value="${ALERT_ACTIVE:-true}"/>
+	<property name="REPORT_ACTIVE" value="${REPORT_ACTIVE:-true}"/>
+
+	<property name="MAIN_FILE_NAME" value="${MAIN_FILE_NAME:-main}"/>
+	<property name="ALERT_FILE_NAME" value="${ALERT_FILE_NAME:-alert}"/>
+	<property name="REPORT_FILE_NAME" value="${REPORT_FILE_NAME:-report}"/>
+
+	<property name="DEFAULT_ALERT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n"/>
+	<property name="DEFAULT_REPORT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n"/>
+
+	<property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}"/>
+
+	<!--whether or not logs should be compressed-->
+	<property name="DEFAULT_GZ" value=".gz"/>
+	<!--each file should be at most 50 Mb-->
+	<property name="DEFAULT_MAX_FILE_SIZE" value="50Mb"/>
+	<!--max history in days-->
+	<property name="DEFAULT_MAX_HISTORY" value="60"/>
+	<!--keep at most 1Gb of logs -->
+	<property name="DEFAULT_TOTAL_SIZE_CAP" value="2Gb"/>
+
+	<if condition='property("MAIN_ACTIVE").equals("true")'>
+		<then>
+			<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${LOG_PATH}/${MAIN_FILE_NAME}.log</file>
+				<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>${LOG_PATH}/archives/${MAIN_FILE_NAME}.%d{yyyy-MM-dd}.%i.log${MAIN_GZ:-${DEFAULT_GZ}}</fileNamePattern>
+					<maxFileSize>${MAIN_MAX_FILE_SIZE:-${DEFAULT_MAX_FILE_SIZE}}</maxFileSize>
+					<maxHistory>${MAIN_MAX_HISTORY:-${DEFAULT_MAX_HISTORY}}</maxHistory>
+					<totalSizeCap>${MAIN_TOTAL_SIZE_CAP:-${DEFAULT_TOTAL_SIZE_CAP}}</totalSizeCap>
+				</rollingPolicy>
+				<encoder>
+					<pattern>${MAIN_FILE_PATTERN:-${FILE_LOG_PATTERN}}</pattern>
+				</encoder>
+			</appender>
+		</then>
+	</if>
+
+	<if condition='property("ALERT_ACTIVE").equals("true")'>
+		<then>
+			<appender name="ALERT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${LOG_PATH}/${ALERT_FILE_NAME}.log</file>
+				<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>${LOG_PATH}/archives/${ALERT_FILE_NAME}.%d{yyyy-MM-dd}.%i.log${ALERT_GZ:-${DEFAULT_GZ}}</fileNamePattern>
+					<maxFileSize>${ALERT_MAX_FILE_SIZE:-${DEFAULT_MAX_FILE_SIZE}}</maxFileSize>
+					<maxHistory>${ALERT_MAX_HISTORY:-${DEFAULT_MAX_HISTORY}}</maxHistory>
+					<totalSizeCap>${ALERT_TOTAL_SIZE_CAP:-${DEFAULT_TOTAL_SIZE_CAP}}</totalSizeCap>
+				</rollingPolicy>
+				<encoder>
+					<pattern>${ALERT_FILE_PATTERN:-${DEFAULT_ALERT_PATTERN}}</pattern>
+				</encoder>
+			</appender>
+
+			<logger name="${ALERT_LOGGER_NAME:-AlertLogger}" level="INFO" additivity="${ALERT_ADDITIVITY:-false}">
+				<appender-ref ref="ALERT"/>
+			</logger>
+		</then>
+	</if>
+
+	<if condition='property("REPORT_ACTIVE").equals("true")'>
+		<then>
+			<appender name="REPORT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<file>${LOG_PATH}/${REPORT_FILE_NAME}.log</file>
+				<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>${LOG_PATH}/archives/${REPORT_FILE_NAME}.%d{yyyy-MM-dd}.%i.log${REPORT_GZ:-${DEFAULT_GZ}}</fileNamePattern>
+					<maxFileSize>${REPORT_MAX_FILE_SIZE:-${DEFAULT_MAX_FILE_SIZE}}</maxFileSize>
+					<maxHistory>${REPORT_MAX_HISTORY:-${DEFAULT_MAX_HISTORY}}</maxHistory>
+					<totalSizeCap>${REPORT_TOTAL_SIZE_CAP:-${DEFAULT_TOTAL_SIZE_CAP}}</totalSizeCap>
+				</rollingPolicy>
+				<encoder>
+					<pattern>${REPORT_FILE_PATTERN:-${DEFAULT_REPORT_PATTERN}}</pattern>
+				</encoder>
+			</appender>
+
+			<logger name="${REPORT_LOGGER_NAME:-ReportLogger}" level="INFO" additivity="${REPORT_ADDITIVITY:-false}">
+				<appender-ref ref="REPORT"/>
+			</logger>
+		</then>
+	</if>
+
+	<if condition='property("CONSOLE_ACTIVE").equals("true")'>
+		<then>
+			<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+				<encoder>
+					<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+					<charset>utf8</charset>
+				</encoder>
+			</appender>
+			<root>
+				<appender-ref ref="CONSOLE"/>
+			</root>
+		</then>
+	</if>
+
+	<if condition='property("MAIN_ACTIVE").equals("true")'>
+		<then>
+			<root level="INFO">
+				<appender-ref ref="FILE"/>
+			</root>
+		</then>
+	</if>
+
+</configuration>

@@ -1,0 +1,15 @@
+FROM registry.kazan.atosworldline.com/docker-reg/awl-centos7
+RUN yum install -y awl-java18-jdk.x86_64 ssh && yum clean all && rm -rf /tmp/*
+
+VOLUME /data
+VOLUME /config
+
+ADD <%=artifactId%>-executable.jar app.jar
+
+RUN sh -c 'touch /app.jar'
+
+ENV JAVA_OPTS=""
+ENV SPRING_PROFILES_ACTIVE ""
+ENV SPRING_CONFIG_LOCATION "/config/"
+
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]

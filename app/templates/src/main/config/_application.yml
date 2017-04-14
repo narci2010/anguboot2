@@ -1,0 +1,20 @@
+# ----------------------------------------
+# SPRING BOOT
+# ----------------------------------------
+
+# possibility to override every spring boot properties
+
+# ----------------------------------------
+# LOGGING
+# ----------------------------------------
+
+logging:
+    path: ${filter.logging.path}
+
+# ----------------------------------------
+# APPLICATION
+# ----------------------------------------
+
+<%=name%>:
+    welcome: 'Anguboot is awesome !'<%if (angular && plugins.custo) { %>
+    external-resources-directory: ${filter.clients.path} <% } %>

@@ -1,0 +1,19 @@
+# package files
+*.jar
+*.war
+*.ear
+
+# project
+target/
+
+# intellij
+.idea/
+*.iml
+
+# angular
+node_modules/
+
+# eclipse
+.settings/
+.classpath
+.project

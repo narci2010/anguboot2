@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId><%=groupId%></groupId>
+	<artifactId><%=artifactId%></artifactId>
+	<version><%=version%></version>
+	<packaging>jar</packaging>
+
+	<name><%=nameCap%></name>
+	<description><%=description%></description>
+
+	<parent>
+		<groupId>com.worldline.edoc</groupId>
+		<artifactId>edoc-parent</artifactId>
+		<version>3.2.12</version>
+	</parent>
+
+	<properties><% if (springboot) { %>
+		<boot.profiles>dev</boot.profiles><% } %><% if (angular) { %>
+		<skipTests>false</skipTests>
+		<angular.env>prod</angular.env>
+		<npm.command>npm</npm.command>
+		<node.command>node</node.command>
+		<!--mode property alter the route js, admin : display only customization page , normal display others routes -->
+		<angular.mode>normal</angular.mode><% } %>
+		<site.version>${project.version}</site.version><% if (angular) { %>
+		<!--add web resources in sonar sources-->
+		<sonar.sources>${sonar.sources.default},src/main/resources/public/js,src/main/resources/public/views,src/main/resources/public/styles</sonar.sources><% } %>
+	</properties>
+
+	<distributionManagement>
+		<site>
+			<id><%=name%>-site</id>
+			<url>ftp://${ftp.share.user}:${ftp.share.password}@ftp-share.kazan.priv.atos.fr/maven-site/<%=name%>/${site.version}</url>
+		</site>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:http://kazan.priv.atos.fr/git/<%=artifactId%></connection>
+		<developerConnection>scm:git:http://kazan.priv.atos.fr/git/<%=artifactId%></developerConnection>
+		<url>http://kazan.priv.atos.fr/git/<%=artifactId%></url>
+	</scm>
+
+	<profiles>
+		<profile>
+			<id>delivery</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<profile.name>delivery</profile.name>
+				<filter.output>delivery</filter.output>
+			</properties>
+		</profile>
+		<profile>
+			<id>bench</id>
+			<properties>
+				<profile.name>bench</profile.name>
+				<filter.output>delivery</filter.output>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<% if (springboot) { %><dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!--needed for spring boot starter actuator-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ryantenney.metrics</groupId>
+			<artifactId>metrics-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<% if (plugins.jpa) { %><dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency><% } %>
+		<% if (plugins.crash) { %><dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-remote-shell</artifactId>
+		</dependency><% } %>
+		<% if (plugins.jpa) { %><dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency><% } %>
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+		</dependency>
+		<!--tests-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<% if (plugins.restDoc) { %><dependency>
+		<groupId>org.springframework.restdocs</groupId>
+		<artifactId>spring-restdocs-mockmvc</artifactId>
+		<scope>test</scope>
+	</dependency><% } %><% } %>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes><% if (plugins.crash) { %>
+					<include>**/*.groovy</include><% } %>
+					<include>**/*.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jar-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jar-test-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>test-jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<!-- prepare agent for measuring unit tests -->
+					<execution>
+						<id>prepare-unit-tests</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>jacoco.agent.arg</propertyName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin><% if (angular) { %>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+				<execution>
+					<id>npm-install</id>
+					<phase>prepare-package</phase>
+					<configuration>
+						<target name="npm update" unless="skipNpm">
+							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+								<arg line="/c ${npm.command} update"/>
+							</exec>
+							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true" osfamily="unix">
+								<arg value="install"/>
+							</exec>
+						</target>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>npm-list-dep</id>
+					<phase>prepare-package</phase>
+					<configuration>
+						<target name="list packages" unless="skipNpm">
+							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+								<arg line="/c"/>
+								<arg line="${npm.command}"/>
+								<arg line="shrinkwrap"/>
+							</exec>
+							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
+								  osfamily="unix">
+								<arg value="prune"/>
+							</exec>
+							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
+								  osfamily="unix">
+								<arg value="shrinkwrap"/>
+							</exec>
+
+							<move file="npm-shrinkwrap.json" todir="${project.build.outputDirectory}/META-INF"/>
+						</target>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>gulp-build</id>
+					<phase>prepare-package</phase>
+					<configuration>
+						<target name="gulp build" unless="skipGulp">
+							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+								<arg line="/c ${node.command} node_modules/gulp/bin/gulp.js build --environment ${angular.env} --version ${project.version} --mode ${angular.mode} --skipTests ${skipTests}"/>
+							</exec>
+							<exec dir="${project.basedir}" executable="${node.command}" failonerror="true" osfamily="unix">
+								<arg value="node_modules/gulp/bin/gulp.js"/>
+								<arg value="build"/>
+								<arg value="--environment"/>
+								<arg value="${angular.env}"/>
+								<arg value="--version"/>
+								<arg value="${project.version}"/>
+								<arg value="--mode"/>
+								<arg value="${angular.mode}"/>
+								<arg value="--skipTests"/>
+								<arg value="${skipTests}"/>
+							</exec>
+						</target>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+				<execution>
+					<id>gulp-build-custo</id>
+					<phase>prepare-package</phase>
+					<configuration>
+						<target name="gulp build custo" unless="skipGulp">
+							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+								<arg line="/c ${node.command} node_modules/gulp/bin/gulp.js build --environment dev --version ${project.version} --mode admin --dest target/site/custo/ --skipTests ${skipTests}"/>
+							</exec>
+							<exec dir="${project.basedir}" executable="${node.command}" failonerror="true" osfamily="unix">
+								<arg value="node_modules/gulp/bin/gulp.js"/>
+								<arg value="build"/>
+								<arg value="--environment"/>
+								<arg value="dev"/>
+								<arg value="--version"/>
+								<arg value="${project.version}"/>
+								<arg value="--mode"/>
+								<arg value="admin"/>
+								<arg value="--dest"/>
+								<arg value="target/site/custo/"/>
+								<arg value="--skipTests"/>
+								<arg value="true"/>
+							</exec>
+						</target>
+					</configuration>
+					<goals>
+						<goal>run</goal>
+					</goals>
+				</execution>
+			</executions>
+			</plugin><% } %>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<% if (springboot) { %><execution>
+						<id>dev-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.testOutputDirectory}/</outputDirectory>
+							<filters>
+								<filter>${project.basedir}/src/main/filters/dev.properties</filter>
+							</filters>
+							<resources>
+								<resource>
+									<directory>src/main/config</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>application.yml</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution><% } %>
+					<execution>
+						<id>${profile.name}</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${filter.output}</outputDirectory>
+							<filters>
+								<filter>${project.basedir}/src/main/filters/${profile.name}.properties</filter>
+							</filters>
+							<resources>
+								<resource>
+									<directory>src/main/config</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin><% if (springboot) { %>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin><% } %>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+					<appendAssemblyId>true</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin><% if (generateSql) { %>
+			<plugin>
+				<groupId>de.juplo</groupId>
+				<artifactId>hibernate-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-create-schema</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.build.directory}/delivery/create.sql</outputFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>generate-drop-schema</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>drop</goal>
+						</goals>
+						<configuration>
+							<outputFile>${project.build.directory}/delivery/drop.sql</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin><% } %>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<inherited>false</inherited>
+				<configuration>
+					<attributes>
+						<!--useful relative url to point javadoc or rest documentations-->
+						<relativeurl>${site.edocument.root}/${maven.site}/<%=name%>/${site.version}</relativeurl>
+					</attributes>
+				</configuration>
+			</plugin><% if (plugins.docker) { %>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+			</plugin><% } %>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,14 @@
+= Rest Api documentation
+
+Rest documentation example.
+
+== Health
+
+.Curl
+include::{snippets}/health/curl-request.adoc[]
+
+.Http request
+include::{snippets}/health/http-request.adoc[]
+
+.Http response
+include::{snippets}/health/http-response.adoc[]
