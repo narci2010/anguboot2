@@ -20,7 +20,8 @@ before_install:
 install:
   - npm install
   - npm install -g yo
+  - npm link
   - test/generate.sh all-options
 script:
   - npm test
-  - mvn clean install
+  - mvn clean install -f angutest/pom.xml
