@@ -1,6 +1,8 @@
 os:
   - linux
-language: node_js
+language: java
+jdk:
+    - oraclejdk8
 node_js:
 #  - "iojs"
 #  - "7"
