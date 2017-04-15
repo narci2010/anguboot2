@@ -12,8 +12,11 @@ cache:
     - $HOME/.m2
     - node_modules
 before_install:
+  - node -v
+  - npm -v
   - java -version
   - mvn -v
+  - chmod +x test/*.sh
 install:
   - npm install
   - test/generate.sh all-options
