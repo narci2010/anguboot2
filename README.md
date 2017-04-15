@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/fonimus/anguboot2.svg?branch=master)](https://travis-ci.org/fonimus/anguboot2)
-
 # Anguboot
+
+[![Build Status](https://travis-ci.org/fonimus/anguboot2.svg?branch=master)](https://travis-ci.org/fonimus/anguboot2)
 
 > Yeoman generator for a complete Spring Boot project with Angular 4 application
 
