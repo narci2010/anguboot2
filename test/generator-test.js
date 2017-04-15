@@ -4,7 +4,7 @@ var assert = require('yeoman-assert');
 var path = require('path');
 
 var defaultFiles = [
-  '.gitignore', 'pom.xml', 'README.md', 'src/main/assembly/assembly.xml', 
+  '.yo-rc.json', '.gitignore', 'pom.xml', 'README.md', 'src/main/assembly/assembly.xml', 
   'src/main/filters/dev.properties', 'src/main/filters/delivery.properties',
   'src/main/java/com/company/anguboot/exception/AngubootApplicativeException.java', 
   'src/main/java/com/company/anguboot/exception/AngubootTechnicalException.java'
@@ -207,7 +207,7 @@ function buildGenerator(springboot, angular, prompts, auth){
   var useAuth = auth || auth;
   Object.assign(prompts, {'name': 'anguboot','artifactId': 'anguboot', 'springboot': springboot, 'angular': angular, 'auth': auth});
   return helpers.run(path.join(__dirname, '../app'))
-      .withOptions({})
+      .withOptions({force: false, port: 8765})
       .withArguments([])
       .withPrompts(prompts); 
 }

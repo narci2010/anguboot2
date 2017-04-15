@@ -1,13 +1,15 @@
 'use strict';
 
 var generator = require('yeoman-generator');
+var chalk = require('chalk');
 
 module.exports = class extends generator {
 
     constructor(args, opts) {
         super(args, opts);
 
-        this.argument('port', { type: Number, desc: 'Http port - random if not provided', required: false, default: 8000 + Math.floor(Math.random() * 90 + 10) });
+        this.option('port', { alias: 'p', type: Number, desc: 'Http port - random if not provided', required: false, default: 8000 + Math.floor(Math.random() * 90 + 10) });
+        this.option('force', { alias: 'f', type: Boolean, desc: 'Force installation with previous configuration', required: false, default: false });
     }
 
     initializing() {
@@ -34,41 +36,71 @@ module.exports = class extends generator {
             {name:'I18n (internationalization)', value:'translate', checked: true},
             {name:'Ace (code editor and viewer)', value: 'ace', checked: true}
         ];
+
+        this.existingProject = this.config.get('name') !== undefined && this.config.get('artifactId') !== undefined && this.config.get('groupId') !== undefined;
     }
 
 	prompting() {
 
 	    var nameRegex = /^[a-zA-Z0-9]+$/;
 
-		var prompts = [{
-			type: 'input',
-			name: 'name',
-			message: 'Your project name (one word, no space or special characters) :',
-			default: this.appname,
-            validate: function (input) {
-                return nameRegex.test(input) ? true : 'Please use valid name (' + nameRegex + ')';
+		var prompts = [
+            {
+              when: (response) => {
+                  return this.existingProject;
+              },
+              type: 'confirm',
+              name: 'useConfig',
+              message: 'Would you like to use saved configuration (.yo-rc.json file) ?',
+              default: true
             },
+            {
+              when: (response) => {
+                  return !response.useConfig;
+              },
+    	      type: 'input',
+    		  name: 'name',
+    		  message: 'Your project name (one word, no space or special characters) :',
+    		  default: this.appname,
+              validate: function (input) {
+                  return nameRegex.test(input) ? true : 'Please use valid name (' + nameRegex + ')';
+              },
             }, {
+              when: (response) => {
+                  return !response.useConfig;
+              },
               type: 'input',
               name: 'description',
               message: 'Your project description :',
               default: 'Spring boot with Angular 2 project'
             }, {
+              when: (response) => {
+                  return !response.useConfig;
+              },
               type: 'input',
               name: 'groupId',
               message: 'Your maven group id :',
               default: 'com.company'
             }, {
+              when: (response) => {
+                  return !response.useConfig;
+              },
               type: 'input',
               name: 'artifactId',
               message: 'Your maven artifact id :',
               default: this.appname
             }, {
+              when: (response) => {
+                  return !response.useConfig;
+              },
               type: 'input',
               name: 'version',
               message: 'Your maven project version :',
               default: '1.0.0-SNAPSHOT'
             }, {
+              when: (response) => {
+                  return !response.useConfig;
+              },
               type: 'confirm',
               name: 'springboot',
               message: 'Would you like to use spring boot ?',
@@ -131,47 +163,64 @@ module.exports = class extends generator {
             default: true
         }];
 
+        if(this.options.force){
+            if(this.existingProject){
+                this.log('> Generation forced - using existing configuration (.yo-rc.json file)\n');
+                this.props = this.config.getAll();
+                return;
+            } else {
+                this.log(chalk.bold.red('> Cannot force project : no existing configuration (.yo-rc.json file)\n'));
+                process.exit(1);
+            }
+        }
+
         return this.prompt(prompts).then((answers) => {
-            this.props = answers;
-            // if never asked !
-            this.props.angular = answers.angular || false;
-            this.props.generateSql = answers.generateSql || false;
-            this.props.report = answers.report || false;
-            //console.log(this.props)
+            if(answers.useConfig){
+                this.props = this.config.getAll();
+            } else {
+                this.props = answers;
+                // if never asked !
+                this.props.angular = answers.angular || false;
+                this.props.generateSql = answers.generateSql || false;
+                this.props.report = answers.report || false;
 
-            this.props.plugins = {};
-            if(this.props.springboot){
-                for(var i in this.pluginsChoice){
-                    this.props.plugins[this.pluginsChoice[i].value] = answers.pluginsAnswer.indexOf(this.pluginsChoice[i].value) > -1;
-                }
-            }
-
-            if(this.props.angular){
-                for(var i in this.pluginsAngularChoice){
-                    this.props.plugins[this.pluginsAngularChoice[i].value] = answers.pluginsAngularAnswer.indexOf(this.pluginsAngularChoice[i].value) > -1;
-                }
-            }
-
-            if(this.props.angular && this.props.plugins.translate){
-                this.props.languages = {};
-                this.props.languagesXlfConf = '["en"';
-                this.props.localesForNavComponent = '[{locale:\'en\', translation: \'English\'}';
-
-                for(var i in this.languagesChoice){
-                    this.props.languages[this.languagesChoice[i].value] = answers.languagesAnswer.indexOf(this.languagesChoice[i].value) > -1;
-                    this.props.languagesXlfConf += ', "' + this.languagesChoice[i].value + '"';
-                    this.props.languagesXlfConf += ', {locale:\'' + this.languagesChoice[i].value + '\', translation: \'' + this.languagesChoice[i].name + '\'';
+                this.props.plugins = {};
+                if(this.props.springboot){
+                    for(var i in this.pluginsChoice){
+                        this.props.plugins[this.pluginsChoice[i].value] = answers.pluginsAnswer.indexOf(this.pluginsChoice[i].value) > -1;
+                    }
                 }
 
-                this.props.languagesXlfConf += ']';
-                this.props.localesForNavComponent += ']';
-            }
+                if(this.props.angular){
+                    for(var i in this.pluginsAngularChoice){
+                        this.props.plugins[this.pluginsAngularChoice[i].value] = answers.pluginsAngularAnswer.indexOf(this.pluginsAngularChoice[i].value) > -1;
+                    }
+                }
 
-			this.props.nameCap = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
-			this.props.nameLow = answers.name.toLowerCase();
-			this.props.package = answers.groupId + '.' + this.props.nameLow;
-			this.props.packagePath = answers.groupId.replace(/\./g, '/') + '/' + this.props.nameLow;
-			this.props.port = this.options.port;
+                if(this.props.angular && this.props.plugins.translate){
+                    this.props.languages = {};
+                    this.props.languagesXlfConf = '["en"';
+                    this.props.localesForNavComponent = '[{locale:\'en\', translation: \'English\'}';
+
+                    for(var i in this.languagesChoice){
+                        this.props.languages[this.languagesChoice[i].value] = answers.languagesAnswer.indexOf(this.languagesChoice[i].value) > -1;
+                        this.props.languagesXlfConf += ', "' + this.languagesChoice[i].value + '"';
+                        this.props.languagesXlfConf += ', {locale:\'' + this.languagesChoice[i].value + '\', translation: \'' + this.languagesChoice[i].name + '\'';
+                    }
+
+                    this.props.languagesXlfConf += ']';
+                    this.props.localesForNavComponent += ']';
+                }
+
+                this.props.nameCap = answers.name.charAt(0).toUpperCase() + answers.name.slice(1);
+                this.props.nameLow = answers.name.toLowerCase();
+                this.props.package = answers.groupId + '.' + this.props.nameLow;
+                this.props.packagePath = answers.groupId.replace(/\./g, '/') + '/' + this.props.nameLow;
+                this.props.port = this.options.port;
+
+                this.config.set(answers);
+                this.config.save();
+            }
         });
      }
 

@@ -5,13 +5,16 @@ node_js:
 #  - "iojs"
 #  - "7"
   - "6"
-jdk:
-  - oraclejdk8
 cache:
   directories:
     - $HOME/.m2
     - node_modules
 before_install:
   - java -version
+  - mvn -v
+install:
+  - npm install
+  - test/generate.sh all-options
 script:
   - npm test
+  - mvn clean install
