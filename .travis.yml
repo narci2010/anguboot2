@@ -22,5 +22,4 @@ install:
   - test/generate.sh all-options
 script:
   - npm test
-  - jdk_switcher use oraclejdk8
   - mvn clean install -f angutest/pom.xml
