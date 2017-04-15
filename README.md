@@ -43,7 +43,6 @@ Module | Details
 
 ```bash
 $ npm install -g yo
-$ npm install -g gulp-cli
 ```
 
 ### From Npm

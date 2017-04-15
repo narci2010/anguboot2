@@ -19,6 +19,7 @@ before_install:
   - chmod +x test/*.sh
 install:
   - npm install
+  - npm install -g yo
   - test/generate.sh all-options
 script:
   - npm test
