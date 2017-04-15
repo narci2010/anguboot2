@@ -1,21 +1,19 @@
 os:
   - linux
-language: java
-jdk:
-    - oraclejdk8
+language: node_js
 node_js:
 #  - "iojs"
 #  - "7"
   - "6"
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
 cache:
   directories:
     - $HOME/.m2
     - node_modules
 before_install:
-  - node -v
-  - npm -v
-  - java -version
-  - mvn -v
   - chmod +x test/*.sh
 install:
   - npm install
@@ -24,4 +22,5 @@ install:
   - test/generate.sh all-options
 script:
   - npm test
+  - jdk_switcher use oraclejdk8
   - mvn clean install -f angutest/pom.xml
