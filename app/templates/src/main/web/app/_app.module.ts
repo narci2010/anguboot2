@@ -41,7 +41,8 @@ import {ChartsModule} from "ng2-charts";
 import "chart.js/dist/Chart.bundle.min.js";
 import {ToasterModule} from "angular2-toaster";
 import {LocalStorageModule} from "angular-2-local-storage";
-import {CookieService} from 'angular2-cookie/services/cookies.service';<% if (plugins.ace) { %>
+import {CookieService} from 'angular2-cookie/services/cookies.service';<% if (plugins.custo) { %>
+import {ColorPickerModule} from 'ngx-color-picker';<% } %><% if (plugins.ace) { %>
 // ace
 import {AceEditorModule} from "ng2-ace-editor";
 
@@ -90,7 +91,8 @@ import {Constants} from "./constants";
 import "../assets/images/favicon.ico";
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule, LocalStorageModule.withConfig({
+  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule,<% if (plugins.custo) { %> ColorPickerModule,<% } %>
+  LocalStorageModule.withConfig({
     prefix: 'angutest',
     storageType: 'localStorage'
   })],

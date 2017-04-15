@@ -15,11 +15,13 @@
                         <div *ngFor="let color of colors" class="col-md-6">
                             <label>{{color.name}}</label>
                             <div class="input-group">
-                                <input id="{{color.name}}" name="{{color.name}}" type="text" class="form-control"
+                                <input id="{{color.name}}" name="{{color.name}}" type="text" class="form-control pointer"
                                        [(ngModel)]="color.value" placeholder="#000000"
+                                       [(colorPicker)]="color.value" [value]="color.value" [(cpToggle)]="color.toggle"
+                                       [cpPresetColors]="presetColors"
                                        pattern="#[a-fA-F\d]{6}|#[a-fA-F\d]{3}|rgba?\(( ?[\d]+ ?),( ?[\d]+ ?),( ?[\d]+ ?)(, ?0?\.?[\d]+ ?)?\)"
                                        required>
-                                <span class="input-group-addon" [style.background-color]="color.value"></span>
+                                <span class="input-group-addon pointer" [style.background-color]="color.value" (click)="color.toggle=!color.toggle"></span>
                             </div>
                         </div>
                     </div>

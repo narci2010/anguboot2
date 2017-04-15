@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/fonimus/anguboot2.svg?branch=master)](https://travis-ci.org/fonimus/anguboot2)
 
-> Yeoman generator for a complete Spring Boot project with Angular 4 application
+> Yeoman generator for a complete Spring Boot application with Angular 4
 
 ## What's in it
 
@@ -32,10 +32,6 @@ Module | Details
 `Toaster` | Notifications
 `Ace` | Ace editor, to display code or even edit
 `Customization` | Bootstrap Angular directives
-
-## What's coming
-
-* Color picker in customization
 
 ## Installation
 
@@ -86,3 +82,7 @@ $ mvn clean install
 # test generated jar, using dev filtered configuration in test-classes
 $ java -jar target/angutest-executable.jar --spring.config.location=target/test-classes/
 ```
+
+## What's coming next
+
+...

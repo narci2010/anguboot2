@@ -52,6 +52,8 @@ export class CustoComponent implements OnInit {
 
   private theme: string = 'dark';
 
+  private presetColors: string[] = [];
+
   private colors: Color[];
   private themeNoColor: string;
   private ready: boolean = false;
@@ -106,6 +108,9 @@ export class CustoComponent implements OnInit {
         let name = l.substring(0, l.indexOf(':'));
         let start = l.indexOf('#') > -1 ? l.lastIndexOf('#') : l.lastIndexOf('rgb');
         let value = l.substring(start, l.indexOf(';'));
+        if(name === '$my-body-bg' || name === '$my-body-color' || name === '$my-brand-primary'){
+          this.presetColors.push(value);
+        }
         if (name && value) {
           let color = new Color();
           color.name = name;

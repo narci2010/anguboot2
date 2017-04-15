@@ -57,7 +57,6 @@
 		<javadoc.options>-Xdoclint:none</javadoc.options><% if (springboot) { %>
 		<boot.profiles>dev</boot.profiles>
 		<boot.classifier>executable</boot.classifier><% } %><% if (angular) { %>
-		<angular.env>prod</angular.env>
 		<npm.command>npm</npm.command>
 		<node.command>node</node.command>
 		<profile.name>delivery</profile.name>
