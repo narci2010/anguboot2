@@ -32,7 +32,7 @@
                     <a class="nav-link dropdown-toggle pointer" id="dropdownMenuAdmin"
                        ngbDropdownToggle [ngClass]="{'active': active(['/health', '/metrics', '/loggers'])}">
                         <span class="fa fa-nav fa-lg fa-cog text-primary"></span>
-                        <span i18n="Navbar link|Open administration drowdown">Administration</span>
+                        <span i18n="Navbar link|Open administration dropdown">Administration</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAdmin">
                         <a class="dropdown-item" routerLink="/health" routerLinkActive="active" i18n="Navbar link|Go to health page">Health</a>
@@ -41,11 +41,11 @@
                     </div>
                 </div>
             </li><% if (plugins.translate) { %>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" *ngIf="locales.length > 1">
                 <div ngbDropdown>
                     <a class="nav-link dropdown-toggle pointer" id="dropdownMenuLocale" ngbDropdownToggle>
                         <span class="fa fa-nav fa-lg fa-flag text-primary"></span>
-                        <span i18n="Navbar link|Open locales drowdown">Locales</span>
+                        <span i18n="Navbar link|Open locales dropdown">Locales</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLocale">
                         <ng-container *ngFor="let l of locales">
@@ -67,7 +67,7 @@
                     <a class="nav-link dropdown-toggle pointer" [ngClass]="{'active': active(['/user'])}"
                        id="dropdownMenuUser" ngbDropdownToggle>
                         <span class="fa fa-nav fa-lg fa-user text-primary"></span>
-                        <span i18n="Navbar link|Open account drowdown">Account</span>
+                        <span i18n="Navbar link|Open account dropdown">Account</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuUser">
                         <a class="dropdown-item" routerLink="/user" routerLinkActive="active" i18n="Navbar link|Go to my account page">My info</a>
