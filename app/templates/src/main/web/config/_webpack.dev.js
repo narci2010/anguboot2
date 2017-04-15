@@ -7,7 +7,7 @@ var helpers = require('./helpers');
 
 const env = process.env.NODE_ENV || process.env.env || 'dev';
 const version = process.env.version || null;
-const base_url = process.env.base_url || 'http://localhost:<%= port %>';
+const base_url = process.env.base_url || 'http://localhost:<%= port %>/';
 const log_level = process.env.log_level || 'DEBUG';
 
 module.exports = webpackMerge(commonConfig, {

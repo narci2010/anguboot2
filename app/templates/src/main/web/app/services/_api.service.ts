@@ -38,7 +38,11 @@ export class ApiService {
       httpError.timestamp = new Date();
       httpError.message = "Unable to connect to server";
     } else {
-      httpError = (error.json() as HttpError) || null;
+      try {
+        httpError = (error.json() as HttpError);
+      } catch (error) {
+        // do nothing
+      }
       if (!httpError) {
         httpError = new HttpError();
         httpError.status = error.status;
