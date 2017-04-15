@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </li><%}%><% if(plugins.custo) { %>
-            <li class="nav-item" *ngIf="env == 'dev' && admin">
+            <li class="nav-item" *ngIf="env == 'dev'<% if(plugins.security) { %> && admin<% } %>">
                 <a class="nav-link" routerLink="/custo" routerLinkActive="active">
                     <span class="fa fa-nav fa-lg fa-scissors text-primary"></span>
                     <span i18n="Navbar link|Go to customization page">Customization</span>

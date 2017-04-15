@@ -35,7 +35,7 @@ Module | Details
 
 ## What's coming
 
-* ?
+* Color picker in customization
 
 ## Installation
 

@@ -1,0 +1,31 @@
+{
+  "generator-anguboot2": {
+    "name": "angutest2",
+    "description": "Spring boot with Angular 2 project",
+    "groupId": "com.company",
+    "artifactId": "angutest2",
+    "version": "1.0.0-SNAPSHOT",
+    "springboot": true,
+    "pluginsAnswer": [
+      "security",
+      "jpa",
+      "restDoc",
+      "docker"
+    ],
+    "auth": "basic",
+    "angular": false,
+    "generateSql": true,
+    "report": false,
+    "plugins": {
+      "security": true,
+      "jpa": true,
+      "restDoc": true,
+      "docker": true
+    },
+    "nameCap": "Angutest2",
+    "nameLow": "angutest2",
+    "package": "com.company.angutest2",
+    "packagePath": "com/company/angutest2",
+    "port": 8084
+  }
+}
