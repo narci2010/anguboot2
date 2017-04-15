@@ -12,6 +12,6 @@ cache:
     - $HOME/.m2
     - node_modules
 before_install:
-  - java -v
+  - java -version
 script:
   - npm test
