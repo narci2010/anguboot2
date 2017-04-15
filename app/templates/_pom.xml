@@ -308,26 +308,7 @@
               <goals>
                   <goal>run</goal>
               </goals>
-          </execution><% if (plugins.custo) { %>
-					<execution>
-						<id>npm-build-custo</id>
-						<phase>prepare-package</phase>
-              <configuration>
-                  <target name="npm build" unless="skipNpmBuild">
-                      <exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
-                          <arg line="/c ${npm.command} run build"/>
-                      </exec>
-                      <exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
-                            osfamily="unix">
-                          <arg value="run"/>
-                          <arg value="build"/>
-                      </exec>
-                  </target>
-              </configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution><% } %>
+          </execution>
 			</executions>
 			</plugin><% } %><% if (plugins.restDoc) { %>
 			<plugin>

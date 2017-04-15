@@ -21,8 +21,8 @@ export class ApiService {
 
   constructor(protected constants: Constants, protected logger: Log) {
     this.baseUrl = constants.baseUrl;
-    this.apiUrl = constants.baseUrl + '/api';
-    this.manageUrl = constants.baseUrl + '/manage';
+    this.apiUrl = constants.baseUrl + 'api';
+    this.manageUrl = constants.baseUrl + 'manage';
   }
 
   protected buildError(error: Response, callback?: IgnoreLogCallback): any {
