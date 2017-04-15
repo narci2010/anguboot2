@@ -1,7 +1,3 @@
-/*
- * Copyright (c) Worldline 2017.
- */
-
 package <%= package %>;
 
 import org.junit.Test;

@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";<% if(plugins.security) { %>
 import {UserService} from "../services/user.service";
+import {User} from "../beans/user";<% } %>
 import {ActivatedRoute, Router} from "@angular/router";
 import {isArray} from "util";
-import {User} from "../beans/user";
-import {Constants} from "../constants";
-import {CookieService} from 'angular2-cookie/core';
+import {Constants} from "../constants";<% if (plugins.translate) { %>
+import {CookieService} from 'angular2-cookie/core';<%}%>
 
 @Component({
   selector: 'my-nav',
@@ -12,16 +12,16 @@ import {CookieService} from 'angular2-cookie/core';
 })
 export class NavComponent implements OnInit {
 
-  private isNavbarCollapsed: boolean = true;
+  private isNavbarCollapsed: boolean = true;<% if(plugins.security) { %>
   private authenticated: boolean = false;
   private admin: boolean = false;
-  private actuator: boolean = false;
-  private env: string;
+  private actuator: boolean = false;<%}%>
+  private env: string;<% if (plugins.translate) { %>
   private current: string;
 
-  private locales: any[] = [{locale:'en', translation: 'English'}, {locale:'fr', translation: 'Français'}, {locale:'es', translation: 'Espanol'}];
+  private locales: any[] = <%-localesForNavComponent%>;<%}%>
 
-  constructor(private userService: UserService, private router: Router, private constants: Constants, private route: ActivatedRoute, private cookie: CookieService) {
+  constructor(<% if(plugins.security) { %>private userService: UserService, <% } %>private router: Router, private constants: Constants, private route: ActivatedRoute<% if (plugins.translate) { %>, private cookie: CookieService<%}%>) {
     this.env = constants.env;
   }
 
@@ -36,7 +36,7 @@ export class NavComponent implements OnInit {
       }
     }
     return false;
-  }
+  }<% if(plugins.security) { %>
 
   public logout(): void {
     this.userService.logout().subscribe(() => {
@@ -62,23 +62,23 @@ export class NavComponent implements OnInit {
       }
     }
     return false;
-  }
+  }<% } %><% if (plugins.translate) { %>
 
   public changeLocale(locale: string): void {
     if(!this.current || locale !== this.current){
         this.cookie.put('ANGUTEST2-LOCALE', locale);
         location.reload();
     }
-  }
+  }<%}%>
 
-  ngOnInit(): void {
-    this.current = this.cookie.get('ANGUTEST2-LOCALE');
+  ngOnInit(): void {<% if (plugins.translate) { %>
+    this.current = this.cookie.get('ANGUTEST2-LOCALE');<%}%><% if(plugins.security) { %>
     this.refresh();
     this.route.queryParams.subscribe(params => {
         if(params['authentication']){
             this.refresh();
         }
-    });
+    });<% } %>
   }
 }
 

@@ -4,12 +4,11 @@ import {Response} from "@angular/http";
 
 import "rxjs/add/operator/toPromise";
 import {Logger, Loggers} from "../beans/loggers";
-import {Dump} from "../beans/dump";
-import {Timer} from "../beans/timer";
+import {Dump} from "../beans/dump";<% if (report) { %>
+import {Timer} from "../beans/timer";<% } %>
 import {ApiService} from "./api.service";
 import {Constants} from "../constants";
 import {Observable} from "rxjs";
-import {LocalStorageService} from "angular-2-local-storage";
 import {LoggerService} from "./logger.service";
 
 export class Counter {
@@ -23,8 +22,8 @@ export class Counter {
 @Injectable()
 export class ActuatorService extends ApiService {
 
-  constructor(private http: HttpService, protected constants: Constants, protected storage: LocalStorageService, protected loggerService: LoggerService) {
-    super(constants, storage, loggerService.getLogger('service.actuator'));
+  constructor(private http: HttpService, protected constants: Constants, protected loggerService: LoggerService) {
+    super(constants, loggerService.getLogger('service.actuator'));
   }
 
   health(): Observable<any> {
@@ -41,12 +40,12 @@ export class ActuatorService extends ApiService {
   dump(): Observable<Dump[]> {
     return this.http.get(this.manageUrl + '/dump', {withCredentials: true}).map(response => response.json() as Dump[])
       .catch(error => this.buildError(error));
-  }
+  }<% if (report) { %>
 
   timers(): Observable<Timer[]> {
     return this.http.get(this.apiUrl + '/metrics?limit=100', {withCredentials: true}).map(response => response.json() as Timer[])
       .catch(error => this.buildError(error));
-  }
+  }<% } %>
 
   loggers(): Observable<Loggers> {
     return this.http.get(this.manageUrl + '/loggers', {withCredentials: true}).map(response => response.json() as Loggers)

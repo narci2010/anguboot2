@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import com.codahale.metrics.MetricRegistry;
-import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
 
 @Configuration
-@EnableMetrics
 public class MetricsConfiguration
 		extends MetricsConfigurerAdapter {
 

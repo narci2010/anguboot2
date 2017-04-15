@@ -6,10 +6,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;<% if (plugins.restDoc) { %>
+import org.springframework.http.MediaType;<% if (plugins.security) { %>
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;<% } %><% if (plugins.restDoc) { %>
 import org.springframework.restdocs.JUnitRestDocumentation;<% } %>
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;<% if (plugins.restDoc) { %>
 
@@ -39,12 +42,14 @@ public class <%= nameCap %>ApplicationTest {<% if (plugins.restDoc) { %>
 	@Before
 	public void setUp() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-			<% if (plugins.restDoc) { %>.apply(documentationConfiguration(this.restDocumentation)
-			.uris().withScheme("http").withHost("localhost").withPort(<%= port %>))<% } %>
+      .alwaysDo(MockMvcResultHandlers.print())<% if (plugins.security) { %>
+      .apply(SecurityMockMvcConfigurers.springSecurity())<% } %><% if (plugins.restDoc) { %>
+			.apply(documentationConfiguration(this.restDocumentation).uris().withScheme("http").withHost("localhost").withPort(<%= port %>))<% } %>
 			.build();
 	}
 
-	@Test
+	@Test<% if (plugins.security) { %>
+  @WithMockUser(roles = "ACTUATOR")<% } %>
 	public void test() throws Exception {
 		this.mockMvc.perform(get("/manage/health").accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())<% if (plugins.restDoc) { %>.andDo(document("health",

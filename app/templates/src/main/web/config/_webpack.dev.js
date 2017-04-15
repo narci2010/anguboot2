@@ -7,7 +7,7 @@ var helpers = require('./helpers');
 
 const env = process.env.NODE_ENV || process.env.env || 'dev';
 const version = process.env.version || null;
-const base_url = process.env.base_url || 'http://localhost:8989';
+const base_url = process.env.base_url || 'http://localhost:<%= port %>';
 const log_level = process.env.log_level || 'DEBUG';
 
 module.exports = webpackMerge(commonConfig, {
@@ -29,7 +29,7 @@ module.exports = webpackMerge(commonConfig, {
         'base_url': JSON.stringify(base_url),
         'log_level': JSON.stringify(log_level)
       }
-    }),
+    })<% if (plugins.custo) { %>,
     new CopyWebpackPlugin([
         { from: 'src/clients'},
         { from: 'src/main/web/assets/scss', to: 'scss' },
@@ -37,7 +37,7 @@ module.exports = webpackMerge(commonConfig, {
         { from: 'node_modules/font-awesome/scss', to: 'scss/font-awesome'},
         { from: 'node_modules/angular2-toaster/toaster.css', to: 'scss/toaster/toaster.css'},
         { from: 'node_modules/sass.js/dist', to: 'sass' }
-    ]),
+    ])<%}%>
   ],
 
   devServer: {

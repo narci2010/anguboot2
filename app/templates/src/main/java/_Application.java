@@ -1,16 +1,15 @@
-/*
- * Copyright (c) Worldline 2017.
- */
-
 package <%= package %>;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
+
 /**
  * Main spring boot application
  */
 @SpringBootApplication
+@EnableMetrics
 public class <%= nameCap %>Application {
 
 	/**

@@ -14,8 +14,6 @@ import {Observable} from "rxjs";
 export class MetricsComponent implements OnInit {
   @ViewChild("textColor") textColor:ElementRef;
 
-  private timers: any;
-
   private statusCodes: string[] = ['all', '200', '400', '401', '404', '500'];
   private isDataAvailable: boolean = false;
 
@@ -27,21 +25,22 @@ export class MetricsComponent implements OnInit {
   private threadsData: number[] = [];
   private threadsLabels: string[] = [];
 
-  private metricsServicesArray: any[] = [];
+  private metricsServicesArray: any[] = [];<% if (report) { %>
+
+  private timers: any;
+
+  private graphOptions: any;
 
   private graphs = {};
-  private graphsArray: any[] = [];
+  private graphsArray: any[] = [];<% } %>
 
-  private series: string[] = ['Mean', 'Min', 'Max'];
+  private fontColor: string;
+  private threadsOptions: any;
 
   private pieChartLabels: string[] = [];
   private pieChartData: number[] = [];
   private pieChartType: string = 'pie';
   private dumps: Dump[];
-
-  private fontColor: string;
-  private graphOptions: any;
-  private threadsOptions: any;
 
   constructor(private service: ActuatorService, private spinner: SpinnerService, private date: DatePipe, private notification: NotificationService) {
   }
@@ -72,14 +71,14 @@ export class MetricsComponent implements OnInit {
 
   private refresh(skipNotification: boolean) {
 
-    let packageName = 'io.fonimus';
+    let packageName = '<%= package %>';
 
     let observables: Observable<any>[] = [];
 
     this.spinner.start();
 
     observables.push(this.service.metrics());
-    observables.push(this.service.dump());
+    observables.push(this.service.dump());<% if (report) { %>
     observables.push(this.service.timers());
 
     this.graphOptions = {
@@ -101,7 +100,7 @@ export class MetricsComponent implements OnInit {
         },
       }]
     }
-    };
+    };<% } %>
 
     this.threadsOptions = {
     legend: {
@@ -114,8 +113,8 @@ export class MetricsComponent implements OnInit {
 
     Observable.forkJoin(observables).subscribe(result => {
       this.metrics = result[0];
-      this.dumps = result[1];
-      this.timers = result[2];
+      this.dumps = result[1];<% if (report) { %>
+      this.timers = result[2];<% } %>
 
       this.metricsHttp = {};
       this.metricsServices = {};
@@ -179,7 +178,7 @@ export class MetricsComponent implements OnInit {
           this.threadsLabels.push(t.substring(0, 1) + t.toLowerCase().substring(1, t.length).replace("_", " "));
           this.threadsData.push(this.threads[t]);
         }
-      }
+      }<% if (report) { %>
 
       this.graphs = {};
       this.graphsArray = [];
@@ -216,7 +215,7 @@ export class MetricsComponent implements OnInit {
           ]
         });
       }
-      this.graphsArray.sort(this.nameSortFunction);
+      this.graphsArray.sort(this.nameSortFunction);<% } %>
 
       this.isDataAvailable = true;
       if (!skipNotification) {

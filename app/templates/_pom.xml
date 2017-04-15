@@ -11,37 +11,62 @@
 	<name><%=nameCap%></name>
 	<description><%=description%></description>
 
-	<parent>
-		<groupId>com.worldline.edoc</groupId>
-		<artifactId>edoc-parent</artifactId>
-		<version>3.2.12</version>
-	</parent>
-
-	<properties><% if (springboot) { %>
-		<boot.profiles>dev</boot.profiles><% } %><% if (angular) { %>
+	<properties>
+		<!--dependencies--><% if (springboot) { %>
+		<spring.boot.version>1.5.2.RELEASE</spring.boot.version>
+		<metrics.spring.version>3.1.3</metrics.spring.version><% } %>
+		<!--maven plugins-->
+		<maven.surefire.version>2.19</maven.surefire.version>
 		<skipTests>false</skipTests>
+		<maven.sonar-plugin.version>2.6</maven.sonar-plugin.version>
+		<maven.source-plugin.version>2.1.2</maven.source-plugin.version>
+		<maven-assembly-plugin.version>2.6</maven-assembly-plugin.version><% if (springboot && plugins.jpa && generateSql) { %>
+		<hibernate-maven-plugin.version>2.0.0</hibernate-maven-plugin.version><% } %>
+		<maven.site-plugin.version>3.4</maven.site-plugin.version>
+		<maven.resources-plugin.version>2.7</maven.resources-plugin.version>
+		<maven.exec-plugin.version>1.4.0</maven.exec-plugin.version>
+		<maven.antrun-plugin.version>1.6</maven.antrun-plugin.version>
+		<maven.properties-plugin.version>1.0.0</maven.properties-plugin.version>
+		<maven.filtering.version>1.3</maven.filtering.version>
+		<maven.plantuml-plugin.version>1.2</maven.plantuml-plugin.version>
+		<maven.swagger-plugin.version>3.1.3</maven.swagger-plugin.version>
+		<maven.project-info-reports-plugin.version>2.8.1</maven.project-info-reports-plugin.version>
+		<maven.javadoc-plugin.version>2.10.3</maven.javadoc-plugin.version>
+		<!--others-->
+		<file.encoding>UTF-8</file.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
+		<sonar.exclusions.default>**/target/generated/**/*,**/target/generated-sources/**/*,**/crash/commands/**/*,**/vendor/**/*
+		</sonar.exclusions.default>
+		<sonar.exclusions>${sonar.exclusions.default}</sonar.exclusions>
+		<sonar.test.exclusions.default>**/test/**/*</sonar.test.exclusions.default>
+		<sonar.test.exclusions>${sonar.test.exclusions.default}</sonar.test.exclusions>
+		<sonar.sources.default>src/main/java</sonar.sources.default>
+		<sonar.sources>${sonar.sources.default}</sonar.sources>
+		<asciidoctor.version>1.5.3</asciidoctor.version>
+		<asciidoctorj.version>1.5.4.1</asciidoctorj.version>
+		<asciidoctor.pdf.version>1.5.0-alpha.11</asciidoctor.pdf.version>
+		<ruby.version>1.7.21</ruby.version>
+		<plantuml.phase>pre-site</plantuml.phase>
+		<copy.site.resources.phase>none</copy.site.resources.phase>
+		<asciidoctor.base.dir>${basedir}/src/main/asciidoc</asciidoctor.base.dir>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+		<jacoco.version>0.7.8</jacoco.version>
+		<javadoc.options>-Xdoclint:none</javadoc.options><% if (springboot) { %>
+		<boot.profiles>dev</boot.profiles>
+		<boot.classifier>executable</boot.classifier><% } %><% if (angular) { %>
 		<angular.env>prod</angular.env>
 		<npm.command>npm</npm.command>
 		<node.command>node</node.command>
+		<profile.name>delivery</profile.name>
 		<!--mode property alter the route js, admin : display only customization page , normal display others routes -->
 		<angular.mode>normal</angular.mode><% } %>
 		<site.version>${project.version}</site.version><% if (angular) { %>
 		<!--add web resources in sonar sources-->
-		<sonar.sources>${sonar.sources.default},src/main/resources/public/js,src/main/resources/public/views,src/main/resources/public/styles</sonar.sources><% } %>
+		<sonar.sources>${sonar.sources.default},src/main/web/js,src/main/web/views,src/main/web/styles</sonar.sources><% } %>
 	</properties>
-
-	<distributionManagement>
-		<site>
-			<id><%=name%>-site</id>
-			<url>ftp://${ftp.share.user}:${ftp.share.password}@ftp-share.kazan.priv.atos.fr/maven-site/<%=name%>/${site.version}</url>
-		</site>
-	</distributionManagement>
-
-	<scm>
-		<connection>scm:git:http://kazan.priv.atos.fr/git/<%=artifactId%></connection>
-		<developerConnection>scm:git:http://kazan.priv.atos.fr/git/<%=artifactId%></developerConnection>
-		<url>http://kazan.priv.atos.fr/git/<%=artifactId%></url>
-	</scm>
 
 	<profiles>
 		<profile>
@@ -53,30 +78,59 @@
 				<profile.name>delivery</profile.name>
 				<filter.output>delivery</filter.output>
 			</properties>
-		</profile>
+		</profile><% if (springboot) { %>
 		<profile>
-			<id>bench</id>
-			<properties>
-				<profile.name>bench</profile.name>
-				<filter.output>delivery</filter.output>
-			</properties>
-		</profile>
-	</profiles>
+			<id>debug</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<configuration>
+							<jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</jvmArguments>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile><% } %>
+	</profiles><% if (springboot) { %>
 
-	<dependencies>
-		<% if (springboot) { %><dependency>
+	<dependencyManagement>
+		<dependencies>
+			<!--spring boot-->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--metrics-->
+			<dependency>
+				<groupId>com.ryantenney.metrics</groupId>
+				<artifactId>metrics-spring</artifactId>
+				<version>${metrics.spring.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement><% } %>
+
+	<dependencies><% if (springboot) { %>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<!--needed for spring boot starter actuator-->
+		</dependency><% if (plugins.security) { %>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency><% if (auth == 'oauth') { %>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+		</dependency><% } %><% } %>
 		<dependency>
 			<groupId>com.ryantenney.metrics</groupId>
 			<artifactId>metrics-spring</artifactId>
@@ -84,12 +138,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<% if (plugins.jpa) { %><dependency>
+		</dependency><% if (plugins.jpa) { %>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency><% } %>
-		<% if (plugins.jpa) { %><dependency>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
@@ -103,17 +157,33 @@
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
 		</dependency>
-		<!--tests-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
-		<% if (plugins.restDoc) { %><dependency>
-		<groupId>org.springframework.restdocs</groupId>
-		<artifactId>spring-restdocs-mockmvc</artifactId>
-		<scope>test</scope>
-	</dependency><% } %><% } %>
+		<!--tests-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency><% if (plugins.security) { %>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency><% } %><% if (plugins.restDoc) { %>
+		<dependency>
+      <groupId>org.springframework.restdocs</groupId>
+      <artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+    	</dependency><% } %><% } %><% if (!springboot) { %>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency><% } %>
 	</dependencies>
 
 	<build>
@@ -131,10 +201,40 @@
 				</includes>
 			</resource>
 		</resources>
+		<pluginManagement>
+			<plugins><% if (springboot) { %>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.version}</version>
+				</plugin><% } %>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<encoding>${file.encoding}</encoding>
+						<source>${java.source.version}</source>
+						<target>${java.target.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.version}</version>
+					<configuration>
+						<forkCount>1</forkCount>
+						<reuseForks>false</reuseForks>
+						<argLine>${jacoco.agent.arg}</argLine>
+						<trimStackTrace>false</trimStackTrace>
+						<skipTests>${skipTests}</skipTests>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>jar-sources</id>
@@ -155,6 +255,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
 				<executions>
 					<!-- prepare agent for measuring unit tests -->
 					<execution>
@@ -170,111 +271,93 @@
 			</plugin><% if (angular) { %>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun-plugin.version}</version>
 				<executions>
-				<execution>
-					<id>npm-install</id>
-					<phase>prepare-package</phase>
-					<configuration>
-						<target name="npm update" unless="skipNpm">
-							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
-								<arg line="/c ${npm.command} update"/>
-							</exec>
-							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true" osfamily="unix">
-								<arg value="install"/>
-							</exec>
-						</target>
-					</configuration>
-					<goals>
-						<goal>run</goal>
-					</goals>
-				</execution>
-				<execution>
-					<id>npm-list-dep</id>
-					<phase>prepare-package</phase>
-					<configuration>
-						<target name="list packages" unless="skipNpm">
-							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
-								<arg line="/c"/>
-								<arg line="${npm.command}"/>
-								<arg line="shrinkwrap"/>
-							</exec>
-							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
-								  osfamily="unix">
-								<arg value="prune"/>
-							</exec>
-							<exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
-								  osfamily="unix">
-								<arg value="shrinkwrap"/>
-							</exec>
-
-							<move file="npm-shrinkwrap.json" todir="${project.build.outputDirectory}/META-INF"/>
-						</target>
-					</configuration>
-					<goals>
-						<goal>run</goal>
-					</goals>
-				</execution>
-				<execution>
-					<id>gulp-build</id>
-					<phase>prepare-package</phase>
-					<configuration>
-						<target name="gulp build" unless="skipGulp">
-							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
-								<arg line="/c ${node.command} node_modules/gulp/bin/gulp.js build --environment ${angular.env} --version ${project.version} --mode ${angular.mode} --skipTests ${skipTests}"/>
-							</exec>
-							<exec dir="${project.basedir}" executable="${node.command}" failonerror="true" osfamily="unix">
-								<arg value="node_modules/gulp/bin/gulp.js"/>
-								<arg value="build"/>
-								<arg value="--environment"/>
-								<arg value="${angular.env}"/>
-								<arg value="--version"/>
-								<arg value="${project.version}"/>
-								<arg value="--mode"/>
-								<arg value="${angular.mode}"/>
-								<arg value="--skipTests"/>
-								<arg value="${skipTests}"/>
-							</exec>
-						</target>
-					</configuration>
-					<goals>
-						<goal>run</goal>
-					</goals>
-				</execution>
-				<execution>
-					<id>gulp-build-custo</id>
-					<phase>prepare-package</phase>
-					<configuration>
-						<target name="gulp build custo" unless="skipGulp">
-							<exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
-								<arg line="/c ${node.command} node_modules/gulp/bin/gulp.js build --environment dev --version ${project.version} --mode admin --dest target/site/custo/ --skipTests ${skipTests}"/>
-							</exec>
-							<exec dir="${project.basedir}" executable="${node.command}" failonerror="true" osfamily="unix">
-								<arg value="node_modules/gulp/bin/gulp.js"/>
-								<arg value="build"/>
-								<arg value="--environment"/>
-								<arg value="dev"/>
-								<arg value="--version"/>
-								<arg value="${project.version}"/>
-								<arg value="--mode"/>
-								<arg value="admin"/>
-								<arg value="--dest"/>
-								<arg value="target/site/custo/"/>
-								<arg value="--skipTests"/>
-								<arg value="true"/>
-							</exec>
-						</target>
-					</configuration>
-					<goals>
-						<goal>run</goal>
-					</goals>
-				</execution>
+          <execution>
+              <id>npm-install</id>
+              <phase>prepare-package</phase>
+              <configuration>
+                  <target name="npm update" unless="skipNpm">
+                      <exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+                          <arg line="/c ${npm.command} update"/>
+                      </exec>
+                      <exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
+                            osfamily="unix">
+                          <arg value="install"/>
+                      </exec>
+                  </target>
+              </configuration>
+              <goals>
+                  <goal>run</goal>
+              </goals>
+          </execution>
+          <execution>
+              <id>npm-build</id>
+              <phase>prepare-package</phase>
+              <configuration>
+                  <target name="npm build" unless="skipNpmBuild">
+                      <exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+                          <arg line="/c ${npm.command} run build"/>
+                      </exec>
+                      <exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
+                            osfamily="unix">
+                          <arg value="run"/>
+                          <arg value="build"/>
+                      </exec>
+                  </target>
+              </configuration>
+              <goals>
+                  <goal>run</goal>
+              </goals>
+          </execution><% if (plugins.custo) { %>
+					<execution>
+						<id>npm-build-custo</id>
+						<phase>prepare-package</phase>
+              <configuration>
+                  <target name="npm build" unless="skipNpmBuild">
+                      <exec dir="${project.basedir}" executable="cmd" failonerror="true" osfamily="windows">
+                          <arg line="/c ${npm.command} run build"/>
+                      </exec>
+                      <exec dir="${project.basedir}" executable="${npm.command}" failonerror="true"
+                            osfamily="unix">
+                          <arg value="run"/>
+                          <arg value="build"/>
+                      </exec>
+                  </target>
+              </configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution><% } %>
 			</executions>
+			</plugin><% } %><% if (plugins.restDoc) { %>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>${asciidoctor.version}</version>
+				<executions>
+					<execution>
+						<id>generate-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/public/docs</outputDirectory>
+							<backend>html</backend>
+							<doctype>book</doctype>
+							<attributes>
+								<snippets>${project.build.directory}/generated-snippets</snippets>
+							</attributes>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin><% } %>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.7</version>
-				<executions>
-					<% if (springboot) { %><execution>
+				<executions><% if (springboot) { %>
+					<execution>
 						<id>dev-resources</id>
 						<phase>process-resources</phase>
 						<goals>
@@ -320,9 +403,29 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<profiles>
+						<profile>${boot.profiles}</profile>
+					</profiles>
+					<arguments>
+						<argument>--spring.config.location=file:target/test-classes/application.yml</argument>
+					</arguments>
+					<fork>true</fork>
+					<executable>true</executable>
+					<classifier>${boot.classifier}</classifier>
+				</configuration>
 			</plugin><% } %>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${maven-assembly-plugin.version}</version>
 				<configuration>
 					<descriptors>
 						<descriptor>src/main/assembly/assembly.xml</descriptor>
@@ -337,10 +440,11 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin><% if (generateSql) { %>
+			</plugin><% if (springboot && plugins.jpa && generateSql) { %>
 			<plugin>
 				<groupId>de.juplo</groupId>
 				<artifactId>hibernate-maven-plugin</artifactId>
+				<version>${hibernate-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>generate-create-schema</id>
@@ -363,21 +467,32 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin><% } %>
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<inherited>false</inherited>
 				<configuration>
-					<attributes>
-						<!--useful relative url to point javadoc or rest documentations-->
-						<relativeurl>${site.edocument.root}/${maven.site}/<%=name%>/${site.version}</relativeurl>
-					</attributes>
+					<export>false</export>
+					<dialect>org.hibernate.dialect.MySQL5InnoDBDialect</dialect>
+					<implicitNamingStrategy>org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</implicitNamingStrategy>
+					<physicalNamingStrategy>org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy</physicalNamingStrategy>
 				</configuration>
-			</plugin><% if (plugins.docker) { %>
+			</plugin><% } %> <% if (plugins.docker) { %>
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.13</version>
+				<configuration>
+					<imageName>${project.artifactId}</imageName>
+					<dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}-${boot.classifier}.${project.packaging}</include>
+						</resource>
+					</resources>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+						<imageTag>latest</imageTag>
+					</imageTags>
+				</configuration>
 			</plugin><% } %>
 		</plugins>
 	</build>

@@ -1,6 +1,6 @@
 # Anguboot
 
-> Yeoman generator for a complete Spring-Boot project with Angular application
+> Yeoman generator for a complete Spring Boot project with Angular 4 application
 
 ## What's in it
 
@@ -8,12 +8,12 @@
 
 Module | Details
 --- | ---
-`Spring boot` | -
+`Spring boot` | Version 1.5.2
 `Spring web` | -
 `Spring data jpa` | -
-`Spring security ` | (basic)
+`Spring security ` | None, Basic, Oauth
 `Spring actuator` | -
-`Spring rest doc` | -
+`Spring rest doc` | Build REST documentation from unit tests
 `Junit` | With spring boot runner
 `Docker` | Build an docker image ready to use
 
@@ -21,13 +21,15 @@ Module | Details
 
 Module | Details
 --- | ---
-`Angular` | -
-`Angular translate` | -
-`Angular ui bootstrap` | -
-`UI router` | -
-`Bootstrap` | -
-`Karma` | For js unit tests
-`Browser Sync` | Browser auto-reload
+`Angular` | Version 4.0.2
+`I18n` | Native internationalization support (xliff format)
+`Bootstrap` | Bootstrap 4
+`Font awesome` | Font awesome 4.7.0, for glyphicons
+`Sass` | Sass with bootstrap customization
+`Ng Bootstrap` | Bootstrap Angular directives
+`Toaster` | Notifications
+`Ace` | Ace editor, to display code or even edit
+`Customization` | Bootstrap Angular directives
 
 ## What's coming
 
@@ -35,20 +37,20 @@ Module | Details
 
 ## Installation
 
-## Requirements
+### Requirements
 
 ```bash
 $ npm install -g yo
 $ npm install -g gulp-cli
 ```
 
-### Npm
+### From Npm
 
 ```bash
 $ npm install -g generator-anguboot
 ```
 
-### Manual
+### From sources
 
 ```bash
 # clone project and go to its root directory

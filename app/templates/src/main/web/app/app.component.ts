@@ -16,7 +16,7 @@ import {DOCUMENT} from '@angular/platform-browser';
   </div>
   <footer class="fixed-bottom bg-faded text-center">
     <p>
-        <span>© Copyright fonimus</span>
+        <span>© Copyright my company</span>
         <span *ngIf="version">| v{{constants.version}}</span>
         <span *ngIf="env == 'dev'">| Development version</span>
     </p>

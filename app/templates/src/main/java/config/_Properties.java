@@ -17,21 +17,24 @@ import <%= package %>.exception.<%= nameCap %>ApplicativeException;
 @Configuration
 @ConfigurationProperties(prefix = "<%= name %>")
 @Validated
-public class <%= nameCap %>Properties {
+public class <%= nameCap %>Properties {<% if (angular && plugins.custo) { %>
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(<%= nameCap %>Properties.class);
 
-	<% if (angular && plugins.custo) { %>private File externalResourcesDirectory;
+	private File externalResourcesDirectory;
 
-	private int externalResourcesCacheTime = 0 ;
-  <% } %>/**
+	private int externalResourcesCacheTime = 0 ;<% } %>
+
+	/**
 	 * Configuration initialization / validation
 	 */
-  @PostConstruct
+  	@PostConstruct
 	public void init() throws <%= nameCap %>ApplicativeException {
-		<% if (angular && plugins.custo) { %>check(externalResourcesDirectory, "<%= name %>.externalResourcesDirectory");<% } %>
-	}
-  <% if (angular && plugins.custo) { %>private void check(File file, String message) throws <%= nameCap %>ApplicativeException {
+		// validate properties<% if (angular && plugins.custo) { %>
+		check(externalResourcesDirectory, "<%= name %>.externalResourcesDirectory");<% } %>
+	}<% if (angular && plugins.custo) { %>
+
+	private void check(File file, String message) throws <%= nameCap %>ApplicativeException {
 		if (file == null) {
 			throw new <%= nameCap %>ApplicativeException(message + " cannot be null");
 		}

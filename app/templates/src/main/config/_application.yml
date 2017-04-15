@@ -15,6 +15,5 @@ logging:
 # APPLICATION
 # ----------------------------------------
 
-<%=name%>:
-    welcome: 'Anguboot is awesome !'<%if (angular && plugins.custo) { %>
+<%=name%>:<%if (angular && plugins.custo) { %>
     external-resources-directory: ${filter.clients.path} <% } %>

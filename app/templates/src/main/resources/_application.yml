@@ -5,6 +5,12 @@
 spring:
     application:
         name: angutest
+    http:
+        multipart:
+            enabled: true
+            file-size-threshold: 10Mb
+            max-file-size: 30Mb
+            max-request-size: 31Mb<% if (plugins.jpa) { %>
     datasource:
         tomcat:
             initial-size: 10
@@ -14,22 +20,16 @@ spring:
             test-on-borrow: true
             validation-query: SELECT 1
         type: org.apache.tomcat.jdbc.pool.DataSource
-    http:
-        multipart:
-            enabled: true
-            file-size-threshold: 10Mb
-            max-file-size: 30Mb
-            max-request-size: 31Mb
     jpa:
         hibernate:
             naming:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy<% } %>
     main:
-        banner-mode: LOG
+        banner-mode: LOG<% if (angular) { %>
     mvc:
         favicon:
-            enabled: false
+            enabled: false<% } %>
 
 # info : generated info from pom (do not change it)
 
@@ -56,7 +56,7 @@ logging:
 # ----------------------------------------
 
 server:
-    port: 8989
+    port: <%= port %>
     session:
         timeout: 3600
     tomcat:
@@ -67,12 +67,14 @@ server:
             directory: logs
 
 management:
-    context-path: /manage
+    context-path: /manage<%if (!plugins.security) { %>
+    security:
+        enabled: false <% } %>
 
 # uncomment to use oauth security
 security:
     basic:
-        enabled: false
+        enabled: false<% if (plugins.jpa) { %>
     oauth2:
         resource:
-            filter-order: 3
+            filter-order: 3<% } %>

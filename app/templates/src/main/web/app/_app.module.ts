@@ -8,23 +8,24 @@ import {DatePipe} from "@angular/common";
 import {AppRoutingModule} from "./app-routing.module";
 // components
 import {AppComponent} from "./app.component";
-import {NavComponent} from "./components/nav.component";
-import {LoginComponent} from "./components/login.component";
+import {NavComponent} from "./components/nav.component";<% if (plugins.security) { %>
+import {LoginComponent} from "./components/login.component";<%}%>
 import {HomeComponent} from "./components/home.component";
 import {MetricsComponent} from "./components/metrics.component";
 import {LoggersComponent} from "./components/loggers.component";
 import {HealthComponent} from "./components/health.component";
-import {ContactComponent} from "./components/contact.component";
-import {UserComponent} from "./components/user.component";
-import {AceModalContent, CustoComponent} from "./components/custo.component";
-// services
-import {UserService} from "./services/user.service";
+import {ContactComponent} from "./components/contact.component";<% if (plugins.security) { %>
+import {UserComponent} from "./components/user.component";<%}%><% if (plugins.custo) { %>
+import {<% if (plugins.ace) { %>AceModalContent, <%}%>CustoComponent} from "./components/custo.component";<%}%>
+// services<% if (plugins.security) { %>
+import {UserService} from "./services/user.service";<%}%>
+import {SpringService} from "./services/spring.service";
 import {ActuatorService} from "./services/actuator.service";
 import {NotificationService} from "./services/notification.service";
 import {SpinnerService} from "./services/spinner.service";
-import {HttpService} from "./services/http.service";
-import {ActuatorActivation, AdminActivation, AuthenticatedActivation} from "./services/auth-routing.service";
-import {CustoService} from "./services/custo.service";
+import {HttpService} from "./services/http.service";<% if (plugins.security) { %>
+import {ActuatorActivation, AdminActivation, AuthenticatedActivation} from "./services/auth-routing.service";<%}%><% if (plugins.custo) { %>
+import {CustoService} from "./services/custo.service";<%}%>
 import {LoggerService} from "./services/logger.service";
 // directives
 import {SpinnerComponent} from "./directives/spinner.directive";
@@ -40,7 +41,7 @@ import {ChartsModule} from "ng2-charts";
 import "chart.js/dist/Chart.bundle.min.js";
 import {ToasterModule} from "angular2-toaster";
 import {LocalStorageModule} from "angular-2-local-storage";
-import {CookieService} from 'angular2-cookie/services/cookies.service';
+import {CookieService} from 'angular2-cookie/services/cookies.service';<% if (plugins.ace) { %>
 // ace
 import {AceEditorModule} from "ng2-ace-editor";
 
@@ -81,7 +82,7 @@ import "brace/worker/json";
 import "brace/worker/css";
 import "brace/worker/javascript";
 import "brace/worker/xml";
-import "brace/worker/html";
+import "brace/worker/html";<%}%>
 // styles
 import "../assets/scss/styles.scss";
 import {Constants} from "./constants";
@@ -89,19 +90,20 @@ import {Constants} from "./constants";
 import "../assets/images/favicon.ico";
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, AceEditorModule, NgbModule.forRoot(), ChartsModule, ToasterModule, LocalStorageModule.withConfig({
+  imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule, LocalStorageModule.withConfig({
     prefix: 'angutest',
     storageType: 'localStorage'
   })],
-  entryComponents: [RawModalContent, ConfirmModalContent, AceModalContent],
-  providers: [UserService, ActuatorService, NotificationService, SpinnerService, HttpService, CustoService, LoggerService,
-    TimePipe, SizePipe, DatePipe,
-    AuthenticatedActivation, AdminActivation, ActuatorActivation, Constants, NavComponent,
-    CookieService],
+  entryComponents: [RawModalContent, ConfirmModalContent<% if (plugins.custo && plugins.ace) { %>, AceModalContent<%}%>],
+  providers: [<% if (plugins.security) { %>UserService, <%}%>SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,
+  <% if (plugins.custo) { %>CustoService, <%}%>LoggerService,
+    TimePipe, SizePipe, DatePipe,<% if (plugins.security) { %>
+    AuthenticatedActivation, AdminActivation, ActuatorActivation,<%}%>
+    Constants, NavComponent, CookieService],
   bootstrap: [AppComponent],
   declarations: [AppComponent, HomeComponent, ContactComponent, HealthComponent, LoggersComponent, MetricsComponent,
-    NavComponent, LoginComponent, SpinnerComponent, UserComponent, CustoComponent,
-    RawModalContent, RawDirective, AceModalContent, ConfirmModalContent, ConfirmDirective,
+    NavComponent, <% if (plugins.security) { %>LoginComponent, <%}%>SpinnerComponent, <% if (plugins.security) { %>UserComponent,<%}%>
+    RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective,
     TimePipe, SizePipe, FilterPipe]
 })
 export class AppModule {

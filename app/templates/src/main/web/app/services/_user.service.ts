@@ -15,7 +15,7 @@ import {LocalStorageService} from "angular-2-local-storage/dist";
 export class UserService extends ApiService {
 
   constructor(private http: HttpService, protected constants: Constants, protected storage: LocalStorageService, protected loggerService: LoggerService) {
-    super(constants, storage, loggerService.getLogger('service.user'));
+    super(constants, loggerService.getLogger('service.user'));
   }
 
   authenticated(redirectIf401 = true): Promise<boolean> {
@@ -86,9 +86,5 @@ export class UserService extends ApiService {
   logout(): Observable<any> {
     this.storage.clearAll();
     return this.http.get(this.apiUrl + '/logout', this.buildOptions()).catch(error => this.buildError(error));
-  }
-
-  getTitle(): Observable<string> {
-    return this.http.get(this.apiUrl + '/welcome', this.buildOptions(), false).map(response => response.json().title).catch(error => this.buildError(error));
   }
 }

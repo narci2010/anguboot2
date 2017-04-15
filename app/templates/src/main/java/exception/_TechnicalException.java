@@ -1,16 +1,12 @@
-/*
- * Copyright (c) Worldline 2017.
- */
-
-package <%= package %>.exception;
+package <%= package %>.exception;<% if (springboot) { %>
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;<% } %>
 
 /**
  * Technical error
- */
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+ */<% if (springboot) { %>
+@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)<% } %>
 public class <%= nameCap %>TechnicalException
 		extends Exception {
 

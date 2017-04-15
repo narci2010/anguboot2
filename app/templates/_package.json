@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config src/main/web/config/webpack.dev.js --inline --progress --port 8080",
     "test": "karma start",
-    "build": "rimraf dist && webpack --config src/main/web/config/webpack.prod.js --progress --profile --bail",
-    "i18n": "ng-xi18n -p src/main/web/tsconfig.json && xliffmerge --profile src/main/web/config/xliffmerge.json"
+    "build": "rimraf dist && webpack --config src/main/web/config/webpack.prod.js --progress --profile --bail"<% if (plugins.translate) { %>,
+    "i18n": "ng-xi18n -p src/main/web/tsconfig.json && xliffmerge --profile src/main/web/config/xliffmerge.json"<%}%>
   },
   "license": "MIT",
   "dependencies": {
@@ -32,8 +32,8 @@
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^2.5.0",
     "core-js": "^2.4.1",
-    "font-awesome": "^4.7.0",
-    "ng2-ace-editor": "^0.1.9",
+    "font-awesome": "^4.7.0",<% if (plugins.ace) { %>
+    "ng2-ace-editor": "^0.1.9",<%}%>
     "ng2-charts": "^1.5.0",
     "rxjs": "5.0.1",
     "systemjs": "0.19.39",
@@ -72,8 +72,8 @@
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^2.0.2",
     "rimraf": "^2.5.2",
-    "sass-loader": "^6.0.3",
-    "sass.js": "git+https://github.com/medialize/sass.js.git",
+    "sass-loader": "^6.0.3",<% if (plugins.custo) { %>
+    "sass.js": "git+https://github.com/medialize/sass.js.git",<%}%>
     "style-loader": "^0.13.2",
     "typescript": "~2.0.10",
     "url-loader": "^0.5.8",

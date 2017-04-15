@@ -1,10 +1,9 @@
-FROM registry.kazan.atosworldline.com/docker-reg/awl-centos7
-RUN yum install -y awl-java18-jdk.x86_64 ssh && yum clean all && rm -rf /tmp/*
+FROM frolvlad/alpine-oraclejdk8:slim
 
 VOLUME /data
 VOLUME /config
 
-ADD <%=artifactId%>-executable.jar app.jar
+ADD <%=artifactId%>-binary.jar app.jar
 
 RUN sh -c 'touch /app.jar'
 

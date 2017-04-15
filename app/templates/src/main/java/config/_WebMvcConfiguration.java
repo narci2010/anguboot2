@@ -1,4 +1,6 @@
-package <%= package %>.config;
+package <%= package %>.config;<% if (plugins.custo) { %>
+
+import <%= package %>.config.<%= nameCap %>Properties;<%}%>
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,12 +9,12 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.*;<% if (plugins.custo) { %>
 
 import javax.annotation.PostConstruct;
-import java.io.File;
+import java.io.File;<%}%><% if(plugins.security) {%>
 
-import static <%= package %>.config.FrontBasicAuthenticationEntryPoint.SECURITY_METHOD;
+import static <%= package %>.config.FrontBasicAuthenticationEntryPoint.SECURITY_METHOD;<%}%>
 
 /**
  * Web mvc configuration
@@ -25,15 +27,41 @@ public class WebMvcConfiguration
     private static final Logger LOGGER = LoggerFactory.getLogger(WebMvcConfiguration.class);
 
     @Autowired
-    private AngutestProperties config;
+    private Environment environment;<% if (plugins.custo) { %>
 
     @Autowired
-    private Environment environment;
+    private <%= nameCap %>Properties properties;
 
     @PostConstruct
     public void init() {
-        LOGGER.info("Looking for specific client configurations in [{}]", config.getExternalResourcesDirectory().getAbsolutePath());
+        LOGGER.info("Looking for specific client configurations in [{}]", properties.getExternalResourcesDirectory().getAbsolutePath());
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String defaultPath = "classpath:/public/";
+        File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
+        if (files != null) {
+            for (File file : files) {
+                String resourceHandler = "/" + file.getName() + "/**";
+                String location = "file:" + new File(properties.getExternalResourcesDirectory(), file.getName()) + "/";
+                LOGGER.debug("Resources handler [{}], add location [{}]", resourceHandler, location);
+                registry.addResourceHandler(resourceHandler)
+                        .addResourceLocations(location, defaultPath)
+                        .setCachePeriod(properties.getExternalResourcesCacheTime());
+            }
+        }
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
+        if (files != null) {
+            for (File file : files) {
+                registry.addViewController("/" + file.getName() + "/").setViewName("forward:index.html");
+            }
+        }
+    }<% } %>
 
     @Override
     public void configurePathMatch(PathMatchConfigurer matcher) {
@@ -41,35 +69,9 @@ public class WebMvcConfiguration
     }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String defaultPath = "classpath:/public/";
-        File[] files = config.getExternalResourcesDirectory().listFiles(File::isDirectory);
-        if (files != null) {
-            for (File file : files) {
-                String resourceHandler = "/" + file.getName() + "/**";
-                String location = "file:" + new File(config.getExternalResourcesDirectory(), file.getName()) + "/";
-                LOGGER.debug("Resources handler [{}], add location [{}]", resourceHandler, location);
-                registry.addResourceHandler(resourceHandler)
-                        .addResourceLocations(location, defaultPath)
-                        .setCachePeriod(config.getExternalResourcesCacheTime());
-            }
-        }
-    }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        File[] files = config.getExternalResourcesDirectory().listFiles(File::isDirectory);
-        if (files != null) {
-            for (File file : files) {
-                registry.addViewController("/" + file.getName() + "/").setViewName("forward:index.html");
-            }
-        }
-    }
-
-    @Override
     public void addCorsMappings(CorsRegistry registry) {
         if (environment.acceptsProfiles("dev")) {
-            registry.addMapping("/**").allowedOrigins("http://localhost:8080").exposedHeaders(SECURITY_METHOD);
+            registry.addMapping("/**").allowedOrigins("http://localhost:8080")<% if(plugins.security) {%>.exposedHeaders(SECURITY_METHOD)<%}%>;
         }
     }
 }

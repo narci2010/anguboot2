@@ -5,11 +5,11 @@ declare var System: any;
 
 export function getTranslationProviders(): Promise<Object[]> {
 
-  const locale = getCookie('ANGUTEST2-LOCALE') || localStorage.getItem('locale') || navigator.language || document['locale'] as string || 'en';
+  const locale = getCookie('ANGUTEST2-LOCALE') || navigator.language || document['locale'] as string || 'en';
 
   const noProviders: Object[] = [];
 
-  if (!locale || locale === 'en') {
+  if (!locale) {
     return Promise.resolve(noProviders);
   }
 

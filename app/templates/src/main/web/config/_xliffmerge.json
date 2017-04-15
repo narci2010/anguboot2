@@ -6,7 +6,7 @@
     "i18nFormat": "xlf",
     "encoding": "UTF-8",
     "defaultLanguage": "en",
-    "languages": ["es", "fr"],
+    "languages": <%-languagesXlfConf%>,
     "removeUnusedIds": true,
     "supportNgxTranslate": false,
     "verbose": false,

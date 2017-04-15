@@ -71,11 +71,11 @@ export class CustoComponent implements OnInit {
   public showSpinner(): void {
     this.spinner.start();
     setTimeout(() => this.spinner.stop(), 2000);
-  }
+  }<% if (plugins.ace) { %>
 
   public aceModal(): void {
     this.modalService.open(AceModalContent, {size: 'lg'});
-  }
+  }<%}%>
 
   public file(event: any): void {
     let fileNamesArray: string [] = [];
@@ -256,7 +256,7 @@ export class CustoComponent implements OnInit {
         });
   }
 
-}
+}<% if (plugins.ace) { %>
 
 @Component({
   selector: 'modal-content',
@@ -354,4 +354,4 @@ export class AceModalContent implements AfterViewChecked {
       this.editorInitialized = true;
     }
   }
-}
+}<%}%>

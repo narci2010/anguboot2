@@ -11,7 +11,7 @@
                 <img src="../../assets/images/webpack.png" class="margin-right" height="150">
             </div>
             <div class="col-md-6">
-                <h4 class="card-title" i18n="Welcome message">Welcome to anguboot</h4>
+                <h4 class="card-title" i18n="Welcome message">Welcome to anguboot</h4><% if(plugins.security) {%>
                 <p i18n="Available users message">Available users:</p>
                 <div>
                     <code>admin:admin</code>
@@ -20,7 +20,7 @@
                 </div>
                 <button *ngIf="showSignIn" type="submit" class="margin-top btn btn-primary pointer" routerLink="/login">
                     Sign in
-                </button>
+                </button><%}%>
             </div>
         </div>
     </div>
