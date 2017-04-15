@@ -205,7 +205,7 @@ module.exports = class extends generator {
                     for(var i in this.languagesChoice){
                         this.props.languages[this.languagesChoice[i].value] = answers.languagesAnswer.indexOf(this.languagesChoice[i].value) > -1;
                         this.props.languagesXlfConf += ', "' + this.languagesChoice[i].value + '"';
-                        this.props.languagesXlfConf += ', {locale:\'' + this.languagesChoice[i].value + '\', translation: \'' + this.languagesChoice[i].name + '\'';
+                        this.props.localesForNavComponent += ', {locale:\'' + this.languagesChoice[i].value + '\', translation: \'' + this.languagesChoice[i].name + '\'}';
                     }
 
                     this.props.languagesXlfConf += ']';
