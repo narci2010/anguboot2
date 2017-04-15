@@ -1,8 +1,17 @@
-sudo: false
+os:
+  - linux
 language: node_js
 node_js:
 #  - "iojs"
 #  - "7"
   - "6"
+jdk:
+  - oraclejdk8
+cache:
+  directories:
+    - $HOME/.m2
+    - node_modules
+before_install:
+  - jdk_switcher use oraclejdk8
 script:
   - npm test
