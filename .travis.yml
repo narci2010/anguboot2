@@ -16,6 +16,7 @@ cache:
 env:
   global:
     - ANGUTEST2=$HOME/angutest2
+    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 before_install:
   - chmod +x test/*.sh
 install:
