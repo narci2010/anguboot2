@@ -14,6 +14,7 @@ export class SpringService extends ApiService {
   }
 
   getTitle(): Observable<string> {
-    return this.http.get(this.apiUrl + '/welcome', this.buildOptions(), false).map(response => response.json().title).catch(error => this.buildError(error));
+    return this.http.get(this.apiUrl + '/welcome', this.buildOptions(), false)
+      .map(response => this.json(response).title).catch(error => this.buildError(error));
   }
 }

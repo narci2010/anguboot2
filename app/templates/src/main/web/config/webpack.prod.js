@@ -4,10 +4,23 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var commonConfig = require('./webpack.common.js');
 var helpers = require('./helpers');
 
-const env = process.env.NODE_ENV || process.env.env || 'production';
-const version = process.env.version || null;
-const base_url = process.env.base_url || '';
-const log_level = process.env.log_level || 'INFO';
+var constants = {
+  env: 'production',
+  version: null,
+  mock_http: false,
+  base_url: '',
+  log_level: 'INFO'
+};
+
+for (var i in process.argv) {
+  if (process.argv[i].indexOf('--env.') > -1) {
+    var arg = process.argv[i].substring(6, process.argv[i].indexOf('='));
+    var value = process.argv[i].substring(process.argv[i].indexOf('=') + 1);
+    if(constants[arg] !== undefined){
+      constants[arg] = value;
+    }
+  }
+}
 
 module.exports = webpackMerge(commonConfig, {
   devtool: 'source-map',
@@ -28,13 +41,7 @@ module.exports = webpackMerge(commonConfig, {
     }),
     new ExtractTextPlugin('[name].[hash].css'),
     new webpack.DefinePlugin({
-      'CONSTANTS': {
-        'env': JSON.stringify(env),
-        'version': JSON.stringify(version),
-        'base_url': JSON.stringify(base_url),
-        'log_level': JSON.stringify(log_level)
-
-      }
+      'CONSTANTS': JSON.stringify(constants)
     }),
     new webpack.LoaderOptionsPlugin({
       htmlLoader: {

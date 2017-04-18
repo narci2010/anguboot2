@@ -28,27 +28,27 @@ export class ActuatorService extends ApiService {
 
   health(): Observable<any> {
     // ignore error log if body status which is not a number
-    return this.http.get(this.manageUrl + '/health', this.buildOptions()).map(response => response.json())
+    return this.http.get(this.manageUrl + '/health', this.buildOptions()).map(response => this.json(response))
       .catch(error => this.buildError(error, (error: Response) => !Number.isInteger(error.json().status)));
   }
 
   metrics(): Observable<any> {
-    return this.http.get(this.manageUrl + '/metrics', {withCredentials: true}).map(response => response.json())
+    return this.http.get(this.manageUrl + '/metrics', {withCredentials: true}).map(response => this.json(response))
       .catch(error => this.buildError(error));
   }
 
   dump(): Observable<Dump[]> {
-    return this.http.get(this.manageUrl + '/dump', {withCredentials: true}).map(response => response.json() as Dump[])
+    return this.http.get(this.manageUrl + '/dump', {withCredentials: true}).map(response => this.json(response) as Dump[])
       .catch(error => this.buildError(error));
   }<% if (report) { %>
 
   timers(): Observable<Timer[]> {
-    return this.http.get(this.apiUrl + '/metrics?limit=100', {withCredentials: true}).map(response => response.json() as Timer[])
+    return this.http.get(this.apiUrl + '/metrics?limit=100', {withCredentials: true}).map(response => this.json(response) as Timer[])
       .catch(error => this.buildError(error));
   }<% } %>
 
   loggers(): Observable<Loggers> {
-    return this.http.get(this.manageUrl + '/loggers', {withCredentials: true}).map(response => response.json() as Loggers)
+    return this.http.get(this.manageUrl + '/loggers', {withCredentials: true}).map(response => this.json(response) as Loggers)
       .catch(error => this.buildError(error));
   }
 

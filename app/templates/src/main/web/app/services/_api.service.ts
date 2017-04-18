@@ -25,6 +25,11 @@ export class ApiService {
     this.manageUrl = constants.baseUrl + 'manage';
   }
 
+  protected json(response: Response){
+    let json = response.json();
+    return this.constants.mock_http && json.data ? json.data : json;
+  }
+
   protected buildError(error: Response, callback?: IgnoreLogCallback): any {
     let httpError: HttpError;<% if (plugins.security) { %>
     let security: string = error.headers.toJSON()['X-Security-Method'];

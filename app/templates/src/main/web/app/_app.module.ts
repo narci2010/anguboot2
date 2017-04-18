@@ -28,6 +28,9 @@ import {ActuatorActivation, AdminActivation, AuthenticatedActivation} from "./se
 import {CustoService} from "./services/custo.service";<%}%>
 import {LoggerService} from "./services/logger.service";<% if (plugins.translate) { %>
 import {I18nService, TmpI18nComponent} from "./services/i18n.service";<% } %>
+import {Constants} from "./constants";
+import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {MockService} from "./services/mock.service";
 // directives
 import {SpinnerComponent} from "./directives/spinner.directive";
 import {RawDirective, RawModalContent} from "./directives/raw.directive";
@@ -88,16 +91,14 @@ import "brace/worker/xml";
 import "brace/worker/html";<%}%>
 // styles
 import "../assets/scss/styles.scss";
-import {Constants} from "./constants";
 
 import "../assets/images/favicon.ico";
 
+declare let CONSTANTS: any;
+
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule,<% if (plugins.custo) { %> ColorPickerModule,<% } %>
-  LocalStorageModule.withConfig({
-    prefix: 'angutest',
-    storageType: 'localStorage'
-  })],
+  LocalStorageModule.withConfig({prefix: 'angutest', storageType: 'localStorage' }), CONSTANTS.mock_http ? InMemoryWebApiModule.forRoot(MockService, { delay: 500 }) : []],
   entryComponents: [RawModalContent, ConfirmModalContent<% if (plugins.custo && plugins.ace) { %>, AceModalContent<%}%>],
   providers: [<% if (plugins.security) { %>UserService, <%}%>SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,<% if (plugins.custo) { %> CustoService, <%}%> LoggerService,
     TimePipe, SizePipe, DatePipe,<% if (plugins.translate) { %> TranslatePipe, I18nService,<% } %><% if (plugins.security) { %>

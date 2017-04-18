@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {DatePipe} from "@angular/common";
-
 import {ActuatorService} from "../services/actuator.service";
 import {SpinnerService} from "../services/spinner.service";
 import {Dump} from "../beans/dump";
 import {NotificationService, NotificationType} from "../services/notification.service";
+import {Constants} from "../constants";
 import {Observable} from "rxjs";
 
 @Component({
@@ -42,7 +42,8 @@ export class MetricsComponent implements OnInit {
   private pieChartType: string = 'pie';
   private dumps: Dump[];
 
-  constructor(private service: ActuatorService, private spinner: SpinnerService, private date: DatePipe, private notification: NotificationService) {
+  constructor(private service: ActuatorService, private spinner: SpinnerService, private date: DatePipe, private notification: NotificationService,
+              private constants: Constants) {
   }
 
   private chartClicked(e: any): void {
@@ -79,7 +80,9 @@ export class MetricsComponent implements OnInit {
 
     observables.push(this.service.metrics());
     observables.push(this.service.dump());<% if (report) { %>
-    observables.push(this.service.timers());
+    if(!this.constants.mock_http){
+      observables.push(this.service.timers());
+    }
 
     this.graphOptions = {
     legend: {
@@ -114,7 +117,9 @@ export class MetricsComponent implements OnInit {
     Observable.forkJoin(observables).subscribe(result => {
       this.metrics = result[0];
       this.dumps = result[1];<% if (report) { %>
-      this.timers = result[2];<% } %>
+      if(!this.constants.mock_http){
+        this.timers = result[2];
+      }<% } %>
 
       this.metricsHttp = {};
       this.metricsServices = {};
@@ -180,42 +185,44 @@ export class MetricsComponent implements OnInit {
         }
       }<% if (report) { %>
 
-      this.graphs = {};
-      this.graphsArray = [];
+      if(!this.constants.mock_http){
+        this.graphs = {};
+        this.graphsArray = [];
 
-      for (let k in this.timers) {
-        let measure = this.timers[k].name;
-        if (!this.graphs[measure]) {
-          this.graphs[measure] = {};
-          this.graphs[measure].labels = [];
-          this.graphs[measure].data = [];
-          this.graphs[measure].options = {
-            title: {display: true, text: measure},
-            legend: {display: true, position: 'bottom'}
-          };
-          this.graphs[measure].data[0] = [];
-          this.graphs[measure].data[1] = [];
-          this.graphs[measure].data[2] = [];
+        for (let k in this.timers) {
+          let measure = this.timers[k].name;
+          if (!this.graphs[measure]) {
+            this.graphs[measure] = {};
+            this.graphs[measure].labels = [];
+            this.graphs[measure].data = [];
+            this.graphs[measure].options = {
+              title: {display: true, text: measure},
+              legend: {display: true, position: 'bottom'}
+            };
+            this.graphs[measure].data[0] = [];
+            this.graphs[measure].data[1] = [];
+            this.graphs[measure].data[2] = [];
+          }
+          this.graphs[measure].labels.push(this.date.transform(this.timers[k].time, 'yyyy-MM-dd HH-mm-ss'));
+          this.graphs[measure].data[0].push(this.timers[k].mean);
+          this.graphs[measure].data[1].push(this.timers[k].min);
+          this.graphs[measure].data[2].push(this.timers[k].max);
         }
-        this.graphs[measure].labels.push(this.date.transform(this.timers[k].time, 'yyyy-MM-dd HH-mm-ss'));
-        this.graphs[measure].data[0].push(this.timers[k].mean);
-        this.graphs[measure].data[1].push(this.timers[k].min);
-        this.graphs[measure].data[2].push(this.timers[k].max);
-      }
 
-      for (let m in this.graphs) {
+        for (let m in this.graphs) {
 
-        this.graphsArray.push({
-          name: m,
-          labels: this.graphs[m].labels,
-          data: [
-            {label: 'Mean', data: this.graphs[m].data[0]},
-            {label: 'Min', data: this.graphs[m].data[1]},
-            {label: 'Max', data: this.graphs[m].data[2]}
-          ]
-        });
-      }
-      this.graphsArray.sort(this.nameSortFunction);<% } %>
+          this.graphsArray.push({
+            name: m,
+            labels: this.graphs[m].labels,
+            data: [
+              {label: 'Mean', data: this.graphs[m].data[0]},
+              {label: 'Min', data: this.graphs[m].data[1]},
+              {label: 'Max', data: this.graphs[m].data[2]}
+            ]
+          });
+        }
+        this.graphsArray.sort(this.nameSortFunction);
+      }<% } %>
 
       this.isDataAvailable = true;
       if (!skipNotification) {

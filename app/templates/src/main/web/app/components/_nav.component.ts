@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";<% if(plugins.security) { %>
 import {UserService} from "../services/user.service";
 import {User} from "../beans/user";<% } %>
 import {ActivatedRoute, Router} from "@angular/router";
+import {SpinnerService} from "../services/spinner.service";
 import {isArray} from "util";
 import {Constants} from "../constants";<% if (plugins.translate) { %>
 import {CookieService} from 'angular2-cookie/core';<%}%>
@@ -21,7 +22,7 @@ export class NavComponent implements OnInit {
 
   private locales: any[] = <%-localesForNavComponent%>;<%}%>
 
-  constructor(<% if(plugins.security) { %>private userService: UserService, <% } %>private router: Router, private constants: Constants, private route: ActivatedRoute<% if (plugins.translate) { %>, private cookie: CookieService<%}%>) {
+  constructor(<% if(plugins.security) { %>private userService: UserService, <% } %>private router: Router, private spinner: SpinnerService, private constants: Constants, private route: ActivatedRoute<% if (plugins.translate) { %>, private cookie: CookieService<%}%>) {
     this.env = constants.env;
   }
 
@@ -39,20 +40,24 @@ export class NavComponent implements OnInit {
   }<% if(plugins.security) { %>
 
   public logout(): void {
+    this.spinner.start();
     this.userService.logout().subscribe(() => {
       this.authenticated = false;
       this.admin = false;
       this.actuator = false;
       this.router.navigate(['/login']);
-    });
+      this.spinner.stop();
+    }, () => this.spinner.stop());
   }
 
   public refresh(): void {
+    this.spinner.start();
     this.userService.me().then(user => {
       this.authenticated = true;
       this.admin = this.hasRole(user, 'ROLE_ADMIN');
       this.actuator = this.hasRole(user, 'ROLE_ACTUATOR');
-    }).catch(() => {});
+      this.spinner.stop();
+    }).catch(() => this.spinner.stop());
   }
 
   public hasRole(user: User, role: string): boolean {

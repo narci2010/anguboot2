@@ -67,7 +67,7 @@ export class UserService extends ApiService {
       oauthHeaders.append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
       let body: string = 'grant_type=password&username=' + credentials.name + '&password=' + credentials.password;
       return this.http.post(this.baseUrl + '/oauth/token', body, {headers: oauthHeaders}, false).map(response => {
-        this.oauthToken = response.json();
+        this.oauthToken = this.json(response);
         this.storage.set('token', this.oauthToken);
         return this.buildMe(this.buildOptions());
       }).catch(error => this.buildError(error));
@@ -77,7 +77,7 @@ export class UserService extends ApiService {
 
   buildMe(options: RequestOptionsArgs, redirectIf401 = true) {
     return this.http.get(this.apiUrl + '/me', options, redirectIf401).map(response => {
-      let user = response.json();
+      let user = this.json(response);
       this.storage.set('user', user);
       return user;
     }).catch(error => this.buildError(error));

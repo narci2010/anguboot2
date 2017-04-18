@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config src/main/web/config/webpack.dev.js --inline --progress --port 8080",
     "test": "karma start",
-    "build": "rimraf dist && webpack --config src/main/web/config/webpack.prod.js --progress --profile --bail"<% if (plugins.translate) { %>,
+    "build": "rimraf dist && webpack --config src/main/web/config/webpack.prod.js --progress --profile --bail",
+    "build-demo": "rimraf dist && webpack --config src/main/web/config/webpack.prod.js --progress --profile --bail --env.mock_http=true"<% if (plugins.translate) { %>,
     "i18n": "ng-xi18n -p src/main/web/tsconfig.json && xliffmerge --profile src/main/web/config/xliffmerge.json"<%}%>
   },
   "license": "MIT",

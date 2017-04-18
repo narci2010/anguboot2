@@ -8,4 +8,5 @@ export class Constants {
   env: string = CONSTANTS.env;
   version: number = CONSTANTS.version;
   logLevel: string = CONSTANTS.log_level;
+  mock_http: boolean = CONSTANTS.mock_http;
 }

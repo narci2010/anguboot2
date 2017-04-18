@@ -5,7 +5,6 @@ import {getTranslationProviders} from "./app/i18n-providers";<%}%>
 import {AppModule} from "./app/app.module";
 
 declare let CONSTANTS: any;
-
 if (CONSTANTS.env === 'production') {
   enableProdMode();
 }<% if (!plugins.translate) { %>
