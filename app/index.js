@@ -365,6 +365,8 @@ module.exports = class extends generator {
             // languages
             if(this.props.plugins.translate) {
                 this.template(staticDir + 'app/_i18n-providers.ts', staticDir + 'app/i18n-providers.ts');
+                this.template(staticDir + 'app/services/_i18n.service.ts', staticDir + 'app/services/i18n.service.ts');
+                this.template(staticDir + 'app/pipes/_translate.pipe.ts', staticDir + 'app/pipes/translate.pipe.ts');
                 this.template(staticDir + 'config/_xliffmerge.json', staticDir + 'config/xliffmerge.json');
                 this.template(staticDir + '_messages.xlf', staticDir + 'messages.xlf');
                 this.template(staticDir + 'locale/_messages.en.xlf', staticDir + 'locale/messages.en.xlf');

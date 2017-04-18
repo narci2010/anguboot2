@@ -310,7 +310,17 @@
                             </div>
                         </div>
                     </form>
-                </div><% if (plugins.ace) { %>
+                </div><% if (plugins.translate) { %>
+                <hr/>
+                <div id="preview-i18n">
+                    <p>Translation with <code>| translate</code> pipe</p>
+                    <table>
+                        <tr *ngFor="let state of ['STATE.SUCCESS', 'STATE.WARNING', 'STATE.ERROR', 'STATE.NOT_EXISTING']">
+                            <td>{{state}}</td>
+                            <td><code>{{state | translate:['error message...']}}</code></td>
+                        </tr>
+                    </table>
+                </div><%}%><% if (plugins.ace) { %>
                 <hr/>
                 <div id="preview-ui-ace">
                     <button type="button" class="btn btn-primary pointer" (click)="aceModal()">See a detailed

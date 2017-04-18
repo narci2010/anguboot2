@@ -79,7 +79,8 @@ var reportFiles = [
   'src/main/java/com/company/anguboot/metrics/MetricsConfiguration.java', 'src/main/java/com/company/anguboot/metrics/MetricsController.java'
 ];
 var angularReportFiles = ['src/main/web/app/beans/timer.ts'];
-var angularTranslateFiles = ['src/main/web/messages.xlf', 'src/main/web/app/i18n-providers.ts','src/main/web/config/xliffmerge.json'];
+var angularTranslateFiles = ['src/main/web/messages.xlf', 'src/main/web/app/i18n-providers.ts','src/main/web/config/xliffmerge.json',
+'src/main/web/app/services/i18n.service.ts', 'src/main/web/app/pipes/translate.pipe.ts'];
 var jpaFiles = ['src/main/java/com/company/anguboot/jpa/AngubootEntity.java','src/main/java/com/company/anguboot/jpa/AngubootRepository.java'];
 
 describe('Tests without springboot or angular >', function() {
@@ -297,6 +298,9 @@ function assertAngularOptions(options, report, security, languages){
   }
   if(options && options.indexOf('translate') > -1){
     assert.file(angularTranslateFiles);
+    assert.fileContent('src/main/web/main.ts', /getTranslationProviders/);
+    assert.fileContent('src/main/web/app/app.module.ts', /I18nService/);
+    assert.fileContent('src/main/web/app/app.module.ts', /TranslatePipe/);
     if(languages){
       for(var i in languages){
         assert.file(['src/main/web/locale/messages.' + languages[i] + '.xlf']);
@@ -307,13 +311,20 @@ function assertAngularOptions(options, report, security, languages){
   } else {
     assert.noFile(angularTranslateFiles);
     assert.noFile(['src/main/web/locale/messages.fr.xlf','src/main/web/locale/messages.es.xlf','src/main/web/locale/messages.en.xlf']);
+    if(options){
+      assert.noFileContent('src/main/web/main.ts', /getTranslationProviders/);
+      assert.noFileContent('src/main/web/app/app.module.ts', /I18nService/);
+      assert.noFileContent('src/main/web/app/app.module.ts', /TranslatePipe/);
+    }
   }
   if(options && options.indexOf('ace') > -1){
       assert.fileContent('package.json', /ace/);
+      assert.fileContent('src/main/web/app/app.module.ts', /Ace/);
       assert.fileContent('src/main/web/app/directives/raw.directive.ts', /ace/);
   } else {
     if(options){
       assert.noFileContent('package.json', /ace/);
+      assert.noFileContent('src/main/web/app/app.module.ts', /Ace/);
       assert.noFileContent('src/main/web/app/directives/raw.directive.ts', /ace/);
     }
   }

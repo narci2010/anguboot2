@@ -102,7 +102,7 @@
       <trans-unit id="f8b996ef1bd864ce1175cb6f02f2aed50808d049" datatype="html">
         <source>Administration</source>
         <target/>
-        <note priority="1" from="description">Open administration drowdown</note>
+        <note priority="1" from="description">Open administration dropdown</note>
         <note priority="1" from="meaning">Navbar link</note>
       </trans-unit>
       <trans-unit id="ceeb3d38b5d2a5740bd79aff1a113b22917a85ea" datatype="html">
@@ -126,7 +126,7 @@
       <trans-unit id="7dca18b8662f5cd58c13578ad106a0bc83607799" datatype="html">
         <source>Locales</source>
         <target/>
-        <note priority="1" from="description">Open locales drowdown</note>
+        <note priority="1" from="description">Open locales dropdown</note>
         <note priority="1" from="meaning">Navbar link</note>
       </trans-unit>
       <trans-unit id="c3e46e4c5508b6892555fecbd93088f7e378e361" datatype="html">
@@ -138,7 +138,7 @@
       <trans-unit id="53cdd30874e467ff343f3d7ed9058d8258b33168" datatype="html">
         <source>Account</source>
         <target/>
-        <note priority="1" from="description">Open account drowdown</note>
+        <note priority="1" from="description">Open account dropdown</note>
         <note priority="1" from="meaning">Navbar link</note>
       </trans-unit>
       <trans-unit id="d23da54b0dfcd7becb4352d8d66b5f1831161098" datatype="html">
@@ -162,7 +162,23 @@
         <source>Are you sure you want to logout ?</source>
         <target/>
         <note priority="1" from="description">Logout confirm popup message</note>
+      </trans-unit><% if (plugins.translate) { %>
+      <trans-unit id="STATE.SUCCESS" datatype="html">
+        <source>Success</source>
+        <target/>
+        <note priority="1" from="description">Success state translation</note>
       </trans-unit>
+      <trans-unit id="STATE.WARNING" datatype="html">
+        <source>Success</source>
+        <target/>
+        <note priority="1" from="description">Warning state translation</note>
+      </trans-unit>
+      <trans-unit id="STATE.ERROR" datatype="html">
+        <source>Error : <x id="INTERPOLATION"/></source>
+        <target/>
+        <note priority="1" from="description">Interpolation is error message</note>
+        <note priority="1" from="meaning">Error state translation</note>
+      </trans-unit><% } %>
     </body>
   </file>
 </xliff>

@@ -113,45 +113,58 @@
         <target>Etes vous sûr de vouloir vous déconnecter ?</target>
         <note priority="1" from="description">Logout confirm popup message</note>
       </trans-unit>
-    <trans-unit id="b40926cf4aaf994f1972a19ffc7f0fc5897ca55a" datatype="html">
+      <trans-unit id="b40926cf4aaf994f1972a19ffc7f0fc5897ca55a" datatype="html">
         <source>Health (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
         <target state="new">Santé (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</target>
       </trans-unit><trans-unit id="4a5d6a9ca9bbf07021f3a4c134fd295b68e8ad44" datatype="html">
-        <source>Jvm</source>
-        <target state="new">Jvm</target>
-        <note priority="1" from="description">Jvm panel title</note>
-      </trans-unit><trans-unit id="e5c39295ba80b4af73d7b997467649b012c4bd88" datatype="html">
-        <source>Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
-        <target state="new">Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</target>
-        <note priority="1" from="description">Loggers panel title</note>
-      </trans-unit><trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
-        <source>Status</source>
-        <target state="new">Statut</target>
-        <note priority="1" from="description">Health table header : status</note>
-      </trans-unit><trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
-        <source>Details</source>
-        <target state="new">Détails</target>
-        <note priority="1" from="description">Health table header : details</note>
-      </trans-unit><trans-unit id="09ea2fdf501405d2c9e2b341b5344fef2113ac21" datatype="html">
-        <source>Filter by name...</source>
-        <target state="new">Filtrer par nom...</target>
-        <note priority="1" from="description">Filter input placeholder</note>
-      </trans-unit><trans-unit id="f8774d558bcfb9ac5f4eedfce71fae8c3af1a3f7" datatype="html">
-        <source>Filter by level : </source>
-        <target state="new">Filtrer par niveau : </target>
-        <note priority="1" from="description">Filter by level</note>
-      </trans-unit><trans-unit id="52fc59444822dd7e672efc1507c2e3a67f003ec1" datatype="html">
-        <source>Configured Level</source>
-        <target state="new">Niveau configuré</target>
-        <note priority="1" from="description">Loggers table header : configured level</note>
-      </trans-unit><trans-unit id="f3af1e0cdcc0fd2b8ef7750d9de87ae23b35cafd" datatype="html">
-        <source>Effective Level</source>
-        <target state="new">Niveau effectif</target>
-        <note priority="1" from="description">Loggers table header : effective level</note>
-      </trans-unit><trans-unit id="3dc4db549e412f88eef1a96298ca0a104a4f2b17" datatype="html">
-        <source>Update level</source>
-        <target state="new">Mettre à jour le niveau de log</target>
-        <note priority="1" from="description">Loggers table header : level</note>
-      </trans-unit></body>
+      <source>Jvm</source>
+      <target state="new">Jvm</target>
+      <note priority="1" from="description">Jvm panel title</note>
+    </trans-unit><trans-unit id="e5c39295ba80b4af73d7b997467649b012c4bd88" datatype="html">
+      <source>Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
+      <target state="new">Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</target>
+      <note priority="1" from="description">Loggers panel title</note>
+    </trans-unit><trans-unit id="81b97b8ea996ad1e4f9fca8415021850214884b1" datatype="html">
+      <source>Status</source>
+      <target state="new">Statut</target>
+      <note priority="1" from="description">Health table header : status</note>
+    </trans-unit><trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
+      <source>Details</source>
+      <target state="new">Détails</target>
+      <note priority="1" from="description">Health table header : details</note>
+    </trans-unit><trans-unit id="09ea2fdf501405d2c9e2b341b5344fef2113ac21" datatype="html">
+      <source>Filter by name...</source>
+      <target state="new">Filtrer par nom...</target>
+      <note priority="1" from="description">Filter input placeholder</note>
+    </trans-unit><trans-unit id="f8774d558bcfb9ac5f4eedfce71fae8c3af1a3f7" datatype="html">
+      <source>Filter by level : </source>
+      <target state="new">Filtrer par niveau : </target>
+      <note priority="1" from="description">Filter by level</note>
+    </trans-unit><trans-unit id="52fc59444822dd7e672efc1507c2e3a67f003ec1" datatype="html">
+      <source>Configured Level</source>
+      <target state="new">Niveau configuré</target>
+      <note priority="1" from="description">Loggers table header : configured level</note>
+    </trans-unit><trans-unit id="f3af1e0cdcc0fd2b8ef7750d9de87ae23b35cafd" datatype="html">
+      <source>Effective Level</source>
+      <target state="new">Niveau effectif</target>
+      <note priority="1" from="description">Loggers table header : effective level</note>
+    </trans-unit><trans-unit id="3dc4db549e412f88eef1a96298ca0a104a4f2b17" datatype="html">
+      <source>Update level</source>
+      <target state="new">Mettre à jour le niveau de log</target>
+      <note priority="1" from="description">Loggers table header : level</note>
+    </trans-unit><% if (plugins.translate) { %><trans-unit id="STATE.SUCCESS" datatype="html">
+      <source>Success</source>
+      <target state="new">Succès</target>
+      <note priority="1" from="description">Success state translation</note>
+    </trans-unit><trans-unit id="STATE.WARNING" datatype="html">
+      <source>Success</source>
+      <target state="new">Avertissement</target>
+      <note priority="1" from="description">Warning state translation</note>
+    </trans-unit><trans-unit id="STATE.ERROR" datatype="html">
+      <source>Error : <x id="INTERPOLATION"/></source>
+      <target state="new">Erreur : <x id="INTERPOLATION"/></target>
+      <note priority="1" from="description">Interpolation is error message</note>
+      <note priority="1" from="meaning">Error state translation</note>
+    </trans-unit><% } %></body>
   </file>
 </xliff>

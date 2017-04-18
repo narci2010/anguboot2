@@ -26,7 +26,8 @@ import {SpinnerService} from "./services/spinner.service";
 import {HttpService} from "./services/http.service";<% if (plugins.security) { %>
 import {ActuatorActivation, AdminActivation, AuthenticatedActivation} from "./services/auth-routing.service";<%}%><% if (plugins.custo) { %>
 import {CustoService} from "./services/custo.service";<%}%>
-import {LoggerService} from "./services/logger.service";
+import {LoggerService} from "./services/logger.service";<% if (plugins.translate) { %>
+import {I18nService, TmpI18nComponent} from "./services/i18n.service";<% } %>
 // directives
 import {SpinnerComponent} from "./directives/spinner.directive";
 import {RawDirective, RawModalContent} from "./directives/raw.directive";
@@ -34,7 +35,8 @@ import {ConfirmDirective, ConfirmModalContent} from "./directives/confirm.direct
 // pipes
 import {TimePipe} from "./pipes/time.pipe";
 import {SizePipe} from "./pipes/size.pipe";
-import {FilterPipe} from "./pipes/filter.pipe";
+import {FilterPipe} from "./pipes/filter.pipe";<% if (plugins.translate) { %>
+import {TranslatePipe} from "./pipes/translate.pipe";<% } %>
 // addons
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ChartsModule} from "ng2-charts";
@@ -97,16 +99,15 @@ import "../assets/images/favicon.ico";
     storageType: 'localStorage'
   })],
   entryComponents: [RawModalContent, ConfirmModalContent<% if (plugins.custo && plugins.ace) { %>, AceModalContent<%}%>],
-  providers: [<% if (plugins.security) { %>UserService, <%}%>SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,
-  <% if (plugins.custo) { %>CustoService, <%}%>LoggerService,
-    TimePipe, SizePipe, DatePipe,<% if (plugins.security) { %>
+  providers: [<% if (plugins.security) { %>UserService, <%}%>SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,<% if (plugins.custo) { %> CustoService, <%}%> LoggerService,
+    TimePipe, SizePipe, DatePipe,<% if (plugins.translate) { %> TranslatePipe, I18nService,<% } %><% if (plugins.security) { %>
     AuthenticatedActivation, AdminActivation, ActuatorActivation,<%}%>
-    Constants, NavComponent, CookieService],
+    Constants, CookieService],
   bootstrap: [AppComponent],
   declarations: [AppComponent, HomeComponent, ContactComponent, HealthComponent, LoggersComponent, MetricsComponent,
     NavComponent, <% if (plugins.security) { %>LoginComponent, <%}%>SpinnerComponent, <% if (plugins.security) { %>UserComponent,<%}%>
     RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective,
-    TimePipe, SizePipe, FilterPipe]
+    TimePipe, SizePipe, FilterPipe<% if (plugins.translate) { %>, TmpI18nComponent, TranslatePipe<% } %>]
 })
 export class AppModule {
 }

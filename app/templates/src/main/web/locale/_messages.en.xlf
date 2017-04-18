@@ -162,7 +162,19 @@
         <source>Are you sure you want to logout ?</source>
         <target state="final">Are you sure you want to logout ?</target>
         <note priority="1" from="description">Logout confirm popup message</note>
-      </trans-unit>
-    </body>
+      </trans-unit><% if (plugins.translate) { %><trans-unit id="STATE.SUCCESS" datatype="html">
+      <source>Success</source>
+      <target state="final">Success</target>
+      <note priority="1" from="description">Success state translation</note>
+    </trans-unit><trans-unit id="STATE.WARNING" datatype="html">
+      <source>Success</source>
+      <target state="final">Success</target>
+      <note priority="1" from="description">Warning state translation</note>
+    </trans-unit><trans-unit id="STATE.ERROR" datatype="html">
+      <source>Error : <x id="INTERPOLATION"/></source>
+      <target state="final">Error : <x id="INTERPOLATION"/></target>
+      <note priority="1" from="description">Interpolation is error message</note>
+      <note priority="1" from="meaning">Error state translation</note>
+    </trans-unit><% } %></body>
   </file>
 </xliff>
