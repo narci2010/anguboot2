@@ -85,6 +85,5 @@ $ java -jar target/angutest-executable.jar --spring.config.location=target/test-
 
 ## What's coming next
 
-* Improve error management in case of too long message (unexpected html response)
-* Improve health management error/down
 * Add mock http service for demo/dev deployment
+* Add i18n error messages

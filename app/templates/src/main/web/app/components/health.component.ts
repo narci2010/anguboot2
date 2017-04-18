@@ -35,7 +35,7 @@ export class HealthComponent implements OnInit {
     this.service.health().subscribe(value => {
       this.process(value, skipNotification);
     }, error => {
-      if (error.status) {
+      if (!Number.isInteger(error.status)) {
         this.process(error, skipNotification);
       } else {
         this.notification.notifyHttpError(error);

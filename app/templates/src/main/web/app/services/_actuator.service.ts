@@ -27,9 +27,9 @@ export class ActuatorService extends ApiService {
   }
 
   health(): Observable<any> {
-    // ignore error log if body contains DOWN status -> reason of going to catch
-    return this.http.get(this.manageUrl + '/health', {withCredentials: true}).map(response => response.json())
-      .catch(error => this.buildError(error, (error: Response) => error.status == 503 && error.json().status === 'DOWN'));
+    // ignore error log if body status which is not a number
+    return this.http.get(this.manageUrl + '/health', this.buildOptions()).map(response => response.json())
+      .catch(error => this.buildError(error, (error: Response) => !Number.isInteger(error.json().status)));
   }
 
   metrics(): Observable<any> {

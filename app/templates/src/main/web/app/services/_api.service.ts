@@ -47,7 +47,13 @@ export class ApiService {
         httpError = new HttpError();
         httpError.status = error.status;
         httpError.timestamp = new Date();
-        httpError.message = error.text();
+        if(error.status === 404){
+            httpError.message = 'Resource not found';
+        } else if(error.text().indexOf('DOCTYPE html') < 0){
+            httpError.message = error.text();
+        } else {
+            httpError.message = 'Unexpected error occurred not found';
+        }
       }
       if (!httpError.message && httpError['error_description']) {
         httpError.message = httpError['error_description'];
