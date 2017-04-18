@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-header card-header-primary">
+        <span i18n="Trace panel title">Traces ({{traces.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Trace [raw]" [(rawBody)]="traces" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="traces">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th i18n="Trace table header : time">Time</th>
+                    <th i18n="Trace table header : method">Method</th>
+                    <th i18n="Trace table header : path">Path</th>
+                    <th i18n="Trace table header : status">Status</th>
+                    <th i18n="Trace table header : details">Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let trace of traces; let i = index">
+                    <td>{{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}</td>
+                    <td><span class="badge badge-primary">{{trace.info.method}}</span></td>
+                    <td><code>{{trace.info.path}}</code></td>
+                    <td><kbd>{{trace.info.headers.response.status}}</kbd></td>
+                    <td><a my-raw rawTitle="Trace [raw] - {{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}" [(rawBody)]="traces[i]" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
+                </tr>
+                <tr *ngIf="traces.count == 0">
+                    <td colspan="5">
+                        <span>No results</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

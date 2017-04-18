@@ -1,15 +1,15 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "./http.service";
 import {Response} from "@angular/http";
-
-import "rxjs/add/operator/toPromise";
 import {Logger, Loggers} from "../beans/loggers";
+import {Trace} from "../beans/trace";
 import {Dump} from "../beans/dump";<% if (report) { %>
 import {Timer} from "../beans/timer";<% } %>
 import {ApiService} from "./api.service";
 import {Constants} from "../constants";
 import {Observable} from "rxjs";
 import {LoggerService} from "./logger.service";
+import "rxjs/add/operator/toPromise";
 
 export class Counter {
   count: number;
@@ -33,22 +33,27 @@ export class ActuatorService extends ApiService {
   }
 
   metrics(): Observable<any> {
-    return this.http.get(this.manageUrl + '/metrics', {withCredentials: true}).map(response => this.json(response))
+    return this.http.get(this.manageUrl + '/metrics', this.buildOptions()).map(response => this.json(response))
+      .catch(error => this.buildError(error));
+  }
+
+  trace(): Observable<Dump[]> {
+    return this.http.get(this.manageUrl + '/trace', this.buildOptions()).map(response => this.json(response) as Trace[])
       .catch(error => this.buildError(error));
   }
 
   dump(): Observable<Dump[]> {
-    return this.http.get(this.manageUrl + '/dump', {withCredentials: true}).map(response => this.json(response) as Dump[])
+    return this.http.get(this.manageUrl + '/dump', this.buildOptions()).map(response => this.json(response) as Dump[])
       .catch(error => this.buildError(error));
   }<% if (report) { %>
 
   timers(): Observable<Timer[]> {
-    return this.http.get(this.apiUrl + '/metrics?limit=100', {withCredentials: true}).map(response => this.json(response) as Timer[])
+    return this.http.get(this.apiUrl + '/metrics?limit=100', this.buildOptions()).map(response => this.json(response) as Timer[])
       .catch(error => this.buildError(error));
   }<% } %>
 
   loggers(): Observable<Loggers> {
-    return this.http.get(this.manageUrl + '/loggers', {withCredentials: true}).map(response => this.json(response) as Loggers)
+    return this.http.get(this.manageUrl + '/loggers', this.buildOptions()).map(response => this.json(response) as Loggers)
       .catch(error => this.buildError(error));
   }
 
@@ -59,7 +64,7 @@ export class ActuatorService extends ApiService {
     } else {
       body = {'configuredLevel': level};
     }
-    return this.http.post(this.manageUrl + '/loggers/' + logger.name, body, {withCredentials: true}).catch(error => this.buildError(error));
+    return this.http.post(this.manageUrl + '/loggers/' + logger.name, body, this.buildOptions()).catch(error => this.buildError(error));
   }
 
 }

@@ -12,19 +12,6 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th colspan="1">
-                        <input type="text" class="form-control" placeholder="Filter by name..." i18n-placeholder="Filter input placeholder" [(ngModel)]="term">
-                    </th>
-                    <th colspan="4" class="align-middle text-right">
-                        <span i18n="Filter by level">Filter by level : </span>
-                        <span (click)="levelTerm = undefined" class="space pointer badge"
-                              [ngClass]="{'badge-default': levelTerm != 'ALL', 'badge-primary': !levelTerm || levelTerm == 'ALL'}">ALL</span>
-                        <span (click)="levelTerm = level.name" *ngFor="let level of levels"
-                              class="space pointer badge badge-default"
-                              [ngClass]="getClass(level.name, levelTerm == level.name)">{{level.name}}</span>
-                    </th>
-                </tr>
-                <tr>
                     <th class="pointer" (click)="doSort('name')">
                         <span i18n="Loggers table header : name">Name</span>
                         <span class="margin-left" [ngClass]="headerClass['name']"></span>
@@ -38,6 +25,19 @@
                         <span class="margin-left" [ngClass]="headerClass['effectiveLevel']"></span>
                     </th>
                     <th class="text-right" i18n="Loggers table header : level">Update level</th>
+                </tr>
+                <tr>
+                    <th colspan="1">
+                        <input type="text" class="form-control" placeholder="Filter by name..." i18n-placeholder="Filter input placeholder" [(ngModel)]="term">
+                    </th>
+                    <th colspan="4" class="align-middle text-right">
+                        <span i18n="Filter by level">Filter by level : </span>
+                        <span (click)="levelTerm = undefined" class="space pointer badge"
+                              [ngClass]="{'badge-default': levelTerm != 'ALL', 'badge-primary': !levelTerm || levelTerm == 'ALL'}">ALL</span>
+                        <span (click)="levelTerm = level.name" *ngFor="let level of levels"
+                              class="space pointer badge badge-default"
+                              [ngClass]="getClass(level.name, levelTerm == level.name)">{{level.name}}</span>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>

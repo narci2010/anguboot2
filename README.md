@@ -70,7 +70,7 @@ $ yo anguboot
 ## Development
 
 ```bash
-$ npm install && npm run watch
+$ npm install && npm run start
 # and in another console
 $ mvn spring-boot:run
 ```
@@ -85,5 +85,6 @@ $ java -jar target/angutest-executable.jar --spring.config.location=target/test-
 
 ## What's coming next
 
-* Add mock http service for demo/dev deployment
 * Add i18n error messages
+* Add actuator pages
+* Table directive(s) for sort, pagination, etc.

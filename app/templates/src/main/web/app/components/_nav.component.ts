@@ -51,13 +51,11 @@ export class NavComponent implements OnInit {
   }
 
   public refresh(): void {
-    this.spinner.start();
     this.userService.me().then(user => {
       this.authenticated = true;
       this.admin = this.hasRole(user, 'ROLE_ADMIN');
       this.actuator = this.hasRole(user, 'ROLE_ACTUATOR');
-      this.spinner.stop();
-    }).catch(() => this.spinner.stop());
+    }).catch(() => {});
   }
 
   public hasRole(user: User, role: string): boolean {

@@ -3,6 +3,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home.component";
 import {ContactComponent} from "./components/contact.component";
 import {HealthComponent} from "./components/health.component";
+import {DumpComponent} from "./components/dump.component";
+import {TraceComponent} from "./components/trace.component";
 import {MetricsComponent} from "./components/metrics.component";
 import {LoggersComponent} from "./components/loggers.component";<% if(plugins.security) { %>
 import {LoginComponent} from "./components/login.component";
@@ -15,6 +17,8 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},<% } %>
   {path: 'contact', component: ContactComponent},
   {path: 'health', component: HealthComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'dump', component: DumpComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'trace', component: TraceComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
   {path: 'metrics', component: MetricsComponent<% if(plugins.security) { %>, canActivate: [ActuatorActivation]<% } %>},
   {path: 'loggers', component: LoggersComponent<% if(plugins.security) { %>, canActivate: [ActuatorActivation]<% } %>},<% if(plugins.security) { %>
   {path: 'user', component: UserComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},<% } %><% if(plugins.custo) { %>

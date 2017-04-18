@@ -11,14 +11,12 @@
             <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="metrics"
                class="fa fa-lg fa-eye fa-margin pointer text-color"
                placement="top" ngbTooltip="Metrics raw" href="#"></a>
-            <a my-raw rawTitle="Dumps [raw]" [(rawBody)]="dumps" class="fa fa-lg fa-eye fa-margin pointer text-color"
-               placement="top" ngbTooltip="Dumps raw" href="#"></a>
             <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
         </span>
     </div>
     <div class="card-block table-responsive">
         <div class="row" *ngIf="isDataAvailable">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <b>Memory</b>
                 <hr>
                 <p>Total Memory</p>
@@ -39,22 +37,7 @@
                     <i>{{metrics['nonheap.used'] * 100 / metrics['nonheap.committed'] | number:0}}%</i>
                 </ngb-progressbar>
             </div>
-            <div class="col-md-4">
-                <b (click)="isDataAvailable = true">Threads</b> (Total: {{threads.all}})
-                <hr>
-                <div class="pie-padding">
-                    <canvas baseChart height="150"
-                            [data]="threadsData"
-                            [labels]="threadsLabels"
-                            [options]="threadsOptions"
-                            [chartType]="'pie'"
-                            (chartHover)="chartHovered($event)"
-                            (chartClick)="chartClicked($event)">
-
-                    </canvas>
-                </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <b>Garbage collector</b>
                 <hr>
                 <dl class="row">

@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {ActuatorService} from "../services/actuator.service";
 import {SpinnerService} from "../services/spinner.service";
-import {Dump} from "../beans/dump";
 import {NotificationService, NotificationType} from "../services/notification.service";
 import {Constants} from "../constants";
 import {Observable} from "rxjs";
@@ -21,10 +20,6 @@ export class MetricsComponent implements OnInit {
   private metricsHttp = {};
   private metricsServices = {};
 
-  private threads = {};
-  private threadsData: number[] = [];
-  private threadsLabels: string[] = [];
-
   private metricsServicesArray: any[] = [];<% if (report) { %>
 
   private timers: any;
@@ -35,12 +30,10 @@ export class MetricsComponent implements OnInit {
   private graphsArray: any[] = [];<% } %>
 
   private fontColor: string;
-  private threadsOptions: any;
 
   private pieChartLabels: string[] = [];
   private pieChartData: number[] = [];
   private pieChartType: string = 'pie';
-  private dumps: Dump[];
 
   constructor(private service: ActuatorService, private spinner: SpinnerService, private date: DatePipe, private notification: NotificationService,
               private constants: Constants) {
@@ -78,8 +71,7 @@ export class MetricsComponent implements OnInit {
 
     this.spinner.start();
 
-    observables.push(this.service.metrics());
-    observables.push(this.service.dump());<% if (report) { %>
+    observables.push(this.service.metrics());<% if (report) { %>
     if(!this.constants.mock_http){
       observables.push(this.service.timers());
     }
@@ -105,20 +97,10 @@ export class MetricsComponent implements OnInit {
     }
     };<% } %>
 
-    this.threadsOptions = {
-    legend: {
-      position: 'bottom',
-      labels: {
-        fontColor: this.fontColor
-      }
-    }
-    };
-
     Observable.forkJoin(observables).subscribe(result => {
-      this.metrics = result[0];
-      this.dumps = result[1];<% if (report) { %>
+      this.metrics = result[0];<% if (report) { %>
       if(!this.constants.mock_http){
-        this.timers = result[2];
+        this.timers = result[1];
       }<% } %>
 
       this.metricsHttp = {};
@@ -162,28 +144,7 @@ export class MetricsComponent implements OnInit {
         }
         this.metricsServicesArray.push(entry);
       }
-      this.metricsServicesArray.sort(this.nameSortFunction);
-
-
-      this.threads = {};
-      this.threadsLabels = [];
-      this.threadsData = [];
-
-      this.threads['all'] = 0;
-      for (let j in this.dumps) {
-        let state = this.dumps[j].threadState;
-        if (!this.threads[state]) {
-          this.threads[state] = 0;
-        }
-        this.threads[state]++;
-        this.threads['all']++;
-      }
-      for (let t in this.threads) {
-        if (t !== 'all') {
-          this.threadsLabels.push(t.substring(0, 1) + t.toLowerCase().substring(1, t.length).replace("_", " "));
-          this.threadsData.push(this.threads[t]);
-        }
-      }<% if (report) { %>
+      this.metricsServicesArray.sort(this.nameSortFunction);<% if (report) { %>
 
       if(!this.constants.mock_http){
         this.graphs = {};

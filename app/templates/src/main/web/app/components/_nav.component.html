@@ -38,6 +38,8 @@
                         <a class="dropdown-item" routerLink="/health" routerLinkActive="active" i18n="Navbar link|Go to health page">Health</a>
                         <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/metrics" routerLinkActive="active" i18n="Navbar link|Go to metrics page">Metrics</a>
                         <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/loggers" routerLinkActive="active" i18n="Navbar link|Go to loggers page">Loggers</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/trace" routerLinkActive="active" i18n="Navbar link|Go to traces page">Traces</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/dump" routerLinkActive="active" i18n="Navbar link|Go to dumps page">Dumps</a>
                     </div>
                 </div>
             </li><% if (plugins.translate) { %>

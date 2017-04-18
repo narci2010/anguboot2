@@ -36,7 +36,7 @@ var angularFiles = [
   'src/main/web/app/constants.ts',
 
   'src/main/web/app/beans/dump.ts', 'src/main/web/app/beans/error.ts', 'src/main/web/app/beans/loggers.ts',
-  'src/main/web/app/beans/table.ts', 
+  'src/main/web/app/beans/table.ts', 'src/main/web/app/beans/trace.ts', 
   
   'src/main/web/app/components/contact.component.ts', 'src/main/web/app/components/contact.component.html',
   'src/main/web/app/components/health.component.ts', 'src/main/web/app/components/health.component.html',
@@ -45,12 +45,14 @@ var angularFiles = [
   'src/main/web/app/components/metrics.component.ts', 'src/main/web/app/components/metrics.component.html',
   'src/main/web/app/components/nav.component.ts', 'src/main/web/app/components/nav.component.html',
   'src/main/web/app/components/contact.component.ts', 'src/main/web/app/components/contact.component.html',
+  'src/main/web/app/components/dump.component.ts', 'src/main/web/app/components/dump.component.html',
+  'src/main/web/app/components/trace.component.ts', 'src/main/web/app/components/trace.component.html',
 
   'src/main/web/app/directives/confirm.directive.ts', 'src/main/web/app/directives/raw.directive.ts', 'src/main/web/app/directives/spinner.directive.ts',
 
   'src/main/web/app/pipes/filter.pipe.ts', 'src/main/web/app/pipes/size.pipe.ts', 'src/main/web/app/pipes/time.pipe.ts',
 
-  'src/main/web/app/services/actuator.service.ts', 'src/main/web/app/services/api.service.ts',
+  'src/main/web/app/services/actuator.service.ts', 'src/main/web/app/services/api.service.ts', 'src/main/web/app/services/mock.service.ts',,
   'src/main/web/app/services/http.service.ts', 'src/main/web/app/services/logger.service.ts',
   'src/main/web/app/services/notification.service.ts', 'src/main/web/app/services/spinner.service.ts'
 ];
