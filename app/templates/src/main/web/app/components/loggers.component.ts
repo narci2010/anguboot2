@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-
 import {ActuatorService, Counter} from "../services/actuator.service";
 import {SpinnerService} from "../services/spinner.service";
+import {UtilService} from "../services/util.service";
 import {Logger, Loggers} from "../beans/loggers";
 import {NotificationService, NotificationType} from "../services/notification.service";
 
@@ -23,32 +23,7 @@ export class LoggersComponent implements OnInit {
 
   private filteredCount: Counter = new Counter();
 
-  private defaultHeaderClass: any = {
-    name: 'fa fa-sort',
-    configuredLevel: 'fa fa-sort',
-    effectiveLevel: 'fa fa-sort'
-  };
-
-  copy(obj: any) {
-    return JSON.parse(JSON.stringify(obj));
-  }
-
-  private headerClass: any = this.copy(this.defaultHeaderClass);
-
-  private sort: string;
-
-  constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService) {
-  }
-
-  doSort(sort: string) {
-    this.headerClass = this.copy(this.defaultHeaderClass);
-    if (this.sort && this.sort === sort) {
-      this.sort = '-' + sort;
-      this.headerClass[sort] = 'fa fa-sort-desc';
-    } else {
-      this.sort = sort;
-      this.headerClass[sort] = 'fa fa-sort-asc';
-    }
+  constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService, private util: UtilService) {
   }
 
   public getClass(level: string, test = true) {

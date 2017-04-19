@@ -3,30 +3,6 @@
 <!-- <<< -->
 <div class="card">
     <div class="card-header card-header-primary">
-        <span i18n="Threads graph panel title">Threads</span>
-        <span class="float-right">
-            <a my-raw rawTitle="Threads [raw]" [(rawBody)]="dumps" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a>
-            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
-        </span>
-    </div>
-    <div class="card-block table-responsive">
-        <div class="col-md-6 offset-md-3" *ngIf="isDataAvailable">
-            <span><b>Threads</b> (Total: {{threads.all}})</span>
-            <hr>
-            <div class="pie-padding">
-                <canvas baseChart
-                        [data]="threadsData"
-                        [labels]="threadsLabels"
-                        [options]="threadsOptions"
-                        [chartType]="'pie'">
-                </canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card margin-top">
-    <div class="card-header card-header-primary">
         <span i18n="Threads panel title">Threads ({{filteredCount.count}} / {{dumps.length}})</span>
         <span class="float-right">
             <a my-raw rawTitle="Threads [raw]" [(rawBody)]="dumps" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a>
@@ -34,43 +10,60 @@
         </span>
     </div>
     <div class="card-block table-responsive">
-        <div *ngIf="isDataAvailable">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th class="pointer" i18n="Thread table header : id">Id</th>
-                    <th class="pointer" i18n="Thread table header : name">Name</th>
-                    <th class="pointer" i18n="Thread table header : state">State</th>
-                    <th i18n="Thread table header : details">Details</th>
-                </tr>
-                <tr>
-                    <th colspan="1">
-                    </th>
-                    <th colspan="1">
-                        <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="term">
-                    </th>
-                    <th colspan="2" class="align-middle">
+        <div class="row" *ngIf="isDataAvailable">
+            <div class="col-md-4">
+                <span><b>Distribution</b></span>
+                <hr>
+                <div class="pie-padding" >
+                    <canvas baseChart
+                            [data]="threadsData"
+                            [labels]="threadsLabels"
+                            [options]="threadsOptions"
+                            [chartType]="'pie'">
+                    </canvas>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <span><b>Table</b></span>
+                <hr>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th my-th-sort sortBy="threadId" headerName="Id" i18n-headerName="Thread table header : id" (onClick)="sort = $event.sort"></th>
+                        <th my-th-sort sortBy="threadName" headerName="Name" i18n-headerName="Thread table header : name" (onClick)="sort = $event.sort"></th>
+                        <th my-th-sort sortBy="threadState" headerName="State" i18n-headerName="Thread table header : state" (onClick)="sort = $event.sort"></th>
+                        <th i18n="Thread table header : details">Details</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1">
+                        </th>
+                        <th colspan="1">
+                            <input type="text" class="form-control" placeholder="Filter..." [(ngModel)]="term">
+                        </th>
+                        <th colspan="2" class="align-middle">
                         <span (click)="termState = undefined" class="badge pointer"
                               [ngClass]="{'badge-primary': !termState || termState === 'ALL', 'badge-default': termState !== 'ALL'}">ALL</span>
-                        <span (click)="termState = state" *ngFor="let state of threadStates"
-                              class="space pointer badge badge-default" [ngClass]="getClass(state, state == termState)">{{state}}</span>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let thread of dumps | filter:{terms: [{key:'threadName',value:term},{key:'threadState',value:termState}]}:filteredCount; let i = index">
-                    <td>{{thread.threadId}}</td>
-                    <td>{{thread.threadName}}</td>
-                    <td><span class="badge" [ngClass]="getClass(state)">{{thread.threadState}}</span></td>
-                    <td><a my-raw rawTitle="Thread [raw] - {{thread.name}}" [(rawBody)]="dumps[i]" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
-                </tr>
-                <tr *ngIf="filteredCount.count == 0">
-                    <td colspan="4">
-                        <span>No results</span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                            <span (click)="termState = state" *ngFor="let state of threadStates"
+                                  class="space pointer badge badge-default" [ngClass]="getClass(state, state == termState)">{{state}}</span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let thread of dumps | filter:{terms: [{key:'threadName',value:term},{key:'threadState',value:termState, strict: true}], sort: sort}:filteredCount; let i = index">
+                        <td>{{thread.threadId}}</td>
+                        <td>{{thread.threadName}}</td>
+                        <td><span class="badge" [ngClass]="getClass(state)">{{thread.threadState}}</span></td>
+                        <td><a my-raw rawTitle="Thread [raw] - {{thread.name}}" [(rawBody)]="dumps[i]"
+                               class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
+                    </tr>
+                    <tr *ngIf="filteredCount.count == 0">
+                        <td colspan="4">
+                            <span>No results</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

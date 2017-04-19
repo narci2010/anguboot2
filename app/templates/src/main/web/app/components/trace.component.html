@@ -12,7 +12,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th i18n="Trace table header : time">Time</th>
+                    <th my-th-sort sortBy="timestamp" headerName="Timestamp" i18n-headerName="Traces table header : timestamp" (onClick)="sort = $event.sort"></th>
                     <th i18n="Trace table header : method">Method</th>
                     <th i18n="Trace table header : path">Path</th>
                     <th i18n="Trace table header : status">Status</th>
@@ -20,12 +20,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let trace of traces; let i = index">
+                <tr *ngFor="let trace of traces | filter:{sort: sort}">
                     <td>{{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}</td>
                     <td><span class="badge badge-primary">{{trace.info.method}}</span></td>
                     <td><code>{{trace.info.path}}</code></td>
                     <td><kbd>{{trace.info.headers.response.status}}</kbd></td>
-                    <td><a my-raw rawTitle="Trace [raw] - {{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}" [(rawBody)]="traces[i]" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
+                    <td><a my-raw rawTitle="Trace [raw] - {{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}" [(rawBody)]="traces[i]"
+                           class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
                 </tr>
                 <tr *ngIf="traces.count == 0">
                     <td colspan="5">

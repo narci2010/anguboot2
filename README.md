@@ -87,4 +87,3 @@ $ java -jar target/angutest-executable.jar --spring.config.location=target/test-
 
 * Add i18n error messages
 * Add actuator pages
-* Table directive(s) for sort, pagination, etc.

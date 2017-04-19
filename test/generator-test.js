@@ -49,11 +49,12 @@ var angularFiles = [
   'src/main/web/app/components/trace.component.ts', 'src/main/web/app/components/trace.component.html',
 
   'src/main/web/app/directives/confirm.directive.ts', 'src/main/web/app/directives/raw.directive.ts', 'src/main/web/app/directives/spinner.directive.ts',
+  'src/main/web/app/directives/table.directive.ts',
 
   'src/main/web/app/pipes/filter.pipe.ts', 'src/main/web/app/pipes/size.pipe.ts', 'src/main/web/app/pipes/time.pipe.ts',
 
   'src/main/web/app/services/actuator.service.ts', 'src/main/web/app/services/api.service.ts', 'src/main/web/app/services/mock.service.ts',,
-  'src/main/web/app/services/http.service.ts', 'src/main/web/app/services/logger.service.ts',
+  'src/main/web/app/services/http.service.ts', 'src/main/web/app/services/logger.service.ts', 'src/main/web/app/services/util.service.ts',
   'src/main/web/app/services/notification.service.ts', 'src/main/web/app/services/spinner.service.ts'
 ];
 var angularCustoFiles = [

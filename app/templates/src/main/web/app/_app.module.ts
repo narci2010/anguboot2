@@ -21,6 +21,7 @@ import {UserComponent} from "./components/user.component";<%}%><% if (plugins.cu
 import {<% if (plugins.ace) { %>AceModalContent, <%}%>CustoComponent} from "./components/custo.component";<%}%>
 // services<% if (plugins.security) { %>
 import {UserService} from "./services/user.service";<%}%>
+import {UtilService} from "./services/util.service";
 import {SpringService} from "./services/spring.service";
 import {ActuatorService} from "./services/actuator.service";
 import {NotificationService} from "./services/notification.service";
@@ -37,6 +38,7 @@ import {MockService} from "./services/mock.service";
 import {SpinnerComponent} from "./directives/spinner.directive";
 import {RawDirective, RawModalContent} from "./directives/raw.directive";
 import {ConfirmDirective, ConfirmModalContent} from "./directives/confirm.directive";
+import {TableSortDirective} from "./directives/table.directive";
 // pipes
 import {TimePipe} from "./pipes/time.pipe";
 import {SizePipe} from "./pipes/size.pipe";
@@ -102,14 +104,14 @@ declare let CONSTANTS: any;
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule,<% if (plugins.custo) { %> ColorPickerModule,<% } %>
   LocalStorageModule.withConfig({prefix: 'angutest', storageType: 'localStorage' }), CONSTANTS.mock_http ? InMemoryWebApiModule.forRoot(MockService, { delay: 500 }) : []],
   entryComponents: [RawModalContent, ConfirmModalContent<% if (plugins.custo && plugins.ace) { %>, AceModalContent<%}%>],
-  providers: [<% if (plugins.security) { %>UserService, <%}%>SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,<% if (plugins.custo) { %> CustoService, <%}%> LoggerService,
+  providers: [<% if (plugins.security) { %>UserService, <%}%>UtilService, SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,<% if (plugins.custo) { %> CustoService, <%}%> LoggerService,
     TimePipe, SizePipe, DatePipe,<% if (plugins.translate) { %> TranslatePipe, I18nService,<% } %><% if (plugins.security) { %>
     AuthenticatedActivation, AdminActivation, ActuatorActivation,<%}%>
     Constants, CookieService],
   bootstrap: [AppComponent],
   declarations: [AppComponent, HomeComponent, ContactComponent, HealthComponent, DumpComponent, TraceComponent, LoggersComponent, MetricsComponent,
     NavComponent, <% if (plugins.security) { %>LoginComponent, <%}%>SpinnerComponent, <% if (plugins.security) { %>UserComponent,<%}%>
-    RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective,
+    RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective, TableSortDirective,
     TimePipe, SizePipe, FilterPipe<% if (plugins.translate) { %>, TmpI18nComponent, TranslatePipe<% } %>]
 })
 export class AppModule {

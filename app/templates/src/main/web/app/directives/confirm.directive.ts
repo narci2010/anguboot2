@@ -1,7 +1,6 @@
 import {Component, Directive, EventEmitter, HostListener, Input, Output} from "@angular/core";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
-
 @Directive({selector: '[my-confirm]'})
 export class ConfirmDirective {
   @Input() confirmTitle: string;
@@ -21,7 +20,6 @@ export class ConfirmDirective {
     modalRef.result.then(() => this.onConfirm.emit(), () => this.onCancel.emit());
   }
 }
-
 
 @Component({
   selector: 'modal-content',
@@ -48,6 +46,3 @@ export class ConfirmModalContent {
   constructor(public activeModal: NgbActiveModal) {
   }
 }
-
-
-

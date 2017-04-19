@@ -12,18 +12,9 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th class="pointer" (click)="doSort('name')">
-                        <span i18n="Loggers table header : name">Name</span>
-                        <span class="margin-left" [ngClass]="headerClass['name']"></span>
-                    </th>
-                    <th class="pointer" (click)="doSort('configuredLevel')">
-                        <span i18n="Loggers table header : configured level">Configured Level</span>
-                        <span class="margin-left" [ngClass]="headerClass['configuredLevel']"></span>
-                    </th>
-                    <th class="pointer" (click)="doSort('effectiveLevel')">
-                        <span i18n="Loggers table header : effective level">Effective Level</span>
-                        <span class="margin-left" [ngClass]="headerClass['effectiveLevel']"></span>
-                    </th>
+                    <th my-th-sort sortBy="name" headerName="Name" i18n-headerName="Loggers table header : name" (onClick)="sort = $event.sort"></th>
+                    <th my-th-sort sortBy="configuredLevel" headerName="Configured Level" i18n-headerName="Loggers table header : configured level" (onClick)="sort = $event.sort"></th>
+                    <th my-th-sort sortBy="effectiveLevel" headerName="Effective Level" i18n-headerName="Loggers table header : effective level" (onClick)="sort = $event.sort"></th>
                     <th class="text-right" i18n="Loggers table header : level">Update level</th>
                 </tr>
                 <tr>
@@ -41,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let logger of loggers | filter:{terms: [{key:'name',value:term},{key:'effectiveLevel',value:levelTerm}], sort: sort}:filteredCount | slice:(page - 1) * pageSize:page * pageSize">
+                <tr *ngFor="let logger of loggers | filter:{terms: [{key:'name',value:term},{key:'effectiveLevel',value:levelTerm, strict: true}], sort: sort}:filteredCount | slice:(page - 1) * pageSize:page * pageSize">
                     <td><span class="logger-name">{{logger.name}}</span></td>
                     <td>
                         <span class="label" class="space pointer badge" [ngClass]="logger.configuredLevelClass">{{logger.configuredLevel}}</span>

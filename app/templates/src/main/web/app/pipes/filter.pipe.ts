@@ -13,16 +13,34 @@ export class FilterPipe implements PipeTransform {
       return array;
     }
     let filtered = array;
-    for (let term of config.terms) {
-      if (term.key && term.value) {
-        filtered = filtered.filter(item => item[term.key].toLowerCase().indexOf(term.value.toLowerCase()) > -1);
-      }
+    if(config.terms){
+        for (let term of config.terms) {
+          if (term.key && term.value) {
+                filtered = filtered.filter(item => {
+                    let itemValue = item[term.key] && item[term.key].toLowerCase ? item[term.key].toLowerCase() : item[term.key];
+                    let termValue = term.value && term.value.toLowerCase ? term.value.toLowerCase() : term.value;
+                    if(!itemValue && !termValue){
+                        return true;
+                    } else if (!itemValue || !termValue) {
+                        return false;
+                    } else if(term.strict){
+                        return itemValue.length === termValue.length && itemValue.indexOf(termValue) === 0;
+                    } else {
+                        return itemValue && itemValue.indexOf(termValue) > -1;
+                    }
+                });
+          }
+        }
     }
     if (config.sort) {
       this.sort.by = config.sort;
-      filtered = filtered.sort(this.makeSort(config.sort));
+      filtered.sort(this.makeSort(config.sort));
+    } else {
+      filtered.sort();
     }
-    counter.count = filtered.length;
+    if(counter){
+        counter.count = filtered.length;
+    }
     return filtered;
   }
 
@@ -33,8 +51,8 @@ export class FilterPipe implements PipeTransform {
       property = property.substring(1);
     }
     return function (objA: any, objB: any) {
-      let a = objA[property] ? objA[property].toLowerCase() : null;
-      let b = objB[property] ? objB[property].toLowerCase() : null;
+      let a = objA[property] && objA[property].toLowerCase ? objA[property].toLowerCase() : objA[property];
+      let b = objB[property] && objB[property].toLowerCase ? objB[property].toLowerCase() : objB[property];
       return (a < b) ? -1 * multi : (a > b) ? multi : 0;
     }
   }

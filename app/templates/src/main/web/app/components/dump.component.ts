@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {ActuatorService, Counter} from "../services/actuator.service";
 import {SpinnerService} from "../services/spinner.service";
+import {UtilService} from "../services/util.service";
 import {NotificationService, NotificationType} from "../services/notification.service";
 import {Dump} from "../beans/dump";
 
@@ -27,19 +28,12 @@ export class DumpComponent implements OnInit {
 
   private filteredCount: Counter = new Counter();
 
+  constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService, private util: UtilService) {
+  }
+
   public resetFilters(): void {
     this.term = '';
     this.termState = undefined;
-  }
-
-  private getHexColor( color: string ) : string {
-      if( color.indexOf('#') != -1 ) { return color };
-      color = color.replace("rgba", "").replace("rgb", "").replace("(", "").replace(")", "");
-      let colors = color.split(",");
-      return  "#"
-              + ( '0' + parseInt(colors[0], 10).toString(16) ).slice(-2)
-              + ( '0' + parseInt(colors[1], 10).toString(16) ).slice(-2)
-              + ( '0' + parseInt(colors[2], 10).toString(16) ).slice(-2);
   }
 
   public getClass(state: string, test = true) {
@@ -62,9 +56,6 @@ export class DumpComponent implements OnInit {
       default:
         return 'badge-primary';
     }
-  }
-
-  constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService) {
   }
 
   private refresh(skipNotification: boolean) {
@@ -119,7 +110,7 @@ export class DumpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fontColor = this.getHexColor(window.getComputedStyle(this.textColor.nativeElement).color);
+    this.fontColor = this.util.getHexColor(window.getComputedStyle(this.textColor.nativeElement).color);
     this.refresh(true);
   }
 }
