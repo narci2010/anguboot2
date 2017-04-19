@@ -152,7 +152,7 @@
       <source>Update level</source>
       <target state="new">Mettre à jour le niveau de log</target>
       <note priority="1" from="description">Loggers table header : level</note>
-    </trans-unit><% if (plugins.translate) { %><trans-unit id="STATE.SUCCESS" datatype="html">
+    </trans-unit><trans-unit id="STATE.SUCCESS" datatype="html">
       <source>Success</source>
       <target state="new">Succès</target>
       <note priority="1" from="description">Success state translation</note>
@@ -165,6 +165,144 @@
       <target state="new">Erreur : <x id="INTERPOLATION"/></target>
       <note priority="1" from="description">Interpolation is error message</note>
       <note priority="1" from="meaning">Error state translation</note>
-    </trans-unit><% } %></body>
+    </trans-unit><trans-unit id="696d21435066edf9423ad87d1b44190dedd3df74" datatype="html">
+        <source>Threads</source>
+        <target state="new">Threads</target>
+        <note priority="1" from="description">Threads panel title</note>
+      </trans-unit><trans-unit id="fe245a76dc911d0e696b77c90d2e6aa898881fb9" datatype="html">
+        <source>Distribution</source>
+        <target state="new">Distribution</target>
+        <note priority="1" from="description">Threads distribution title</note>
+      </trans-unit><trans-unit id="5c8ea0443990792280e53ee2cc87e577940c95cf" datatype="html">
+        <source>Table</source>
+        <target state="new">Tableau</target>
+        <note priority="1" from="description">Threads table title</note>
+      </trans-unit><trans-unit id="2798cc1e152b1ec07fd8daf94a2a073d1ba1ebcc" datatype="html">
+        <source>Id</source>
+        <target state="new">Id</target>
+        <note priority="1" from="description">Thread table header : id</note>
+      </trans-unit><trans-unit id="873b72903b1858a9cd6c8967521030b4d7d1435b" datatype="html">
+        <source>State</source>
+        <target state="new">Etat</target>
+        <note priority="1" from="description">Thread table header : state</note>
+      </trans-unit><trans-unit id="f6b2048c58241339f5c2627d6d68b24c441275e0" datatype="html">
+        <source>Traces (<x id="INTERPOLATION"/>)</source>
+        <target state="new">Traces (<x id="INTERPOLATION"/>)</target>
+        <note priority="1" from="description">Trace panel title</note>
+      </trans-unit><trans-unit id="07193288a0312875e18f38c3a2486b927a15520a" datatype="html">
+        <source>Timestamp</source>
+        <target state="new">Timestamp</target>
+        <note priority="1" from="description">Traces table header : timestamp</note>
+      </trans-unit><trans-unit id="a0c7e8516852d2b5888c8a00894acd60aad61317" datatype="html">
+        <source>Method</source>
+        <target state="new">Méthode</target>
+        <note priority="1" from="description">Trace table header : method</note>
+      </trans-unit><trans-unit id="766c66ad5cc981c531aaf3fe3a2a7a346ddc8d83" datatype="html">
+        <source>Path</source>
+        <target state="new">Chemin</target>
+        <note priority="1" from="description">Trace table header : path</note>
+      </trans-unit><trans-unit id="20bce1f24f98516a27feab14852b6905e800500b" datatype="html">
+        <source>Audits (<x id="INTERPOLATION"/>)</source>
+        <target state="new">Audits (<x id="INTERPOLATION"/>)</target>
+        <note priority="1" from="description">Trace panel title</note>
+      </trans-unit><trans-unit id="732705569e07059ff6e4ffccc4157a2faaa031f4" datatype="html">
+        <source>Principal</source>
+        <target state="new">Utilisateur</target>
+        <note priority="1" from="description">Trace table header : principal</note>
+      </trans-unit><trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
+        <source>Type</source>
+        <target state="new">Type</target>
+        <note priority="1" from="description">Trace table header : type</note>
+      </trans-unit><trans-unit id="720f2dedfc9d713879dc21b128e0e34bbde81701" datatype="html">
+        <source>Context : </source>
+        <target state="new">Contexte : </target>
+        <note priority="1" from="description">Context panel title prefix</note>
+      </trans-unit><trans-unit id="1481b8488e10dbc437accce89d2ae35a0106e8ba" datatype="html">
+        <source>Scope</source>
+        <target state="new">Cadre</target>
+        <note priority="1" from="description">Beans table header : scope</note>
+      </trans-unit><trans-unit id="d65dc6c3324be629427da89e1240087373b4bf0b" datatype="html">
+        <source>Aliases</source>
+        <target state="new">Alias</target>
+        <note priority="1" from="description">Trace table header : aliases</note>
+      </trans-unit><trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
+        <source>Dependencies</source>
+        <target state="new">Dépendances</target>
+        <note priority="1" from="description">Trace table header : dependencies</note>
+      </trans-unit><trans-unit id="056d358b2b067307621203bdf9681a048041ad49" datatype="html">
+        <source>Environment</source>
+        <target state="new">Environnement</target>
+        <note priority="1" from="description">Environment panel title</note>
+      </trans-unit><trans-unit id="2aa1b475352673f7286f0caf8cd593e4c8ac1d64" datatype="html">
+        <source>Ports</source>
+        <target state="new">Ports</target>
+        <note priority="1" from="description">Environment server ports</note>
+      </trans-unit><trans-unit id="c58e33e048cf147451754a7b6509455e3931bc91" datatype="html">
+        <source>Profiles</source>
+        <target state="new">Profils</target>
+        <note priority="1" from="description">Environment profiles</note>
+      </trans-unit><trans-unit id="c8bc897f4fd1eedf6b7b90e4cb386ce495b50387" datatype="html">
+        <source>Command line arguments</source>
+        <target state="new">Argument de la commande</target>
+        <note priority="1" from="description">Command line arguments</note>
+      </trans-unit><trans-unit id="a6493c6ca346cd052da40423eda9c132de2b2002" datatype="html">
+        <source>Key</source>
+        <target state="new">Clé</target>
+        <note priority="1" from="description">Env properties table header : key</note>
+      </trans-unit><trans-unit id="5049e204c14c648691ac775a64fb504467aeb549" datatype="html">
+        <source>Value</source>
+        <target state="new">Valeur</target>
+        <note priority="1" from="description">Env properties table header : value</note>
+      </trans-unit><trans-unit id="1ca49f48c7d4aa5fb0200cd682c914e04ab22f22" datatype="html">
+        <source>Api (<x id="INTERPOLATION"/>)</source>
+        <target state="new">Api (<x id="INTERPOLATION"/>)</target>
+        <note priority="1" from="description">Api panel title</note>
+      </trans-unit><trans-unit id="155b4c8ed9793bc6f9960f334e9265edbd185ff6" datatype="html">
+        <source>Bean</source>
+        <target state="new">Bean</target>
+        <note priority="1" from="description">Mapping table header : bean</note>
+      </trans-unit><trans-unit id="e0dbbfca85c7d1d9276c9e5ef1b3d9a80065d18c" datatype="html">
+        <source>Java Method</source>
+        <target state="new">Méthode Java</target>
+        <note priority="1" from="description">Mapping table header : java method</note>
+      </trans-unit><trans-unit id="de08e675857b0101dcd3ce640a4f3f6b3729e566" datatype="html">
+        <source>Manage (<x id="INTERPOLATION"/>)</source>
+        <target state="new">Manage (<x id="INTERPOLATION"/>)</target>
+        <note priority="1" from="description">Api panel title</note>
+      </trans-unit><trans-unit id="6b4248e6ee17c09f70608d2bdc800d1f78d3c332" datatype="html">
+        <source>Others (<x id="INTERPOLATION"/>)</source>
+        <target state="new">Autres (<x id="INTERPOLATION"/>)</target>
+        <note priority="1" from="description">Api panel title</note>
+      </trans-unit><trans-unit id="054097f622133e9e8e6b099ff3c99a965a2ff298" datatype="html">
+        <source>Traces</source>
+        <target state="new">Traces</target>
+        <note priority="1" from="description">Go to traces page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit><trans-unit id="e00db2982ded33c83f2ef4b4332050463860f4d8" datatype="html">
+        <source>Dumps</source>
+        <target state="new">Dumps</target>
+        <note priority="1" from="description">Go to dumps page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit><trans-unit id="e8a004d19b9b34e12012ca7e15abe4d707f2c939" datatype="html">
+        <source>Audit</source>
+        <target state="new">Audit</target>
+        <note priority="1" from="description">Go to audit events page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit><trans-unit id="2b170e442e2631541250eca919f426ab692bc12e" datatype="html">
+        <source>Beans</source>
+        <target state="new">Beans</target>
+        <note priority="1" from="description">Go to beans page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit><trans-unit id="9cda8ccdc6790a7fabc1638ede6998d4a7259410" datatype="html">
+        <source>Environment</source>
+        <target state="new">Environnement</target>
+        <note priority="1" from="description">Go to environment page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit><trans-unit id="d83574bf3dcd48697f70b6e95f9237158a199b6f" datatype="html">
+        <source>Mappings</source>
+        <target state="new">Chemins</target>
+        <note priority="1" from="description">Go to mappings page</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit></body>
   </file>
 </xliff>

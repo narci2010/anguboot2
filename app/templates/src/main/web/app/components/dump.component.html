@@ -3,7 +3,7 @@
 <!-- <<< -->
 <div class="card">
     <div class="card-header card-header-primary">
-        <span i18n="Threads panel title">Threads ({{filteredCount.count}} / {{dumps.length}})</span>
+        <span i18n="Threads panel title">Threads</span>
         <span class="float-right">
             <a my-raw rawTitle="Threads [raw]" [(rawBody)]="dumps" class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a>
             <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
@@ -12,7 +12,9 @@
     <div class="card-block table-responsive">
         <div class="row" *ngIf="isDataAvailable">
             <div class="col-md-4">
-                <span><b>Distribution</b></span>
+                <span>
+                    <b i18n="Threads distribution title">Distribution</b>
+                </span>
                 <hr>
                 <div class="pie-padding" >
                     <canvas baseChart
@@ -24,7 +26,12 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <span><b>Table</b></span>
+                <span>
+                    <b>
+                        <span i18n="Threads table title">Table</span>
+                        <span>({{filteredCount.count}} / {{dumps.length}})</span>
+                    </b>
+                </span>
                 <hr>
                 <table class="table table-hover">
                     <thead>
@@ -52,7 +59,7 @@
                     <tr *ngFor="let thread of dumps | filter:{terms: [{key:'threadName',value:term},{key:'threadState',value:termState, strict: true}], sort: sort}:filteredCount; let i = index">
                         <td>{{thread.threadId}}</td>
                         <td>{{thread.threadName}}</td>
-                        <td><span class="badge" [ngClass]="getClass(state)">{{thread.threadState}}</span></td>
+                        <td><span class="badge" [ngClass]="getClass(thread.threadState)">{{thread.threadState}}</span></td>
                         <td><a my-raw rawTitle="Thread [raw] - {{thread.name}}" [(rawBody)]="dumps[i]"
                                class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
                     </tr>

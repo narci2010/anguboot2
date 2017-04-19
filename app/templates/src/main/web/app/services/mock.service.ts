@@ -27,6 +27,6 @@ export class MockService implements InMemoryDbService {
 
     let health: any = { "status": "UP","diskSpace": {"status": "UP","total": 120108089344,"free": 9796456448, "threshold": 10485760},"db": {"status": "UP","database": "H2","hello": 1}, "test": {"status": "DOWN","details": "Reason..."}};
 
-    return {loggers: loggers, health: health, me: me, welcome: {title:'Demo welcome message'}, metrics: metrics, dump: dump, trace: trace};
+    return {loggers: loggers, health: health, me: me, welcome: {title:'Demo welcome message'}, metrics: metrics, dump: dump, trace: trace, auditevents: auditevents, mappings: mappings, env: env, beans: beans};
   }
 }

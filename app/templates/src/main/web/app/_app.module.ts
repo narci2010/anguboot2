@@ -41,6 +41,7 @@ import {MockService} from "./services/mock.service";
 // directives
 import {SpinnerComponent} from "./directives/spinner.directive";
 import {RawDirective, RawModalContent} from "./directives/raw.directive";
+import {CheckDirective} from "./directives/check.directive";
 import {ConfirmDirective, ConfirmModalContent} from "./directives/confirm.directive";
 import {TableSortDirective} from "./directives/table.directive";
 // pipes
@@ -103,10 +104,14 @@ import "../assets/scss/styles.scss";
 import "../assets/images/favicon.ico";
 
 declare let CONSTANTS: any;
+let MockModule: any = [];
+if(CONSTANTS.mock_http){
+  MockModule = InMemoryWebApiModule.forRoot(MockService, { delay: 500 }); 
+}
 
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpModule, AppRoutingModule, <% if (plugins.ace) { %>AceEditorModule, <%}%>NgbModule.forRoot(), ChartsModule, ToasterModule,<% if (plugins.custo) { %> ColorPickerModule,<% } %>
-  LocalStorageModule.withConfig({prefix: 'angutest', storageType: 'localStorage' }), CONSTANTS.mock_http ? InMemoryWebApiModule.forRoot(MockService, { delay: 500 }) : []],
+  LocalStorageModule.withConfig({prefix: 'angutest', storageType: 'localStorage' }), MockModule],
   entryComponents: [RawModalContent, ConfirmModalContent<% if (plugins.custo && plugins.ace) { %>, AceModalContent<%}%>],
   providers: [<% if (plugins.security) { %>UserService, <%}%>UtilService, SpringService, ActuatorService, NotificationService, SpinnerService, HttpService,<% if (plugins.custo) { %> CustoService, <%}%> LoggerService,
     TimePipe, SizePipe, DatePipe,<% if (plugins.translate) { %> TranslatePipe, I18nService,<% } %><% if (plugins.security) { %>
@@ -115,7 +120,7 @@ declare let CONSTANTS: any;
   bootstrap: [AppComponent],
   declarations: [AppComponent, HomeComponent, ContactComponent, NavComponent, SpinnerComponent, <% if (plugins.security) { %>LoginComponent, <%}%><% if (plugins.security) { %>UserComponent,<%}%>
     HealthComponent, DumpComponent, TraceComponent, LoggersComponent, MetricsComponent, AuditComponent, BeansComponent, EnvComponent, MappingsComponent,
-    RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective, TableSortDirective,
+    RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective, CheckDirective, TableSortDirective,
     TimePipe, SizePipe, FilterPipe<% if (plugins.translate) { %>, TmpI18nComponent, TranslatePipe<% } %>]
 })
 export class AppModule {

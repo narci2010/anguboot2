@@ -86,6 +86,4 @@ $ java -jar target/angutest-executable.jar --spring.config.location=target/test-
 ## What's coming next
 
 * Add i18n + error messages
-* Improve actuator pages (env, search for beans)
-* Add check directive yes/no
 * Fix too long fields in table (with fixed columns ?)

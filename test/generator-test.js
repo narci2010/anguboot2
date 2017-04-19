@@ -53,7 +53,7 @@ var angularFiles = [
   'src/main/web/app/components/mappings.component.ts', 'src/main/web/app/components/mappings.component.html',
 
   'src/main/web/app/directives/confirm.directive.ts', 'src/main/web/app/directives/raw.directive.ts', 'src/main/web/app/directives/spinner.directive.ts',
-  'src/main/web/app/directives/table.directive.ts',
+  'src/main/web/app/directives/table.directive.ts', 'src/main/web/app/directives/check.directive.ts',
 
   'src/main/web/app/pipes/filter.pipe.ts', 'src/main/web/app/pipes/size.pipe.ts', 'src/main/web/app/pipes/time.pipe.ts',
 
