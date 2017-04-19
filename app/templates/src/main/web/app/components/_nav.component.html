@@ -40,6 +40,10 @@
                         <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/loggers" routerLinkActive="active" i18n="Navbar link|Go to loggers page">Loggers</a>
                         <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/trace" routerLinkActive="active" i18n="Navbar link|Go to traces page">Traces</a>
                         <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/dump" routerLinkActive="active" i18n="Navbar link|Go to dumps page">Dumps</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/auditevents" routerLinkActive="active" i18n="Navbar link|Go to audit events page">Audit</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/beans" routerLinkActive="active" i18n="Navbar link|Go to beans page">Beans</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/env" routerLinkActive="active" i18n="Navbar link|Go to environment page">Environment</a>
+                        <a <% if(plugins.security) { %>*ngIf="actuator" <%}%>class="dropdown-item" routerLink="/mappings" routerLinkActive="active" i18n="Navbar link|Go to mappings page">Mappings</a>
                     </div>
                 </div>
             </li><% if (plugins.translate) { %>

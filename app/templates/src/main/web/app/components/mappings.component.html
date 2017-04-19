@@ -1,0 +1,98 @@
+<div class="card" *ngIf="api && api.length > 0">
+    <div class="card-header card-header-primary">
+        <span i18n="Api panel title">Api ({{api.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Trace [raw]" [(rawBody)]="mappings" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="mappings">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th i18n="Mapping table header : path">Path</th>
+                    <th i18n="Mapping table header : method">Method</th>
+                    <th i18n="Mapping table header : bean">Bean</th>
+                    <th i18n="Mapping table header : java method">Java Method</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let i of api">
+                    <td><code class="space" *ngFor="let p of i.paths">{{p}}</code></td>
+                    <td><span class="badge badge-primary space" *ngFor="let m of i.methods">{{m}}</span></td>
+                    <td>{{i.bean}}</td>
+                    <td>{{i.javaMethod}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card margin-top" *ngIf="manage && manage.length > 0">
+    <div class="card-header card-header-primary">
+        <span i18n="Api panel title">Manage ({{manage.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Trace [raw]" [(rawBody)]="mappings" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="mappings">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th i18n="Mapping table header : path">Path</th>
+                    <th i18n="Mapping table header : method">Method</th>
+                    <th i18n="Mapping table header : bean">Bean</th>
+                    <th i18n="Mapping table header : java method">Java Method</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let i of manage">
+                    <td><code class="space" *ngFor="let p of i.paths">{{p}}</code></td>
+                    <td><span class="badge badge-primary space" *ngFor="let m of i.methods">{{m}}</span></td>
+                    <td>{{i.bean}}</td>
+                    <td>{{i.javaMethod}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card margin-top" *ngIf="others && others.length > 0">
+    <div class="card-header card-header-primary">
+        <span i18n="Api panel title">Others ({{others.length}})</span>
+        <span class="float-right">
+            <a my-raw rawTitle="Trace [raw]" [(rawBody)]="mappings" class="fa fa-lg fa-eye fa-margin pointer text-color"
+               href="#"></a>
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <div *ngIf="mappings">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th i18n="Mapping table header : path">Path</th>
+                    <th i18n="Mapping table header : method">Method</th>
+                    <th i18n="Mapping table header : bean">Bean</th>
+                    <th i18n="Mapping table header : java method">Java Method</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let i of others">
+                    <td><code class="space" *ngFor="let p of i.paths">{{p}}</code></td>
+                    <td><span class="badge badge-primary space" *ngFor="let m of i.methods">{{m}}</span></td>
+                    <td>{{i.bean}}</td>
+                    <td>{{i.javaMethod}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

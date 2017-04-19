@@ -199,28 +199,26 @@ a.nav-link.active {
 // Loggers
 // ------------------------------------------------------------------------------------------------------------
 
-.logger-name {
-  word-break: break-all;
-  display: block;
-  width: 500px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 // ------------------------------------------------------------------------------------------------------------
 // Metrics
 // ------------------------------------------------------------------------------------------------------------
 
 .pie-padding {
-  /* padding-right: 50px;*/
-  /* padding-left: 50px;*/
   padding-top: 10px;
 }
 
 // ------------------------------------------------------------------------------------------------------------
 // Others
 // ------------------------------------------------------------------------------------------------------------
+
+.text-overflow {
+  word-break: break-all;
+  display: block;
+  width: 600px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .fa-margin {
   margin-right: 10px;

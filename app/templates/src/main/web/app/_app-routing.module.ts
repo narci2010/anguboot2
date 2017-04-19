@@ -5,6 +5,10 @@ import {ContactComponent} from "./components/contact.component";
 import {HealthComponent} from "./components/health.component";
 import {DumpComponent} from "./components/dump.component";
 import {TraceComponent} from "./components/trace.component";
+import {AuditComponent} from "./components/audit.component";
+import {BeansComponent} from "./components/beans.component";
+import {EnvComponent} from "./components/env.component";
+import {MappingsComponent} from "./components/mappings.component";
 import {MetricsComponent} from "./components/metrics.component";
 import {LoggersComponent} from "./components/loggers.component";<% if(plugins.security) { %>
 import {LoginComponent} from "./components/login.component";
@@ -19,6 +23,10 @@ const routes: Routes = [
   {path: 'health', component: HealthComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
   {path: 'dump', component: DumpComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
   {path: 'trace', component: TraceComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'env', component: EnvComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'auditevents', component: AuditComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'beans', component: BeansComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
+  {path: 'mappings', component: MappingsComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},
   {path: 'metrics', component: MetricsComponent<% if(plugins.security) { %>, canActivate: [ActuatorActivation]<% } %>},
   {path: 'loggers', component: LoggersComponent<% if(plugins.security) { %>, canActivate: [ActuatorActivation]<% } %>},<% if(plugins.security) { %>
   {path: 'user', component: UserComponent<% if(plugins.security) { %>, canActivate: [AuthenticatedActivation]<% } %>},<% } %><% if(plugins.custo) { %>

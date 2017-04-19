@@ -2,6 +2,9 @@ import {Injectable} from "@angular/core";
 import {HttpService} from "./http.service";
 import {Response} from "@angular/http";
 import {Logger, Loggers} from "../beans/loggers";
+import {BeanContext} from "../beans/beans";
+import {Audit} from "../beans/audit";
+import {Env} from "../beans/env";
 import {Trace} from "../beans/trace";
 import {Dump} from "../beans/dump";<% if (report) { %>
 import {Timer} from "../beans/timer";<% } %>
@@ -39,6 +42,26 @@ export class ActuatorService extends ApiService {
 
   trace(): Observable<Dump[]> {
     return this.http.get(this.manageUrl + '/trace', this.buildOptions()).map(response => this.json(response) as Trace[])
+      .catch(error => this.buildError(error));
+  }
+
+  beans(): Observable<BeanContext[]> {
+    return this.http.get(this.manageUrl + '/beans', this.buildOptions()).map(response => this.json(response) as BeanContext[])
+      .catch(error => this.buildError(error));
+  }
+
+  audit(): Observable<Audit> {
+    return this.http.get(this.manageUrl + '/auditevents', this.buildOptions()).map(response => this.json(response) as Audit)
+      .catch(error => this.buildError(error));
+  }
+
+  env(): Observable<Env> {
+    return this.http.get(this.manageUrl + '/env', this.buildOptions()).map(response => this.json(response) as Env)
+      .catch(error => this.buildError(error));
+  }
+
+  mappings(): Observable<any> {
+    return this.http.get(this.manageUrl + '/mappings', this.buildOptions()).map(response => this.json(response))
       .catch(error => this.buildError(error));
   }
 

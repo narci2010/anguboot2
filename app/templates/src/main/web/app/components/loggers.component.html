@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let logger of loggers | filter:{terms: [{key:'name',value:term},{key:'effectiveLevel',value:levelTerm, strict: true}], sort: sort}:filteredCount | slice:(page - 1) * pageSize:page * pageSize">
-                    <td><span class="logger-name">{{logger.name}}</span></td>
+                    <td><span class="text-overflow">{{logger.name}}</span></td>
                     <td>
                         <span class="label" class="space pointer badge" [ngClass]="logger.configuredLevelClass">{{logger.configuredLevel}}</span>
                     </td>

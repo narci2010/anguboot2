@@ -14,6 +14,10 @@ import {HomeComponent} from "./components/home.component";
 import {MetricsComponent} from "./components/metrics.component";
 import {LoggersComponent} from "./components/loggers.component";
 import {HealthComponent} from "./components/health.component";
+import {AuditComponent} from "./components/audit.component";
+import {BeansComponent} from "./components/beans.component";
+import {EnvComponent} from "./components/env.component";
+import {MappingsComponent} from "./components/mappings.component";
 import {DumpComponent} from "./components/dump.component";
 import {TraceComponent} from "./components/trace.component";
 import {ContactComponent} from "./components/contact.component";<% if (plugins.security) { %>
@@ -109,8 +113,8 @@ declare let CONSTANTS: any;
     AuthenticatedActivation, AdminActivation, ActuatorActivation,<%}%>
     Constants, CookieService],
   bootstrap: [AppComponent],
-  declarations: [AppComponent, HomeComponent, ContactComponent, HealthComponent, DumpComponent, TraceComponent, LoggersComponent, MetricsComponent,
-    NavComponent, <% if (plugins.security) { %>LoginComponent, <%}%>SpinnerComponent, <% if (plugins.security) { %>UserComponent,<%}%>
+  declarations: [AppComponent, HomeComponent, ContactComponent, NavComponent, SpinnerComponent, <% if (plugins.security) { %>LoginComponent, <%}%><% if (plugins.security) { %>UserComponent,<%}%>
+    HealthComponent, DumpComponent, TraceComponent, LoggersComponent, MetricsComponent, AuditComponent, BeansComponent, EnvComponent, MappingsComponent,
     RawModalContent, RawDirective, <% if (plugins.custo) { %> CustoComponent,<% if (plugins.ace) { %>AceModalContent, <%}%><%}%>ConfirmModalContent, ConfirmDirective, TableSortDirective,
     TimePipe, SizePipe, FilterPipe<% if (plugins.translate) { %>, TmpI18nComponent, TranslatePipe<% } %>]
 })

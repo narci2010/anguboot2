@@ -35,8 +35,8 @@ var angularFiles = [
   'src/main/web/app/app-routing.module.ts', 'src/main/web/app/app.component.ts', 'src/main/web/app/app.module.ts',
   'src/main/web/app/constants.ts',
 
-  'src/main/web/app/beans/dump.ts', 'src/main/web/app/beans/error.ts', 'src/main/web/app/beans/loggers.ts',
-  'src/main/web/app/beans/table.ts', 'src/main/web/app/beans/trace.ts', 
+  'src/main/web/app/beans/dump.ts', 'src/main/web/app/beans/error.ts', 'src/main/web/app/beans/loggers.ts', 'src/main/web/app/beans/env.ts',
+  'src/main/web/app/beans/table.ts', 'src/main/web/app/beans/trace.ts', 'src/main/web/app/beans/audit.ts', 'src/main/web/app/beans/beans.ts',
   
   'src/main/web/app/components/contact.component.ts', 'src/main/web/app/components/contact.component.html',
   'src/main/web/app/components/health.component.ts', 'src/main/web/app/components/health.component.html',
@@ -47,6 +47,10 @@ var angularFiles = [
   'src/main/web/app/components/contact.component.ts', 'src/main/web/app/components/contact.component.html',
   'src/main/web/app/components/dump.component.ts', 'src/main/web/app/components/dump.component.html',
   'src/main/web/app/components/trace.component.ts', 'src/main/web/app/components/trace.component.html',
+  'src/main/web/app/components/audit.component.ts', 'src/main/web/app/components/audit.component.html',
+  'src/main/web/app/components/beans.component.ts', 'src/main/web/app/components/beans.component.html',
+  'src/main/web/app/components/env.component.ts', 'src/main/web/app/components/env.component.html',
+  'src/main/web/app/components/mappings.component.ts', 'src/main/web/app/components/mappings.component.html',
 
   'src/main/web/app/directives/confirm.directive.ts', 'src/main/web/app/directives/raw.directive.ts', 'src/main/web/app/directives/spinner.directive.ts',
   'src/main/web/app/directives/table.directive.ts',
