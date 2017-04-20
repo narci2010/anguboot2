@@ -26,3 +26,4 @@ script:
   - test/generate.sh no-options $HOME/no-options && mvn clean install -f $HOME/no-options/pom.xml
   - test/generate.sh no-angular $HOME/no-angular && mvn clean install -f $HOME/no-angular/pom.xml
   - test/generate.sh all-options $HOME/all-options && mvn clean install -f $HOME/all-options/pom.xml
+  - docker -v
