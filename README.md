@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/fonimus/anguboot2.svg?branch=master)](https://travis-ci.org/fonimus/anguboot2)
 [![dependencies Status](https://david-dm.org/fonimus/anguboot2/status.svg)](https://david-dm.org/fonimus/anguboot2)
+[![devDependencies Status](https://david-dm.org/fonimus/anguboot2/dev-status.svg)](https://david-dm.org/fonimus/anguboot2?type=dev)
 
 > Yeoman generator for a complete Spring Boot application with Angular 4
 
