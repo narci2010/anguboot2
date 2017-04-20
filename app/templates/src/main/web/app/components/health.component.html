@@ -9,12 +9,12 @@
     </div>
     <div class="card-block table-responsive">
         <div>
-            <table class="table table-hover">
+            <table class="table table-hover table-fixed-header">
                 <thead>
                 <tr>
-                    <th class="pointer" i18n="Health table header : name">Name</th>
-                    <th class="pointer" i18n="Health table header : status">Status</th>
-                    <th i18n="Health table header : details">Details</th>
+                    <th width="30%" i18n="Health table header : name">Name</th>
+                    <th width="10%" i18n="Health table header : status">Status</th>
+                    <th width="60%" i18n="Health table header : details">Details</th>
                 </tr>
                 <tr>
                     <th colspan="1">
@@ -31,27 +31,33 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let health of healthList | filter:{terms: [{key:'name',value:term},{key:'status',value:termStatus}]}:filteredCount">
+                <tr *ngFor="let health of healthList | filter:{terms: [{key:'name',value:term},{key:'status',value:termStatus}]}:filteredCount; let i = index">
                     <td>{{health.name}}</td>
                     <td><span
                             [ngClass]="{'badge-success': health.status === 'UP', 'badge-danger': health.status !== 'UP'}"
                             class="badge">{{health.status}}</span></td>
                     <td>
-                        <span [ngSwitch]="health.name">
-                        <span *ngSwitchCase="'diskSpace'">
-                            <ngb-progressbar type="{{health.type}}" [value]="health.value" [striped]="true" [animated]="true"
-                                             placement="top" ngbTooltip="{{health.free | size}} / {{health.total | size}}">
-                                <i>{{ health.value }} %</i>
-                            </ngb-progressbar>
-                        </span>
-                        <span *ngSwitchCase="'db'">{{health.database}}</span>
-                        <span *ngSwitchDefault>{{health.details}}</span>
+                        <span class="row">
+                            <span class="col-xs-1 col-md-1">
+                                <a my-raw rawTitle="Health [raw] - {{health.name}}" [(rawBody)]="healthList[i].raw"
+                                   class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a>
+                            </span>
+                            <span class="col-xs-11 col-md-11" [ngSwitch]="health.name">
+                                <span *ngSwitchCase="'diskSpace'">
+                                    <ngb-progressbar type="{{health.type}}" [value]="health.value" [striped]="true" [animated]="true"
+                                                     placement="top" ngbTooltip="{{health.raw.free | size}} / {{health.raw.total | size}}">
+                                        <i>{{ health.value }} %</i>
+                                    </ngb-progressbar>
+                                </span>
+                                <span *ngSwitchCase="'db'">{{health.raw.database}}</span>
+                                <span *ngSwitchDefault>{{health.raw.details}}</span>
+                            </span>
                         </span>
                     </td>
                 </tr>
-                <tr *ngIf="filteredCount.count == 0">
+                <tr *ngIf="!healthList || healthList.length == 0 || filteredCount.count == 0">
                     <td colspan="3">
-                        <span>No results</span>
+                        <span i18n>No results</span>
                     </td>
                 </tr>
                 </tbody>

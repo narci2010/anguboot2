@@ -18,7 +18,7 @@
                         <th i18n="Beans table header : scope">Scope</th>
                         <th my-th-sort sortBy="type" headerName="Type" i18n-headerName="Beans table header : type"
                             (onClick)="sort = $event.sort"></th>
-                        <th i18n="Trace table header : aliases">Aliases</th>
+                        <!--<th i18n="Trace table header : aliases">Aliases</th>-->
                         <th i18n="Trace table header : dependencies">Dependencies</th>
                         <th i18n="Trace table header : details">Details</th>
                     </tr>
@@ -30,22 +30,35 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let bean of ctx.beans | filter:{terms:[{key:'bean', value: term}], sort: sort}:ctx.filteredCount; let i = index">
-                        <td><span class="text-overflow">{{bean.bean}}</span></td>
+                        <td class="text-overflow">{{bean.bean}}</td>
                         <td><span class="badge badge-primary">{{bean.scope}}</span></td>
-                        <td><code class="text-overflow">{{bean.type}}</code></td>
-                        <td><span my-check [ok]="bean.aliases.length > 0"></span></td>
+                        <td class="text-overflow">{{bean.type}}</td>
+                        <!--<td><span my-check [ok]="bean.aliases.length > 0"></span></td>-->
                         <td><span my-check [ok]="bean.dependencies.length > 0"></span></td>
                         <td><a my-raw rawTitle="Bean [raw] - {{bean.bean}}" [(rawBody)]="ctx.beans[i]"
                                class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
                     </tr>
-                    <tr *ngIf="ctx.filteredCount.count == 0">
+                    <tr *ngIf="!ctx.beans || ctx.beans.length == 0 || ctx.filteredCount.count == 0">
                         <td colspan="6">
-                            <span>No results</span>
+                            <span i18n>No results</span>
                         </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+</div>
+<div class="card" *ngIf="!contexts">
+    <div class="card-header card-header-primary">
+        <span i18n="Beans panel title">Beans</span>
+        <span class="float-right">
+            <a class="fa fa-refresh pointer text-color" (click)="$event.preventDefault();refresh()" href="#"></a>
+        </span>
+    </div>
+    <div class="card-block table-responsive">
+        <p>
+            <span i18n>No results</span>
+        </p>
     </div>
 </div>

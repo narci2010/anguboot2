@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ToasterService} from "angular2-toaster/angular2-toaster";
 import {HttpError} from "../beans/error";
-import {LoggerService, Log} from "./logger.service";
+import {LoggerService, Log} from "./logger.service";<% if (plugins.translate) { %>
+import {I18nService} from "../services/i18n.service";<% } %>
 
 export enum NotificationType {
   SUCCESS, INFO, ERROR, WARNING
@@ -12,7 +13,7 @@ export class NotificationService {
 
   private logger: Log;
 
-  constructor(private toaster: ToasterService, protected loggerService: LoggerService) {
+  constructor(private toaster: ToasterService, protected loggerService: LoggerService<% if (plugins.translate) { %>, private i18n: I18nService<% } %>) {
     this.logger = loggerService.getLogger('service.notification');
   }
 
@@ -32,8 +33,9 @@ export class NotificationService {
     this.toaster.pop(NotificationType[NotificationType.ERROR].toLowerCase(), header, message);
   }
 
-  notifyHttpError(error: HttpError): void {
-    this.toaster.pop(NotificationType[NotificationType.ERROR].toLowerCase(), error.error, error.message);
+  notifyHttpError(error: HttpError): void {<% if (plugins.translate) { %>
+    this.toaster.pop(NotificationType[NotificationType.ERROR].toLowerCase(), this.i18n.getHttpStatusErrorMessage(error.status));<% } else { %>
+    this.toaster.pop(NotificationType[NotificationType.ERROR].toLowerCase(), error.error, error.message);<% } %>
   }
 
   private check(header?: string, message?: string): boolean {

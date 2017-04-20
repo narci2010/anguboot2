@@ -10,7 +10,10 @@
         </span>
     </div>
     <div class="card-block table-responsive">
-        <div class="row" *ngIf="isDataAvailable">
+        <p *ngIf="!dumps || dumps.length == 0 || filteredCount.count == 0">
+            <span i18n>No results</span>
+        </p>
+        <div class="row" *ngIf="dumps">
             <div class="col-md-4">
                 <span>
                     <b i18n="Threads distribution title">Distribution</b>
@@ -62,11 +65,6 @@
                         <td><span class="badge" [ngClass]="getClass(thread.threadState)">{{thread.threadState}}</span></td>
                         <td><a my-raw rawTitle="Thread [raw] - {{thread.name}}" [(rawBody)]="dumps[i]"
                                class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
-                    </tr>
-                    <tr *ngIf="filteredCount.count == 0">
-                        <td colspan="4">
-                            <span>No results</span>
-                        </td>
                     </tr>
                     </tbody>
                 </table>

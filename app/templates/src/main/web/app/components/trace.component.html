@@ -28,9 +28,9 @@
                     <td><a my-raw rawTitle="Trace [raw] - {{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}" [(rawBody)]="traces[i]"
                            class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
                 </tr>
-                <tr *ngIf="traces.count == 0">
+                <tr *ngIf="!traces || traces.length == 0">
                     <td colspan="5">
-                        <span>No results</span>
+                        <span i18n="No results">No results</span>
                     </td>
                 </tr>
                 </tbody>

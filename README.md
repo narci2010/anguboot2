@@ -85,5 +85,4 @@ $ java -jar target/angutest-executable.jar --spring.config.location=target/test-
 
 ## What's coming next
 
-* Add i18n + error messages
-* Fix too long fields in table (with fixed columns ?)
+???

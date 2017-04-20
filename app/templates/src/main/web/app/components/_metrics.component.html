@@ -19,51 +19,57 @@
             <div class="col-md-6">
                 <b>Memory</b>
                 <hr>
-                <p>Total Memory</p>
-                <ngb-progressbar type="success" [value]="(metrics.mem - metrics['mem.free']) * 100 / metrics.mem" [striped]="true" [animated]="true"
-                                 placement="top" ngbTooltip="{{(metrics.mem - metrics['mem.free']) / 1024 | number:0}} M / {{metrics.mem / 1024 | number:0}} M">
-                    <i>{{(metrics.mem - metrics['mem.free']) * 100 / metrics.mem | number:0}}%</i>
-                </ngb-progressbar>
-
-                <p class="margin-top">Heap Memory</p>
-                <ngb-progressbar type="success" [value]="metrics['heap.used'] * 100 / metrics['heap.committed']" [striped]="true" [animated]="true"
-                                 placement="top" ngbTooltip="{{metrics['heap.used'] / 1024 | number:0}} M / {{metrics['heap.committed'] / 1024 | number:0}} M">
-                    <i>{{metrics['heap.used'] * 100 / metrics['heap.committed'] | number:0}}%</i>
-                </ngb-progressbar>
-
-                <p class="margin-top">Non-Heap Memory</p>
-                <ngb-progressbar type="success" [value]="metrics['nonheap.used'] * 100 / metrics['nonheap.committed']" [striped]="true" [animated]="true"
-                                 placement="top" ngbTooltip="{{metrics['nonheap.used'] / 1024 | number:0}} M / {{metrics['nonheap.committed'] / 1024 | number:0}} M">
-                    <i>{{metrics['nonheap.used'] * 100 / metrics['nonheap.committed'] | number:0}}%</i>
-                </ngb-progressbar>
+                <dl class="row dl-memory">
+                    <dt class="col-md-3" i18n>Total Memory</dt>
+                    <dd class="col-md-9">
+                        <ngb-progressbar type="success" class="progress-bar-lg" [value]="(metrics.mem - metrics['mem.free']) * 100 / metrics.mem"
+                                         [striped]="true" [animated]="true"
+                                         placement="top"
+                                         ngbTooltip="{{(metrics.mem - metrics['mem.free']) / 1024 | number:0}} M / {{metrics.mem / 1024 | number:0}} M">
+                            <i>{{(metrics.mem - metrics['mem.free']) * 100 / metrics.mem | number:0}}%</i>
+                        </ngb-progressbar>
+                    </dd>
+                    <dt class="col-md-3" i18n>Heap Memory</dt>
+                    <dd class="col-md-9">
+                        <ngb-progressbar type="success" class="progress-bar-lg" [value]="metrics['heap.used'] * 100 / metrics['heap.committed']"
+                                         [striped]="true" [animated]="true"
+                                         placement="top"
+                                         ngbTooltip="{{metrics['heap.used'] / 1024 | number:0}} M / {{metrics['heap.committed'] / 1024 | number:0}} M">
+                            <i>{{metrics['heap.used'] * 100 / metrics['heap.committed'] | number:0}}%</i>
+                        </ngb-progressbar>
+                    </dd>
+                    <dt class="col-md-3" i18n>Non-Heap Memory</dt>
+                    <dd class="col-md-9">
+                        <ngb-progressbar type="success" class="progress-bar-lg" [value]="metrics['nonheap.used'] * 100 / metrics['nonheap.committed']"
+                                         [striped]="true" [animated]="true"
+                                         placement="top"
+                                         ngbTooltip="{{metrics['nonheap.used'] / 1024 | number:0}} M / {{metrics['nonheap.committed'] / 1024 | number:0}} M">
+                            <i>{{metrics['nonheap.used'] * 100 / metrics['nonheap.committed'] | number:0}}%</i>
+                        </ngb-progressbar>
+                    </dd>
+                </dl>
             </div>
             <div class="col-md-6">
-                <b>Garbage collector</b>
+                <b i18n>Garbage collector</b>
                 <hr>
                 <dl class="row">
-                    <dt class="col-sm-9 col-xs-9">Mark Sweep count</dt>
-                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_marksweep.count']}}</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-9 col-xs-9">Mark Sweep time</dt>
-                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_marksweep.time']}}</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-9 col-xs-9">Scavenge count</dt>
-                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_scavenge.count']}}</dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-9 col-xs-9">Scavenge time</dt>
-                    <dd class="col-sm-3 col-xs-3">{{metrics['gc.ps_scavenge.time']}}</dd>
+                    <dt class="col-md-9" i18n>Mark Sweep count</dt>
+                    <dd class="col-md-3">{{metrics['gc.ps_marksweep.count']}}</dd>
+                    <dt class="col-md-9" i18n>Mark Sweep time</dt>
+                    <dd class="col-md-3">{{metrics['gc.ps_marksweep.time']}}</dd>
+                    <dt class="col-md-9" i18n>Scavenge count</dt>
+                    <dd class="col-md-3">{{metrics['gc.ps_scavenge.count']}}</dd>
+                    <dt class="col-md-9" i18n>Scavenge time</dt>
+                    <dd class="col-md-3">{{metrics['gc.ps_scavenge.time']}}</dd>
                 </dl>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card margin-top">
+<div class="card margin-top" *ngIf="isDataAvailable">
     <div class="card-header card-header-primary">
-        <span>Http</span>
+        <span i18n="Http requests">Http requests</span>
         <span class="float-right">
             <a my-raw rawTitle="Metrics [raw]" [(rawBody)]="metrics"
                class="fa fa-lg fa-eye fa-margin pointer text-color"
@@ -72,64 +78,71 @@
         </span>
     </div>
     <div class="card-block table-responsive">
-        <div *ngIf="isDataAvailable">
-            <p *ngIf="metricsHttp['all'] == 0">No http requests yet</p>
+        <div>
+            <p *ngIf="metricsHttp['all'] == 0" i18n="No requests yet message">No http requests yet</p>
             <div *ngIf="metricsHttp && metricsHttp['all'] > 0">
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Count</th>
+                        <th i18n="Metrics http table header : code">Code</th>
+                        <th i18n="Metrics http table header : name">Name</th>
+                        <th i18n="Metrics http table header : count">Count</th>
+                        <th i18n="Metrics http table header : distribution">Distribution</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr *ngIf="metricsHttp['200'] > 0">
-                        <td>OK</td>
+                        <td>200</td>
+                        <td i18n="200 status description">OK</td>
+                        <td>{{metricsHttp['200']}}</td>
                         <td>
-                            <ngb-progressbar type="success"
+                            <ngb-progressbar type="success" class="progress-bar-lg"
                                              [value]="metricsHttp['200'] * 100 / metricsHttp['all']"
                                              [striped]="true" [animated]="true">
-                                <i>{{metricsHttp['200']}}</i>
                             </ngb-progressbar>
                         </td>
                     </tr>
                     <tr *ngIf="metricsHttp['400'] > 0">
-                        <td>Bad Request</td>
+                        <td>400</td>
+                        <td i18n="Error 400 description">Bad Request</td>
+                        <td>{{metricsHttp['400']}}</td>
                         <td>
-                            <ngb-progressbar type="warning"
+                            <ngb-progressbar type="warning" class="progress-bar-lg"
                                              [value]="metricsHttp['400'] * 100 / metricsHttp['all']"
                                              [striped]="true" [animated]="true">
-                                <i>{{metricsHttp['400']}}</i>
                             </ngb-progressbar>
                         </td>
                     </tr>
                     <tr *ngIf="metricsHttp['401'] > 0">
-                        <td>Unauthorized</td>
+                        <td>401</td>
+                        <td i18n="Error 500 description">Unauthorized</td>
+                        <td>{{metricsHttp['401']}}</td>
                         <td>
-                            <ngb-progressbar type="warning"
+                            <ngb-progressbar type="warning" class="progress-bar-lg"
                                              [value]="metricsHttp['401'] * 100 / metricsHttp['all']"
                                              [striped]="true" [animated]="true">
-                                <i>{{metricsHttp['401']}}</i>
                             </ngb-progressbar>
                         </td>
                     </tr>
                     <tr *ngIf="metricsHttp['404'] > 0">
-                        <td>Not Found</td>
+                        <td>404</td>
+                        <td i18n="Error 404 description">Not Found</td>
+                        <td>{{metricsHttp['404']}}</td>
                         <td>
-                            <ngb-progressbar type="warning"
+                            <ngb-progressbar type="warning" class="progress-bar-lg"
                                              [value]="metricsHttp['404'] * 100 / metricsHttp['all']"
                                              [striped]="true" [animated]="true">
-                                <i>{{metricsHttp['404']}}</i>
                             </ngb-progressbar>
                         </td>
                     </tr>
                     <tr *ngIf="metricsHttp['500'] > 0">
-                        <td>Server error</td>
+                        <td>500</td>
+                        <td i18n="Error 500 description">Server error</td>
+                        <td>{{metricsHttp['500']}}</td>
                         <td>
-                            <ngb-progressbar type="danger"
+                            <ngb-progressbar type="danger" class="progress-bar-lg"
                                              [value]="metricsHttp['500'] * 100 / metricsHttp['all']"
                                              [striped]="true" [animated]="true">
-                                <i>{{metricsHttp['500']}}</i>
                             </ngb-progressbar>
                         </td>
                     </tr>
@@ -140,7 +153,7 @@
     </div>
 </div>
 
-<div class="card margin-top">
+<div class="card margin-top" *ngIf="isDataAvailable">
     <div class="card-header card-header-primary">
         <span>Services (in ms)</span>
         <span class="float-right">
@@ -151,7 +164,7 @@
         </span>
     </div>
     <div class="card-block table-responsive">
-        <div *ngIf="isDataAvailable">
+        <div>
             <p *ngIf="!metricsServicesArray || metricsServicesArray.length == 0">No service found</p>
 
             <div *ngIf="metricsServicesArray && metricsServicesArray.length > 0">
@@ -192,7 +205,7 @@
     </div>
 </div><% if (report) { %>
 
-<div class="card margin-top">
+<div class="card margin-top" *ngIf="isDataAvailable">
     <div class="card-header card-header-primary">
         <span>Services over time (in ms)</span>
         <span class="float-right">
@@ -202,7 +215,7 @@
         </span>
     </div>
     <div class="card-block table-responsive">
-        <div *ngIf="isDataAvailable">
+        <div>
             <p *ngIf="!graphsArray || graphsArray.length == 0">No data found</p>
             <div class="row" *ngIf="graphsArray && graphsArray.length > 0">
                 <div class="col-md-6 text-center margin-bottom" *ngFor="let graph of graphsArray">

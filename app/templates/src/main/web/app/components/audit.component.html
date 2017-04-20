@@ -26,9 +26,9 @@
                     <td><a my-raw rawTitle="Audit [raw] - {{event.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}" [(rawBody)]="events[i]"
                            class="fa fa-lg fa-eye fa-margin pointer text-color" href="#"></a></td>
                 </tr>
-                <tr *ngIf="events.count == 0">
+                <tr *ngIf="!events || events.length == 0">
                     <td colspan="4">
-                        <span>No results</span>
+                        <span i18n>No results</span>
                     </td>
                 </tr>
                 </tbody>

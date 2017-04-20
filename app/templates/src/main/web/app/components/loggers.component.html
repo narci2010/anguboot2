@@ -13,9 +13,9 @@
                 <thead>
                 <tr>
                     <th my-th-sort sortBy="name" headerName="Name" i18n-headerName="Loggers table header : name" (onClick)="sort = $event.sort"></th>
-                    <th my-th-sort sortBy="configuredLevel" headerName="Configured Level" i18n-headerName="Loggers table header : configured level" (onClick)="sort = $event.sort"></th>
-                    <th my-th-sort sortBy="effectiveLevel" headerName="Effective Level" i18n-headerName="Loggers table header : effective level" (onClick)="sort = $event.sort"></th>
-                    <th class="text-right" i18n="Loggers table header : level">Update level</th>
+                    <th class="logger-level" my-th-sort sortBy="configuredLevel" headerName="Configured Level" i18n-headerName="Loggers table header : configured level" (onClick)="sort = $event.sort"></th>
+                    <th class="logger-level" my-th-sort sortBy="effectiveLevel" headerName="Effective Level" i18n-headerName="Loggers table header : effective level" (onClick)="sort = $event.sort"></th>
+                    <th class="logger-update text-right" i18n="Loggers table header : level">Update level</th>
                 </tr>
                 <tr>
                     <th colspan="1">
@@ -34,22 +34,22 @@
                 <tbody>
                 <tr *ngFor="let logger of loggers | filter:{terms: [{key:'name',value:term},{key:'effectiveLevel',value:levelTerm, strict: true}], sort: sort}:filteredCount | slice:(page - 1) * pageSize:page * pageSize">
                     <td><span class="text-overflow">{{logger.name}}</span></td>
-                    <td>
+                    <td class="logger-level">
                         <span class="label" class="space pointer badge" [ngClass]="logger.configuredLevelClass">{{logger.configuredLevel}}</span>
                     </td>
-                    <td>
+                    <td class="logger-level">
                         <span class="label" class="space pointer badge" [ngClass]="logger.effectiveLevelClass">{{logger.effectiveLevel}}</span>
                     </td>
-                    <td class="text-right">
+                    <td class="logger-level text-right">
                         <span (click)="updateLevel(logger, 'INHERIT')"
                               class="space pointer badge badge-primary">INHERIT</span>
                         <span (click)="updateLevel(logger, level.name)" *ngFor="let level of levels"
                               class="space pointer badge" [ngClass]="level.class">{{level.name}}</span>
                     </td>
                 </tr>
-                <tr *ngIf="filteredCount.count == 0">
+                <tr *ngIf="!loggers || loggers.length == 0 || filteredCount.count == 0">
                     <td colspan="4">
-                        <span>No results</span>
+                        <span i18n>No results</span>
                     </td>
                 </tr>
                 </tbody>

@@ -16,6 +16,57 @@
         <source>Contact</source>
         <target/>
       </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.500" datatype="html">
+        <source>Internal error from server</source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 500</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.401" datatype="html">
+        <source>Not authenticated</source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 401</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.403" datatype="html">
+        <source>Access denied</source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 403</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.404" datatype="html">
+        <source>Resource not found</source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 404</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.404.WITH_INTERPOLATION" datatype="html">
+        <source>Resource not found : <x id="INTERPOLATION"/></source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 404 with resource name</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.409" datatype="html">
+        <source>Resource already exists</source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 409</note>
+      </trans-unit>
+      <trans-unit id="ERROR.HTTP_STATUS.409.WITH_INTERPOLATION" datatype="html">
+        <source>Resource already exists : <x id="INTERPOLATION"/></source>
+        <target/>
+        <note priority="1" from="description">Notification error for status : 409 with resource name</note>
+      </trans-unit>
+      <trans-unit id="STATE.SUCCESS" datatype="html">
+        <source>Success</source>
+        <target/>
+        <note priority="1" from="description">Success state translation</note>
+      </trans-unit>
+      <trans-unit id="STATE.WARNING" datatype="html">
+        <source>Warning</source>
+        <target/>
+        <note priority="1" from="description">Warning state translation</note>
+      </trans-unit>
+      <trans-unit id="STATE.ERROR" datatype="html">
+        <source>Error : <x id="INTERPOLATION"/></source>
+        <target/>
+        <note priority="1" from="description">Interpolation is error message</note>
+        <note priority="1" from="meaning">Error state translation</note>
+      </trans-unit>
       <trans-unit id="b40926cf4aaf994f1972a19ffc7f0fc5897ca55a" datatype="html">
         <source>Health (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
         <target/>
@@ -35,6 +86,10 @@
         <source>Details</source>
         <target/>
         <note priority="1" from="description">Health table header : details</note>
+      </trans-unit>
+      <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
+        <source>No results</source>
+        <target/>
       </trans-unit>
       <trans-unit id="696d21435066edf9423ad87d1b44190dedd3df74" datatype="html">
         <source>Threads</source>
@@ -106,11 +161,6 @@
         <target/>
         <note priority="1" from="description">Beans table header : scope</note>
       </trans-unit>
-      <trans-unit id="d65dc6c3324be629427da89e1240087373b4bf0b" datatype="html">
-        <source>Aliases</source>
-        <target/>
-        <note priority="1" from="description">Trace table header : aliases</note>
-      </trans-unit>
       <trans-unit id="473fb06a7b7b3992af493059e8f9c8c74f369a97" datatype="html">
         <source>Dependencies</source>
         <target/>
@@ -120,6 +170,11 @@
         <source>Filter by name...</source>
         <target/>
         <note priority="1" from="description">Filter input placeholder</note>
+      </trans-unit>
+      <trans-unit id="5561bcb6e309ebc01edce9e5fc7da84e6b80d81f" datatype="html">
+        <source>Beans</source>
+        <target/>
+        <note priority="1" from="description">Beans panel title</note>
       </trans-unit>
       <trans-unit id="056d358b2b067307621203bdf9681a048041ad49" datatype="html">
         <source>Environment</source>
@@ -151,8 +206,8 @@
         <target/>
         <note priority="1" from="description">Env properties table header : value</note>
       </trans-unit>
-      <trans-unit id="1ca49f48c7d4aa5fb0200cd682c914e04ab22f22" datatype="html">
-        <source>Api (<x id="INTERPOLATION"/>)</source>
+      <trans-unit id="e12d4dea23807334c6710628b5a19f842a1fb360" datatype="html">
+        <source><x id="INTERPOLATION"/> (<x id="INTERPOLATION_1"/>)</source>
         <target/>
         <note priority="1" from="description">Api panel title</note>
       </trans-unit>
@@ -166,20 +221,92 @@
         <target/>
         <note priority="1" from="description">Mapping table header : java method</note>
       </trans-unit>
-      <trans-unit id="de08e675857b0101dcd3ce640a4f3f6b3729e566" datatype="html">
-        <source>Manage (<x id="INTERPOLATION"/>)</source>
+      <trans-unit id="2b05afed4d79c529c4b0445fb586c80c32bb43ee" datatype="html">
+        <source>Mappings</source>
         <target/>
-        <note priority="1" from="description">Api panel title</note>
-      </trans-unit>
-      <trans-unit id="6b4248e6ee17c09f70608d2bdc800d1f78d3c332" datatype="html">
-        <source>Others (<x id="INTERPOLATION"/>)</source>
-        <target/>
-        <note priority="1" from="description">Api panel title</note>
+        <note priority="1" from="description">Mappings panel title</note>
       </trans-unit>
       <trans-unit id="4a5d6a9ca9bbf07021f3a4c134fd295b68e8ad44" datatype="html">
         <source>Jvm</source>
         <target/>
         <note priority="1" from="description">Jvm panel title</note>
+      </trans-unit>
+      <trans-unit id="ee53ff3d5344ca9f11f74164fb99572ede1ad4de" datatype="html">
+        <source>Total Memory</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="44f506e1c4c5b3c6657ae69140e9fe20173ec16a" datatype="html">
+        <source>Heap Memory</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="dd8876c6cf579a997981b57b60848c25c6a1b657" datatype="html">
+        <source>Non-Heap Memory</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="b4f58fef3a2df6a7f0de310b2219a80e9efb23b1" datatype="html">
+        <source>Garbage collector</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7d5561337b84753e749e869f94cc3714661b94e2" datatype="html">
+        <source>Mark Sweep count</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="ef0617542accd9fe5cff1c74ec8c6ffe4c2c39d2" datatype="html">
+        <source>Mark Sweep time</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="aec87a61ee837a608d0dac835d4f48ad1952a5fd" datatype="html">
+        <source>Scavenge count</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4f4affd2f2b21c8a785fbba4e01ca7d738fd9f37" datatype="html">
+        <source>Scavenge time</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6919104370612d4ef8d6eb3600a9857ae986a6a4" datatype="html">
+        <source>Http requests</source>
+        <target/>
+        <note priority="1" from="description">Http requests</note>
+      </trans-unit>
+      <trans-unit id="2e70f6b770fde86f8cdd095ec6d4d6fc7399d11d" datatype="html">
+        <source>No http requests yet</source>
+        <target/>
+        <note priority="1" from="description">No requests yet message</note>
+      </trans-unit>
+      <trans-unit id="68572de01b84c678be4bf8a27b990ecac2f41ce9" datatype="html">
+        <source>Code</source>
+        <target/>
+        <note priority="1" from="description">Metrics http table header : code</note>
+      </trans-unit>
+      <trans-unit id="06412bce0f4fe4311193e9763666089bf9d980da" datatype="html">
+        <source>Count</source>
+        <target/>
+        <note priority="1" from="description">Metrics http table header : count</note>
+      </trans-unit>
+      <trans-unit id="7e6c975ebea8b5f8b120905ca7acf9f8edf59d8e" datatype="html">
+        <source>OK</source>
+        <target/>
+        <note priority="1" from="description">200 status description</note>
+      </trans-unit>
+      <trans-unit id="7252594bb6e4a06e657542ca378a85dde5f3f4ef" datatype="html">
+        <source>Bad Request</source>
+        <target/>
+        <note priority="1" from="description">Error 400 description</note>
+      </trans-unit>
+      <trans-unit id="a12efbcf6dccd44e99a1bc9adb6b5ab6efa0286f" datatype="html">
+        <source>Unauthorized</source>
+        <target/>
+        <note priority="1" from="description">Error 500 description</note>
+      </trans-unit>
+      <trans-unit id="d04a7bcd0c10157e6135e0230e30d3e6539655f3" datatype="html">
+        <source>Not Found</source>
+        <target/>
+        <note priority="1" from="description">Error 404 description</note>
+      </trans-unit>
+      <trans-unit id="85b9773b9a3caeb9f0fd69b2b8fa7284bda6b492" datatype="html">
+        <source>Server error</source>
+        <target/>
+        <note priority="1" from="description">Error 500 description</note>
       </trans-unit>
       <trans-unit id="e5c39295ba80b4af73d7b997467649b012c4bd88" datatype="html">
         <source>Loggers (<x id="INTERPOLATION"/> / <x id="INTERPOLATION_1"/>)</source>
@@ -333,22 +460,6 @@
         <source>Are you sure you want to logout ?</source>
         <target/>
         <note priority="1" from="description">Logout confirm popup message</note>
-      </trans-unit>
-      <trans-unit id="STATE.SUCCESS" datatype="html">
-        <source>Success</source>
-        <target/>
-        <note priority="1" from="description">Success state translation</note>
-      </trans-unit>
-      <trans-unit id="STATE.WARNING" datatype="html">
-        <source>Success</source>
-        <target/>
-        <note priority="1" from="description">Warning state translation</note>
-      </trans-unit>
-      <trans-unit id="STATE.ERROR" datatype="html">
-        <source>Error : <x id="INTERPOLATION"/></source>
-        <target/>
-        <note priority="1" from="description">Interpolation is error message</note>
-        <note priority="1" from="meaning">Error state translation</note>
       </trans-unit>
     </body>
   </file>

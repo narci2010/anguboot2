@@ -18,8 +18,6 @@ export class DumpComponent implements OnInit {
   private threadsData: number[] = [];
   private threadsLabels: string[] = [];
   private threadsOptions: any;
-  
-  private isDataAvailable: boolean = false;
 
   private fontColor: string;
 
@@ -59,8 +57,6 @@ export class DumpComponent implements OnInit {
   }
 
   private refresh(skipNotification: boolean) {
-    this.dumps = [];
-
     this.resetFilters();
 
     this.threadsOptions = {
@@ -101,7 +97,6 @@ export class DumpComponent implements OnInit {
         this.notification.notify(NotificationType.SUCCESS, 'Dashboard refreshed');
       }
       this.filteredCount.count = this.dumps.length;
-      this.isDataAvailable = true;
       this.spinner.stop();
     }, error => {
         this.notification.notifyHttpError(error);

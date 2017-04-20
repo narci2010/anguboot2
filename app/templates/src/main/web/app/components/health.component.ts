@@ -35,7 +35,7 @@ export class HealthComponent implements OnInit {
     this.service.health().subscribe(value => {
       this.process(value, skipNotification);
     }, error => {
-      if (!Number.isInteger(error.status)) {
+      if (error.status && !Number.isInteger(error.status)) {
         this.process(error, skipNotification);
       } else {
         this.notification.notifyHttpError(error);
@@ -50,15 +50,12 @@ export class HealthComponent implements OnInit {
       let status;
       if (key === 'status') {
         status = value[key];
-        this.healthList.push({'name': 'general', 'status': status});
+        this.healthList.push({name: 'general', raw: value});
       } else {
         status = value[key].status;
-        let health: any = {'name': key, 'status': status};
-        for (let i in value[key]) {
-          health[i] = value[key][i];
-        }
+        let health: any = {name: key, status: status, raw: value[key]};
         if (key === 'diskSpace') {
-          health.value = Math.round(((health.total - health.free) * 100 / health.total)).toFixed(2);
+          health.value = Math.round(((health.raw.total - health.raw.free) * 100 / health.raw.total)).toFixed(2);
           health.type = 'success';
           if (health.value > 90) {
             health.type = 'danger';

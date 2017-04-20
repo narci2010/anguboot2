@@ -9,33 +9,39 @@ import {NotificationService, NotificationType} from "../services/notification.se
 })
 export class MappingsComponent implements OnInit {
 
-  private mappings: any;
-  private api: any[] = [];
-  private manage: any[] = [];
-  private others: any[] = [];
+  private raw: any;
+  private mappings: any[];
 
   constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService) {
   }
 
   private refresh(skipNotification: boolean) {
-    this.mappings = {};
-    this.api = [];
-    this.manage = [];
-    this.others = [];
+    this.raw = {};
 
     this.spinner.start();
     this.service.mappings().subscribe(value => {
-      this.mappings = value;
+      this.raw = value;
+      this.mappings = [];
+
+      let api: any[] = [];
+      let manage: any[] = [];
+      let others: any[] = [];
+
       Object.keys(value).map((path) => {
         let mapping = this.map(path, value[path]);
         if(path.indexOf('/api/') > -1){
-            this.api.push(mapping);
+            api.push(mapping);
         } else if(path.indexOf('/manage/') > -1){
-            this.manage.push(mapping);
+            manage.push(mapping);
         } else {
-            this.others.push(mapping);
+            others.push(mapping);
         }
       });
+
+      this.mappings.push({name: '[/api/*]', mappings: api});
+      this.mappings.push({name: '[/manage/*]', mappings: manage});
+      this.mappings.push({name: '[/*]', mappings: others});
+
       if (!skipNotification) {
         this.notification.notify(NotificationType.SUCCESS, 'Dashboard refreshed');
       }

@@ -66,10 +66,10 @@ export class MetricsComponent implements OnInit {
   private refresh(skipNotification: boolean) {
 
     let packageName = '<%= package %>';
-
     let observables: Observable<any>[] = [];
 
     this.spinner.start();
+    this.isDataAvailable = false;
 
     observables.push(this.service.metrics());<% if (report) { %>
     if(!this.constants.mock_http){

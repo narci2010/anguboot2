@@ -330,6 +330,7 @@ module.exports = class extends generator {
             this.template(staticDir + 'app/_app.module.ts', staticDir + 'app/app.module.ts');
             this.template(staticDir + 'app/_app-routing.module.ts', staticDir + 'app/app-routing.module.ts');
             this.template(staticDir + 'app/services/_actuator.service.ts', staticDir + 'app/services/actuator.service.ts');
+            this.template(staticDir + 'app/services/_notification.service.ts', staticDir + 'app/services/notification.service.ts');
             this.template(staticDir + 'app/services/_api.service.ts', staticDir + 'app/services/api.service.ts');
             this.template(staticDir + 'app/services/_http.service.ts', staticDir + 'app/services/http.service.ts');
             this.template(staticDir + 'app/directives/_raw.directive.ts', staticDir + 'app/directives/raw.directive.ts');

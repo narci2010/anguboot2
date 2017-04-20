@@ -22,7 +22,6 @@ export class BeansComponent implements OnInit {
   }
 
   private refresh(skipNotification: boolean) {
-    this.contexts = [];
 
     this.resetFilters();
 
