@@ -1,7 +1,7 @@
 {
   "name": "generator-anguboot2",
   "version": "2.0.0",
-  "description": "Angular-gulp-browserify-springboot generator !",
+  "description": "Yeoman generator for a complete Spring Boot application with Angular 4",
   "private": true,
   "main": "app/index.js",
   "author": {
