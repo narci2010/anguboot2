@@ -1,0 +1,14 @@
+= <%=nameCap%>
+
+== Description
+
+<%=description%>
+
+== Javadoc
+
+link:./apidocs/index.html[Link to javadoc]<% if (plugins.restDoc) { %>
+
+== Rest Api
+
+link:./rest-api.html[Link to rest api documentation]<% } %>
+

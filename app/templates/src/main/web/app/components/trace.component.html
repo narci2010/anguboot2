@@ -13,6 +13,7 @@
                 <thead>
                 <tr>
                     <th my-th-sort sortBy="timestamp" headerName="Timestamp" i18n-headerName="Traces table header : timestamp" (onClick)="sort = $event.sort"></th>
+                    <th i18n="Trace table header : duration">Duration</th>
                     <th i18n="Trace table header : method">Method</th>
                     <th i18n="Trace table header : path">Path</th>
                     <th i18n="Trace table header : status">Status</th>
@@ -22,6 +23,7 @@
                 <tbody>
                 <tr *ngFor="let trace of traces | filter:{sort: sort}; let i = index">
                     <td>{{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}</td>
+                    <td>{{trace.timeTaken}}</td>
                     <td><span class="badge badge-primary">{{trace.info.method}}</span></td>
                     <td><code>{{trace.info.path}}</code></td>
                     <td><kbd>{{trace.info.headers.response.status}}</kbd></td>

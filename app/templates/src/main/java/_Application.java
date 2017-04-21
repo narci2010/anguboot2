@@ -13,7 +13,7 @@ import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 public class <%= nameCap %>Application {
 
 	/**
-	 * @param args : program arguments
+	 * @param args program arguments
 	 */
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(<%= nameCap %>Application.class).listeners(new CustomLoggingListener()).run(args);

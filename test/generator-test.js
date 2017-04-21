@@ -5,7 +5,7 @@ var path = require('path');
 
 var defaultFiles = [
   '.yo-rc.json', '.gitignore', 'pom.xml', 'README.md', 'src/main/assembly/assembly.xml', 
-  'src/main/filters/dev.properties', 'src/main/filters/delivery.properties',
+  'src/main/filters/dev.properties', 'src/main/filters/delivery.properties', 'src/main/asciidoc/index.adoc',
   'src/main/java/com/company/anguboot/exception/AngubootApplicativeException.java', 
   'src/main/java/com/company/anguboot/exception/AngubootTechnicalException.java'
 ];

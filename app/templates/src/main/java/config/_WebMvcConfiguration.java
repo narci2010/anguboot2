@@ -32,33 +32,32 @@ public class WebMvcConfiguration
     @Autowired
     private <%= nameCap %>Properties properties;
 
-    @PostConstruct
-    public void init() {
-        LOGGER.info("Looking for specific client configurations in [{}]", properties.getExternalResourcesDirectory().getAbsolutePath());
-    }
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String defaultPath = "classpath:/public/";
-        File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
-        if (files != null) {
-            for (File file : files) {
-                String resourceHandler = "/" + file.getName() + "/**";
-                String location = "file:" + new File(properties.getExternalResourcesDirectory(), file.getName()) + "/";
-                LOGGER.debug("Resources handler [{}], add location [{}]", resourceHandler, location);
-                registry.addResourceHandler(resourceHandler)
+        if(properties.getExternalResourcesDirectory() != null && properties.getExternalResourcesDirectory().exists()) {
+            File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
+            if (files != null) {
+                for (File file : files) {
+                    String resourceHandler = "/" + file.getName() + "/**";
+                    String location = "file:" + new File(properties.getExternalResourcesDirectory(), file.getName()) + "/";
+                    LOGGER.debug("Resources handler [{}], add location [{}]", resourceHandler, location);
+                    registry.addResourceHandler(resourceHandler)
                         .addResourceLocations(location, defaultPath)
                         .setCachePeriod(properties.getExternalResourcesCacheTime());
+                }
             }
         }
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
-        if (files != null) {
-            for (File file : files) {
-                registry.addViewController("/" + file.getName() + "/").setViewName("forward:index.html");
+        if(properties.getExternalResourcesDirectory() != null && properties.getExternalResourcesDirectory().exists()) {
+            File[] files = properties.getExternalResourcesDirectory().listFiles(File::isDirectory);
+            if (files != null) {
+                for (File file : files) {
+                    registry.addViewController("/" + file.getName() + "/").setViewName("forward:index.html");
+                }
             }
         }
     }<% } %>

@@ -50,7 +50,7 @@ public class SecurityConfiguration
             http.httpBasic().authenticationEntryPoint(new FrontBasicAuthenticationEntryPoint("basic"));
             http.csrf().disable();
             http.authorizeRequests()
-                    .antMatchers("/", "/index.html", "/**/*.js", "/assets/**/*", "/images/**", "/*.woff*", "/*.ttf", "/*.png")
+                    .antMatchers("/", "/index.html", "/**/*.js", "/assets/**/*", "/images/**", "/*.woff*", "/*.ttf", "/*.png", "/docs/**")
                     .permitAll().anyRequest().authenticated();
             http.logout().invalidateHttpSession(true).deleteCookies(COOKIE_SESSION_ID)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))

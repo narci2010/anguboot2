@@ -29,19 +29,9 @@ public class <%= nameCap %>Properties {<% if (angular && plugins.custo) { %>
 	 * Configuration initialization / validation
 	 */
   	@PostConstruct
-	public void init() throws <%= nameCap %>ApplicativeException {
-		// validate properties<% if (angular && plugins.custo) { %>
-		check(externalResourcesDirectory, "<%= name %>.externalResourcesDirectory");<% } %>
+	public void init() {
+		// validate properties
 	}<% if (angular && plugins.custo) { %>
-
-	private void check(File file, String message) throws <%= nameCap %>ApplicativeException {
-		if (file == null) {
-			throw new <%= nameCap %>ApplicativeException(message + " cannot be null");
-		}
-		if (!file.exists() || !file.isDirectory()) {
-			throw new <%= nameCap %>ApplicativeException(message + " directory does not exist or is not a directory : " + file.getAbsolutePath());
-		}
-	}
 
 	public File getExternalResourcesDirectory() {
 		return externalResourcesDirectory;

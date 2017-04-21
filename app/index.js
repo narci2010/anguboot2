@@ -72,7 +72,7 @@ module.exports = class extends generator {
               type: 'input',
               name: 'description',
               message: 'Your project description :',
-              default: 'Spring boot with Angular 2 project'
+              default: 'Spring boot with Angular 4 project'
             }, {
               when: (response) => {
                   return !response.useConfig;
@@ -248,6 +248,7 @@ module.exports = class extends generator {
             this.template('_tslint.json', 'tslint.json');
         }
 
+        this.template('src/main/asciidoc/_index.adoc', 'src/main/asciidoc/index.adoc');
         if(this.props.plugins.restDoc) {
             this.template('src/main/asciidoc/_rest-api.adoc', 'src/main/asciidoc/rest-api.adoc');
         }

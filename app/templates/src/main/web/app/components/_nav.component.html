@@ -59,6 +59,12 @@
                         </ng-container>
                     </div>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../docs/index.html">
+                    <span class="fa fa-nav fa-lg fa fa-book text-primary"></span>
+                    <span i18n="Navbar link|Go to documentation page">Documentation</span>
+                </a>
             </li><%}%><% if(plugins.custo) { %>
             <li class="nav-item" *ngIf="env == 'dev'<% if(plugins.security) { %> && admin<% } %>">
                 <a class="nav-link" routerLink="/custo" routerLinkActive="active">

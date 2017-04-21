@@ -1,5 +1,6 @@
 export class Trace {
   timestamp: number;
+  timeTaken: number;
   info: Info;
 }
 export class Info {
