@@ -11,7 +11,7 @@
 
 Module | Details
 --- | ---
-`Spring boot` | Version 1.5.2
+`Spring boot` | Version 1.5.3
 `Spring web` | -
 `Spring data jpa` | -
 `Spring security ` | None, Basic, Oauth
@@ -45,7 +45,7 @@ $ npm install -g yo
 ### From Npm
 
 ```bash
-$ npm install -g generator-anguboot
+$ npm install -g generator-anguboot2
 ```
 
 ### From sources
@@ -59,13 +59,13 @@ $ npm update && npm link
 
 ```bash
 $ mkdir angutest && cd angutest
-$ yo anguboot
+$ yo anguboot2
 
    /\  _  _    |_  _  _ |_
   /--\| )(_)|_||_)(_)(_)|_  v2.0.0
           _/
 
-? Your project name (one word, no space or special characters) : (angutest)
+? Your project name (one word, no space or special characters) : (angutest2)
 ```
 
 ## Development
@@ -80,8 +80,7 @@ $ mvn spring-boot:run
 
 ```bash
 $ mvn clean install
-# test generated jar, using dev filtered configuration in test-classes
-$ java -jar target/angutest-executable.jar --spring.config.location=target/test-classes/
+$ java -jar target/angutest-executable.jar
 ```
 
 ## What's coming next
