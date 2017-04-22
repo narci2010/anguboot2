@@ -1,7 +1,7 @@
 # Anguboot
 
 [![Build Status](https://travis-ci.org/fonimus/anguboot2.svg?branch=master)](https://travis-ci.org/fonimus/anguboot2)
-[![Dependency Status](https://www.versioneye.com/user/projects/58fa75ffc2ef4238240d5f15/badge.svg)](https://www.versioneye.com/user/projects/58fa75ffc2ef4238240d5f15)
+[![Dependency Status](https://www.versioneye.com/user/projects/58fb201b710da2402c670588/badge.svg)](https://www.versioneye.com/user/projects/58fb201b710da2402c670588)
 
 > Yeoman generator for a complete Spring Boot application with Angular 4
 
