@@ -126,6 +126,11 @@
         <target/>
         <note priority="1" from="description">Traces table header : timestamp</note>
       </trans-unit>
+      <trans-unit id="a02ea1d4e7424ca989929da5e598f379940fdbf2" datatype="html">
+        <source>Duration</source>
+        <target/>
+        <note priority="1" from="description">Trace table header : duration</note>
+      </trans-unit>
       <trans-unit id="a0c7e8516852d2b5888c8a00894acd60aad61317" datatype="html">
         <source>Method</source>
         <target/>
@@ -205,11 +210,6 @@
         <source>Value</source>
         <target/>
         <note priority="1" from="description">Env properties table header : value</note>
-      </trans-unit>
-      <trans-unit id="e12d4dea23807334c6710628b5a19f842a1fb360" datatype="html">
-        <source><x id="INTERPOLATION"/> (<x id="INTERPOLATION_1"/>)</source>
-        <target/>
-        <note priority="1" from="description">Api panel title</note>
       </trans-unit>
       <trans-unit id="155b4c8ed9793bc6f9960f334e9265edbd185ff6" datatype="html">
         <source>Bean</source>
@@ -425,6 +425,12 @@
         <source>Locales</source>
         <target/>
         <note priority="1" from="description">Open locales dropdown</note>
+        <note priority="1" from="meaning">Navbar link</note>
+      </trans-unit>
+      <trans-unit id="8c58c19e8abaad73946f20fbfd0970e28e816162" datatype="html">
+        <source>Documentation</source>
+        <target/>
+        <note priority="1" from="description">Go to documentation page</note>
         <note priority="1" from="meaning">Navbar link</note>
       </trans-unit>
       <trans-unit id="c3e46e4c5508b6892555fecbd93088f7e378e361" datatype="html">

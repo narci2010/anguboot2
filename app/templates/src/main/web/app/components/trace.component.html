@@ -23,7 +23,7 @@
                 <tbody>
                 <tr *ngFor="let trace of traces | filter:{sort: sort}; let i = index">
                     <td>{{trace.timestamp | date:'yyyy-MM-dd HH-mm-ss'}}</td>
-                    <td>{{trace.timeTaken}}</td>
+                    <td>{{trace.info.timeTaken}}</td>
                     <td><span class="badge badge-primary">{{trace.info.method}}</span></td>
                     <td><code>{{trace.info.path}}</code></td>
                     <td><kbd>{{trace.info.headers.response.status}}</kbd></td>

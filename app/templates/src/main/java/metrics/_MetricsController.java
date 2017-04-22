@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,7 @@ public class MetricsController {
 	@Autowired
 	private TimerRepository timerRepository;
 
-	@RequestMapping(path = "/metrics")
+	@RequestMapping(method = RequestMethod.GET, path = "/metrics")
 	public ResponseEntity<List<Timer>> metrics(
 			@RequestParam(name = "start", required = false) Date start,
 			@RequestParam(name = "end", required = false) Date end,
@@ -38,7 +39,7 @@ public class MetricsController {
 						new PageRequest(0, limit != null ? limit : 100))));
 	}
 
-	@RequestMapping(path = "/metrics/{name}")
+	@RequestMapping(method = RequestMethod.GET, path = "/metrics/{name}")
 	public ResponseEntity<List<Timer>> metrics(
 			@PathVariable(name = "name") String name,
 			@RequestParam(name = "start", required = false) Date start,
