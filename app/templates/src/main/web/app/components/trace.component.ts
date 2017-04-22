@@ -14,6 +14,17 @@ export class TraceComponent implements OnInit {
   constructor(private service: ActuatorService, private spinner: SpinnerService, private notification: NotificationService) {
   }
 
+  public getClass(status: string) {
+    if(status.indexOf('20') === 0){
+      return 'badge-success';
+    } else if(status.indexOf('40') === 0){
+      return 'badge-warning';
+    } else if(status.indexOf('20') === 0){
+      return 'badge-danger';
+    }
+    return 'badge-default';
+  }
+
   private refresh(skipNotification: boolean) {
     this.traces = [];
 
