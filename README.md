@@ -42,6 +42,7 @@ Module | Details
 $ npm install -g yo
 ```
 
+From二选一，好像只能From source
 ### From Npm
 
 ```bash
